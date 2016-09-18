@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CRM</string>
+
+    <string name="custom_title">客户</string>
+    <string name="work_place_title">工作台</string>
+    <string name="profile_title">我</string>
+    <string name="add_custom_title">添加客户</string>
+    <string name="filter_custom_title">筛选客户</string>
+    <string name="search_custom_title">搜索客户</string>
+    <string name="location_title">位置</string>
+</resources>

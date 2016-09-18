@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/pageBgColor">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_margin="@dimen/common_margin">
+
+            <TextView
+                android:id="@+id/tv_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/searchbar_textfield_bg"
+                android:drawableLeft="@drawable/searchbar_second_textfield_search_icon"
+                android:gravity="center_vertical"
+                android:paddingLeft="5dp"
+                android:text=" 搜索搜索搜索搜索搜索"
+                android:textColor="@color/hintColor"/>
+
+            <TextView
+                android:id="@+id/tv_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="8dp"
+                android:text="筛选"
+                android:textColor="@color/titleColor"
+                android:textSize="@dimen/name_font_size"/>
+        </LinearLayout>
+
+        <include
+            layout="@layout/layout_custom_list"/>
+    </LinearLayout>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/btn_flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="20dp"
+        android:elevation="3dp"
+        android:src="@drawable/ic_flash"
+        app:fab_colorNormal="@color/nameColor"
+        app:fab_colorPressed="@color/hintColor"/>
+</FrameLayout>

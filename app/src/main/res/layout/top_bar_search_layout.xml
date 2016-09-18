@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height"
+        android:layout_marginLeft="8dp"
+        android:gravity="center_vertical">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/et_content"
+                android:layout_width="match_parent"
+                android:layout_height="28dp"
+                android:background="@drawable/search_navigationbar_textfield_background"
+                android:gravity="center_vertical"
+                android:hint="输入关键字搜索"
+                android:imeOptions="actionSearch"
+                android:paddingLeft="8dp"
+                android:textColor="@color/commonColor"
+                android:textColorHint="@color/hintColor"
+                android:textSize="15sp"/>
+
+            <ImageView
+                android:id="@+id/iv_clear_text"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/clear_textfield_drawable"
+                android:layout_gravity="center_vertical|right"
+                android:scaleType="center"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_exit_search"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="取消"
+            android:textColor="@color/titleColor"
+            android:textSize="@dimen/name_font_size"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/toolbar_shadow"/>
+</LinearLayout>

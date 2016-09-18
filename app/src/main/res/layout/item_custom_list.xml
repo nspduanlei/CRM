@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/common_margin">
+
+    <com.apec.crm.views.widget.RoundTextView
+        android:id="@+id/tv_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginRight="10dp"
+        app:circle_color="#ff2222"
+        app:circle_text="蛋糕"/>
+
+    <TextView
+        android:id="@+id/tv_custom_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/tv_head"
+        android:text="fafafafasf"
+        android:textColor="@color/nameColor"
+        android:textSize="@dimen/name_font_size"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_custom_name"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@id/tv_head"
+        android:text="fasfasfasfafasfasfsfasffadfasfas"
+        android:textColor="@color/commonColor"
+        android:textSize="@dimen/common_font_size"/>
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
+        android:text="dfafasf"
+        android:textColor="@color/hintColor"
+        android:textSize="@dimen/tip_font_size"/>
+
+</RelativeLayout>

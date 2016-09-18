@@ -1,0 +1,81 @@
+apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.android.databinding'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'duanlei'
+            keyPassword '455483293'
+            storeFile file('duanleiKey.jks')
+            storePassword '455483293'
+        }
+    }
+
+    compileSdkVersion 24
+    buildToolsVersion "24.0.2"
+
+    defaultConfig {
+        applicationId "com.apec.crm"
+        minSdkVersion 15
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
+
+    productFlavors {
+        develop {
+            applicationId 'com.apec.crm'
+        }
+    }
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders = [TD_CHANNEL_ID: name]
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
+    //tab
+    compile 'com.android.support:support-v4:24.2.1'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.8@aar'
+    //数据库
+    compile 'org.litepal.android:core:1.3.1'
+    //图片加载
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    //友盟
+    compile 'com.umeng.analytics:analytics:latest.integration'
+    //http请求
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    //依赖注入
+    compile 'com.google.dagger:dagger:2.4'
+    provided 'com.google.dagger:dagger-compiler:2.4'
+    apt 'com.google.dagger:dagger-compiler:2.4'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    apt 'com.jakewharton:butterknife-compiler:8.0.1'
+    //测试
+    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+    compile 'com.facebook.stetho:stetho:1.3.1'
+}

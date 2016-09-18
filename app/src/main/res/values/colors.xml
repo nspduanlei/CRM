@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f56200</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+
+    <!--标题颜色-->
+    <color name="titleColor">#525252</color>
+
+    <!--非要点内容颜色-->
+    <color name="notImColor">#929292</color>
+
+    <!--提示文本颜色-->
+    <color name="hintColor">#bdbdbd</color>
+
+    <!--可点击内容颜色-->
+    <color name="clickTextColor">#507db0</color>
+
+    <!--普通内容颜色-->
+    <color name="commonColor">#636363</color>
+
+    <!--名称,按钮 颜色-->
+    <color name="nameColor">#f56200</color>
+
+    <!--页面 背景色-->
+    <color name="pageBgColor">#f2f2f2</color>
+
+    <!--标题内容 背景色-->
+    <color name="titleBgColor">#ffffff</color>
+
+    <!-- 一般内容 背景色-->
+    <color name="commonBgColor">#f7f7f7</color>
+
+    <!--线条颜色-->
+    <color name="lineColor">#e6e6e6</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+
+    <color name="colorTransparent">#00000000</color>
+
+
+</resources>

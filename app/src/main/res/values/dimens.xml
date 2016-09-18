@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- 导航栏高度 -->
+    <dimen name="top_bar_height">44dp</dimen>
+
+    <!--页面内容边距-->
+    <dimen name="common_margin">8dp</dimen>
+
+    <!--表单项内边距-->
+    <dimen name="form_padding">10dp</dimen>
+
+    <!-- 标签栏高度 -->
+    <dimen name="bot_bar_height">44dp</dimen>
+
+    <!--导航栏标题字体大小-->
+    <dimen name="title_font_size">18sp</dimen>
+
+    <!--普通文字大小-->
+    <dimen name="common_font_size">14sp</dimen>
+
+    <!--名称文字大小-->
+    <dimen name="name_font_size">16sp</dimen>
+
+    <!--注释-->
+    <dimen name="tip_font_size">12sp</dimen>
+
+</resources>
