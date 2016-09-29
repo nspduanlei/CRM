@@ -3,6 +3,10 @@ package com.apec.crm.support.rest;
 import android.content.Context;
 
 import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.User;
+import com.apec.crm.domin.entities.VisitRecord;
+import com.apec.crm.domin.entities.func.ListPage;
+import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.support.rest.interceptors.CacheInterceptor;
 import com.apec.crm.support.rest.interceptors.HeaderInterceptor;
@@ -10,7 +14,6 @@ import com.apec.crm.support.rest.interceptors.LoggingInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -54,6 +57,7 @@ public class RestDataSource implements GoodsRepository {
                 .cache(new Cache(cacheDir, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE))
                 .build();
 
+
         Retrofit crmApiAdapter = new Retrofit.Builder()
                 .baseUrl(END_POINT)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -61,11 +65,17 @@ public class RestDataSource implements GoodsRepository {
                 .client(client)
                 .build();
 
-
-
         mCrmApi = crmApiAdapter.create(CrmApi.class);
-
     }
 
 
+    @Override
+    public Observable<Result<User>> login(String userName, String password) {
+        return mCrmApi.login(userName, password);
+    }
+
+    @Override
+    public Observable<Result<ListPage<VisitRecord>>> getVisitRecord(String jsonString) {
+        return mCrmApi.getVisitRecord(jsonString);
+    }
 }

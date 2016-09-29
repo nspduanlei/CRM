@@ -2,9 +2,7 @@ package com.apec.crm.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -12,7 +10,6 @@ import com.apec.crm.config.Constants;
 import com.apec.crm.views.activities.core.BaseActivity;
 
 import butterknife.OnClick;
-import butterknife.OnTouch;
 
 /**
  * Created by duanlei on 16/9/12.
@@ -47,7 +44,7 @@ public class AddCustomActivity extends BaseActivity {
 
     @OnClick(R.id.tv_location)
     void onSelectLocationClicked(View view) {
-        Intent intent = new Intent(this, MapMarkActivity.class);
+        Intent intent = new Intent(this, MapLocationActivity.class);
         startActivityForResult(intent, Constants.REQUEST_CODE_MARK_MAP);
     }
 }

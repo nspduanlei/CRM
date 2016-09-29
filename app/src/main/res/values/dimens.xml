@@ -2,6 +2,8 @@
 
     <!-- 导航栏高度 -->
     <dimen name="top_bar_height">44dp</dimen>
+    <!-- 导航栏高度+阴影高度 -->
+    <dimen name="top_bar_height_e">46dp</dimen>
 
     <!--页面内容边距-->
     <dimen name="common_margin">8dp</dimen>
@@ -23,5 +25,12 @@
 
     <!--注释-->
     <dimen name="tip_font_size">12sp</dimen>
+
+    <!--文字间间距-->
+    <dimen name="text_margin_top">6dp</dimen>
+    <dimen name="text_margin_title_top">10dp</dimen>
+
+    <!--面板间间距-->
+    <dimen name="plate_margin_top">10dp</dimen>
 
 </resources>

@@ -13,18 +13,12 @@ public class SPUtils {
      * =============================key====================================
      **/
 
-    //jpush 注册id
-    public static final String REGISTRATION_ID = "registration_id";
-    //城市id
-    public static final String LOCATION_CITY_ID = "open_city_id";
-    public static final String LOCATION_CITY_NAME = "open_city_name";
-
-    //用户选择游客模式
-    public static final String IS_NO_LOGIN = "select_no_login";
     //是否第一次进入app
     public static final String IS_FIRST_LAUNCH = "is_first_launch";
-    //用户登录的回话id
-    public static final String SESSION_ID = "session_id";
+
+    //用户登录token
+    public static final String TOKEN = "token";
+
     //用户选择不更新版本
     public static final String IS_NOT_UPDATE_VERSION = "select_not_update_version";
 
@@ -36,6 +30,9 @@ public class SPUtils {
 
     //用户名
     public static final String USER_NAME = "user_name";
+
+    //用户编号
+    public static final String USER_NO = "user_no";
 
     //是否有新的系统消息
     public static final String HAS_NEW_MESSAGE = "has_new_message";

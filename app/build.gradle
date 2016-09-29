@@ -78,4 +78,8 @@ dependencies {
     //测试
     compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
     compile 'com.facebook.stetho:stetho:1.3.1'
+    compile project(':collapsecalendar')
+
+    //design
+    compile 'com.android.support:design:24.2.1'
 }

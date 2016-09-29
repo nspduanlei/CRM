@@ -1,11 +1,11 @@
 package com.apec.crm.views.activities;
 
-import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -20,7 +20,6 @@ import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.Poi;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiResult;
@@ -44,7 +43,6 @@ import butterknife.BindView;
 public class MapMarkActivity extends BaseActivity implements LocationSource, AMapLocationListener,
         AMap.OnCameraChangeListener, AMap.OnMapLoadedListener, PoiSearch.OnPoiSearchListener {
 
-
     AMap mAMap = null;
     PoiSearch mPoiSearch = null;
     OnLocationChangedListener mListener;
@@ -62,14 +60,26 @@ public class MapMarkActivity extends BaseActivity implements LocationSource, AMa
     @BindView(R.id.pb_loading)
     ProgressBar mLoading;
 
+
     private void initMarker() {
         //默认点标记
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.draggable(true);
-        markerOption.icon(
-                BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(getResources(),
-                                R.drawable.customer_location_green)));
+
+        FrameLayout frameLayout = new FrameLayout(this);
+
+        ImageView viewIng = new ImageView(this);
+        viewIng.setImageResource(R.drawable.map_loc_ing);
+
+        //ObjectAnimator.ofFloat(viewIng, "translationY", 0, 20).start();
+
+        ImageView viewBg = new ImageView(this);
+        viewBg.setImageResource(R.drawable.map_loc_bg);
+
+        frameLayout.addView(viewBg);
+        frameLayout.addView(viewIng);
+
+        markerOption.icon(BitmapDescriptorFactory.fromView(frameLayout));
 
         // 将Marker设置为贴地显示，可以双指下拉看效果
         markerOption.setFlat(true);
@@ -85,6 +95,7 @@ public class MapMarkActivity extends BaseActivity implements LocationSource, AMa
         mAMap.getUiSettings().setMyLocationButtonEnabled(true); // 显示默认的定位按钮
         mAMap.setMyLocationEnabled(true);
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+
 
         MyLocationStyle locationStyle = new MyLocationStyle();
         locationStyle.myLocationIcon(BitmapDescriptorFactory.fromResource(
@@ -102,7 +113,7 @@ public class MapMarkActivity extends BaseActivity implements LocationSource, AMa
 
     private void initPoiSearch() {
         PoiSearch.Query query = new PoiSearch.Query("餐饮服务", "");
-        query.setPageSize(10);
+        query.setPageSize(20);
         mPoiSearch = new PoiSearch(this, query);
         mPoiSearch.setOnPoiSearchListener(this);
         mPoiResult = new ArrayList<>();
@@ -205,7 +216,7 @@ public class MapMarkActivity extends BaseActivity implements LocationSource, AMa
 
         //检索周边的poi
         mPoiSearch.setBound(new PoiSearch.SearchBound(new LatLonPoint(mMarker.getPosition().latitude,
-                mMarker.getPosition().longitude), 1000));
+                mMarker.getPosition().longitude), 500));
 
         mPoiSearch.searchPOIAsyn();
         mLoading.setVisibility(View.VISIBLE);

@@ -3,4 +3,12 @@
     <item name="toolbar_title" type="id" />
     <item name="toolbar" type="id" />
     <item name="toolbar_image" type="id" />
+
+    <item name="lv_visit" type="id" />
+
+    <item name="et_content" type="id" />
+    <item name="iv_clear_text" type="id" />
+    <item name="tv_exit_search" type="id" />
+    <item name="lv_search" type="id" />
+
 </resources>

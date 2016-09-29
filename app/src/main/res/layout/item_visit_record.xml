@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/common_margin"
+android:background="@color/colorWhite">
+
+    <TextView
+        android:id="@+id/tv_custom_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QQ蛋糕店"
+        android:textColor="@color/titleColor"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_visit_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_custom_name"
+        android:text="2016-6-20"
+        android:textColor="@color/notImColor"/>
+
+    <TextView
+        android:id="@+id/tv_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="李某某"
+        android:textColor="@color/commonColor"/>
+
+    <TextView
+        android:id="@+id/tv_visit_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_visit_time"
+        android:text="嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的"
+        android:textColor="@color/commonColor"/>
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_visit_des"
+        android:text="深圳市福田区发撒嘎嘎好地方哈的哈哈哈哈"
+        android:textColor="@color/notImColor"
+        android:textSize="@dimen/common_font_size"/>
+
+
+</RelativeLayout>

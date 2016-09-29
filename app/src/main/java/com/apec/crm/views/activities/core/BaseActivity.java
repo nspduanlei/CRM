@@ -14,7 +14,6 @@ import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by duanlei on 2016/5/10.
@@ -75,8 +74,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     }
 
     public void setContentView(int layoutResID, int titleResId, int menuId, int mode) {
+        if (layoutResID == -1) {
+            return;
+        }
         super.setContentView(layoutResID);
-
         ButterKnife.bind(this);
         setUpToolbar(titleResId, menuId, mode);
     }
@@ -112,7 +113,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected void setBtnImage(int resId, AddClickListener onClickListener) {
         mOnClickListener = onClickListener;
         mToolbarBtn.setVisibility(View.VISIBLE);
-        mToolbarBtn.setImageResource(R.drawable.custom_add_drawable);
+        mToolbarBtn.setImageResource(resId);
         mToolbarBtn.setOnClickListener(view -> mOnClickListener.onAddClicked());
     }
 

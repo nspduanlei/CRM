@@ -39,7 +39,15 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
 
+    <color name="colorBlackT">#aaffffff</color>
+
     <color name="colorTransparent">#00000000</color>
+
+    <!--下拉刷新-->
+    <color name="swipe_color_1">#00ff00</color>
+    <color name="swipe_color_2">#ccff00</color>
+    <color name="swipe_color_3">#ffff00</color>
+    <color name="swipe_color_4">#ee00ee</color>
 
 
 </resources>

@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_main, R.string.custom_title, BaseActivity.MODE_HOME);
-        setBtnImage(R.drawable.custom_add_drawable, this);
+        setBtnImage(R.drawable.nav_add_drawable, this);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
                 switch (position) {
                     case 0:
                         setUpTitle(R.string.custom_title);
-                        setBtnImage(R.drawable.custom_add_drawable, MainActivity.this);
+                        setBtnImage(R.drawable.nav_add_drawable, MainActivity.this);
                         break;
                     case 1:
                         setUpTitle(R.string.work_place_title);
@@ -88,8 +88,6 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
                         hideBtnImage();
                         break;
                 }
-
-
             }
 
             @Override
@@ -116,5 +114,10 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
     public void onAddClicked() {
         Intent intent = new Intent(this, AddCustomActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(false);
     }
 }

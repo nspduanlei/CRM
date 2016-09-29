@@ -4,6 +4,7 @@ package com.apec.crm.injector.components;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.injector.modules.AppModule;
+import com.google.gson.Gson;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -27,4 +28,7 @@ public interface AppComponent {
 
     @Named("executor_thread")
     Scheduler executorThread();
+
+    @Named("gson")
+    Gson gson();
 }

@@ -17,7 +17,7 @@
             android:layout_weight="1">
 
             <EditText
-                android:id="@+id/et_content"
+                android:id="@id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
                 android:background="@drawable/search_navigationbar_textfield_background"
@@ -30,16 +30,17 @@
                 android:textSize="15sp"/>
 
             <ImageView
-                android:id="@+id/iv_clear_text"
+                android:id="@id/iv_clear_text"
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:src="@drawable/clear_textfield_drawable"
                 android:layout_gravity="center_vertical|right"
-                android:scaleType="center"/>
+                android:scaleType="center"
+                android:visibility="gone"/>
         </FrameLayout>
 
         <TextView
-            android:id="@+id/tv_exit_search"
+            android:id="@id/tv_exit_search"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:gravity="center_vertical"

@@ -7,6 +7,7 @@ import android.widget.ListView;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.views.activities.CustomActivity;
 import com.apec.crm.views.activities.FilterCustomActivity;
 import com.apec.crm.views.activities.SearchCustomActivity;
 import com.apec.crm.views.fragments.core.BaseFragment;
@@ -46,6 +47,12 @@ public class CustomFragment extends BaseFragment {
                         .setText(R.id.tv_time, custom.getTime());
             }
         });
+
+        mCustomList.setOnItemClickListener((adapterView, view1, i, l) -> {
+            Intent intent = new Intent(getActivity(), CustomActivity.class);
+            intent.putExtra("id", data.get(i).getId());
+            startActivity(intent);
+        });
     }
 
     @Override
@@ -67,7 +74,6 @@ public class CustomFragment extends BaseFragment {
     void onSearchClicked(View view) {
         Intent intent = new Intent(getActivity(), SearchCustomActivity.class);
         startActivity(intent);
-
     }
 
     @OnClick(R.id.tv_filter)

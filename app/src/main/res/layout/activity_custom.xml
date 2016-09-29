@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/pageBgColor"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/top_bar_layout"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_custom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/plate_click_selector"
+            android:padding="@dimen/common_margin">
+
+            <com.apec.crm.views.widget.RoundTextView
+                android:id="@+id/rtv_title"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:circle_text="蛋糕"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/rtv_title"
+                android:text="QQ蛋糕店"
+                android:textColor="@color/commonColor"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/triangle"/>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@id/lv_visit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="76dp"
+            android:divider="@color/lineColor"
+            android:dividerHeight="0.5dp"/>
+
+        <include
+            layout="@layout/layout_dialog_menu"/>
+
+    </FrameLayout>
+
+</LinearLayout>

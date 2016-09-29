@@ -2,10 +2,10 @@ package com.apec.crm.support.rest.interceptors;
 
 import android.content.Context;
 
-
 import com.apec.crm.utils.AppUtils;
 import com.apec.crm.utils.SPUtils;
 import com.apec.crm.utils.ScreenUtils;
+import com.apec.crm.utils.StringUtils;
 
 import java.io.IOException;
 
@@ -25,13 +25,26 @@ public class HeaderInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         Request originalRequest = chain.request();
-        Request request = originalRequest.newBuilder()
-                .header("_c", "android")
-                .header("IMEI", AppUtils.getDeviceId(mContext))
-                //.header("UA", getHeaderUserAgent())
-                .header("x-auth-token", (String) SPUtils.get(mContext, SPUtils.SESSION_ID, "0"))
-                .method(originalRequest.method(), originalRequest.body())
-                .build();
+        String token = (String) SPUtils.get(mContext, SPUtils.TOKEN, "");
+        Request request;
+
+        if (StringUtils.isNullOrEmpty(token)) {
+            request = originalRequest.newBuilder()
+                    .header("_c", "android")
+                    .header("IMEI", AppUtils.getDeviceId(mContext))
+                    .header("UA", getHeaderUserAgent())
+                    .method(originalRequest.method(), originalRequest.body())
+                    .build();
+        } else {
+            request = originalRequest.newBuilder()
+                    .header("_c", "android")
+                    .header("IMEI", AppUtils.getDeviceId(mContext))
+                    .header("UA", getHeaderUserAgent())
+                    .header("token", token)
+                    .method(originalRequest.method(), originalRequest.body())
+                    .build();
+        }
+
         return chain.proceed(request);
     }
 

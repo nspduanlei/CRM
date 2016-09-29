@@ -7,12 +7,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.utils.DensityUtils;
-
-import java.util.Random;
 
 /**
  * Created by duanlei on 16/9/13.
@@ -44,6 +41,11 @@ public class RoundTextView extends View {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundTextView);
         //mColor = a.getColor(R.styleable.RoundTextView_circle_color, Color.RED);
         mText = a.getString(R.styleable.RoundTextView_circle_text);
+
+        if (mText == null) {
+            mText = "";
+        }
+
         a.recycle();
 
         init();

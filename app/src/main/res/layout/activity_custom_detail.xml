@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/pageBgColor"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/top_bar_layout"/>
+
+    <ScrollView android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/plate_click_selector"
+                android:orientation="vertical"
+                android:padding="@dimen/common_margin">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/triangle"
+                    android:text="基本信息"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_title_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plate_margin_top"
+                android:background="@drawable/plate_click_selector"
+                android:orientation="vertical"
+                android:padding="@dimen/common_margin">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/triangle"
+                    android:text="其它信息"
+                    android:textColor="@color/colorBlack"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_title_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:text="客户名称: QQ蛋糕店"
+                    android:textColor="@color/commonColor"
+                    android:textSize="@dimen/common_font_size"/>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/plate_margin_top"
+                android:background="@color/colorWhite"
+                android:orientation="vertical"
+                android:padding="@dimen/common_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系人"
+                    android:textColor="@color/colorBlack"/>
+
+                <com.apec.crm.views.widget.NoScrollListView
+                    android:id="@+id/lv_contact_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/lineColor"
+                    android:dividerHeight="0.5dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/lineColor"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@drawable/plate_click_selector"
+                    android:drawableLeft="@drawable/add_contact"
+                    android:gravity="center_vertical"
+                    android:text=" 添加联系人"
+                    android:textColor="@color/colorBlack"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

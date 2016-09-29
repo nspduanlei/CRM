@@ -9,7 +9,6 @@
     <include
         layout="@layout/top_bar_layout"/>
 
-
     <com.amap.api.maps.MapView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/map"
@@ -20,15 +19,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
+        <include
+            layout="@layout/loading_layout"/>
         <ListView
             android:id="@+id/lv_poi"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-
-        <include
-            layout="@layout/loading_layout"/>
-
     </FrameLayout>
 
 </LinearLayout>

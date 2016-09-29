@@ -4,6 +4,7 @@ package com.apec.crm.injector.modules;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.support.rest.RestDataSource;
+import com.google.gson.Gson;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -46,5 +47,10 @@ public class AppModule {
     @Provides @Named("ui_thread")
     Scheduler provideUiThread() {
         return AndroidSchedulers.mainThread();
+    }
+
+    @Provides @Named("gson")
+    Gson provideGson() {
+        return new Gson();
     }
 }

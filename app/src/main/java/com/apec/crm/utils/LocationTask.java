@@ -11,16 +11,15 @@ import com.amap.api.location.AMapLocationListener;
  */
 public class LocationTask  {
 
-    Context mContext;
-    AMapLocationClient mLocationClient = null;
-    AMapLocationClientOption mLocationOption = null;
+    private Context mContext;
+    private AMapLocationClient mLocationClient = null;
+    private AMapLocationClientOption mLocationOption = null;
 
     public LocationTask(Context context) {
         mLocationClient = new AMapLocationClient(context);
         mLocationOption = new AMapLocationClientOption();
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setMockEnable(false);
-
         mContext = context;
     }
 
@@ -34,7 +33,6 @@ public class LocationTask  {
     public void startSingleLocate() {
         mLocationOption.setOnceLocation(true);
         mLocationOption.setOnceLocationLatest(false);
-
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
     }
@@ -44,7 +42,6 @@ public class LocationTask  {
      */
     public void startLocate() {
         mLocationOption.setInterval(1000);
-
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
     }

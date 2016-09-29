@@ -8,4 +8,10 @@
     <string name="filter_custom_title">筛选客户</string>
     <string name="search_custom_title">搜索客户</string>
     <string name="location_title">位置</string>
+    <string name="visit_custom_title">客户拜访</string>
+    <string name="add_visit_title">添加拜访</string>
+    <string name="custom_home">客户主页</string>
+    <string name="custom_detail_title">客户详细信息</string>
+    <string name="login_title">登录</string>
+    <string name="message_loading_more_characters">加载更多数据</string>
 </resources>
