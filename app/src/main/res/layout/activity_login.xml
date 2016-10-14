@@ -2,40 +2,80 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             android:background="@color/colorWhite"
              android:orientation="vertical">
-
-    <include
-        layout="@layout/top_bar_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorMain"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="CRM"
+            android:textColor="@color/colorBlack"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="你的专属客户关系顾问"
+            android:textColor="@color/commonColor"
+            android:textSize="16sp"/>
 
         <EditText
             android:id="@+id/et_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="用户名"/>
+            style="@style/LoginEditTextStyle"
+            android:layout_marginTop="45dp"
+            android:hint="用户名"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:nextFocusDown="@+id/et_password"/>
 
         <EditText
-            android:id="@+id/et_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:id="@id/et_password"
+            style="@style/LoginEditTextStyle"
+            android:layout_marginTop="15dp"
             android:hint="密码"
-            android:inputType="numberPassword"/>
+            android:imeOptions="actionDone"
+            android:inputType="numberPassword"
+            android:maxLines="1"/>
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="62dp"
             android:layout_gravity="center"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
-            android:text="登录"/>
+            android:background="@drawable/button_shape_bg"
+            android:text="登录"
+            android:textColor="@color/colorWhite"
+            android:textSize="19sp"/>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="20dp"
+        android:text="版权©深圳市中农网股份有限公司"
+        android:textColor="@color/color_2"
+        android:textSize="12sp"/>
+
+    <include
+        layout="@layout/loading_layout"/>
 
 </FrameLayout>

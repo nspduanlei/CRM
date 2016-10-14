@@ -1,14 +1,11 @@
 package com.apec.crm.utils;
 
-import android.annotation.SuppressLint;
 import android.util.Base64;
 import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -151,35 +148,6 @@ public class StringUtils {
                 md5StrBuff.append(Integer.toHexString(0xFF & aByteArray));
         }
         return md5StrBuff.toString();
-    }
-
-    /**
-     *
-     * 将秒数转化成指定格式的时间字符串
-     * MM月dd日 HH:mm
-     * yyyy-MM-dd
-     * @param time  秒数
-     * @param formatStr
-     * @return
-     */
-    @SuppressLint("SimpleDateFormat")
-    public static String getDataFormatStr(String time, String formatStr) {
-        Long ltime;
-        try{
-            ltime = Long.valueOf(time);
-        } catch (Exception e) {
-            return time;
-        }
-
-        if (ltime == 0) {
-            return "";
-        }
-        ltime = ltime * 1000;
-
-        Date d = new Date(ltime);
-        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
-        d.getTime();
-        return sdf.format(d);
     }
 
     private static final int NICKNAME_LEN = 14;

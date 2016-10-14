@@ -13,7 +13,6 @@ import com.apec.crm.views.activities.core.BaseActivity;
 /**
  * Created by duanlei on 16/9/27.
  */
-
 public class LaunchActivity extends BaseActivity {
     @Override
     protected void setUpContentView() {
@@ -29,7 +28,8 @@ public class LaunchActivity extends BaseActivity {
         decorView.setSystemUiVisibility(option);
 
         new Handler().postDelayed(() -> {
-
+//            Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
+//            startActivity(intent);
             if (StringUtils.isNullOrEmpty((String) SPUtils.get(this, SPUtils.TOKEN, ""))) {
                 Intent intent = new Intent(LaunchActivity.this, LoginActivity.class);
                 startActivity(intent);
@@ -37,7 +37,6 @@ public class LaunchActivity extends BaseActivity {
                 Intent intent = new Intent(LaunchActivity.this, MainActivity.class);
                 startActivity(intent);
             }
-
 
             this.finish();
         }, 2000);

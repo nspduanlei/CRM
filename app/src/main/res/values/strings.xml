@@ -1,6 +1,22 @@
 <resources>
     <string name="app_name">CRM</string>
 
+    <string name="year" translatable="false">年前</string>
+    <string name="month" translatable="false">月前</string>
+    <string name="day" translatable="false">天前</string>
+    <string name="hour" translatable="false">小时前</string>
+    <string name="min" translatable="false">分钟前</string>
+    <string name="sec" translatable="false">秒前</string>
+    <string name="justnow" translatable="false">刚刚</string>
+    <string name="yesterday" translatable="false">昨天</string>
+    <string name="the_day_before_yesterday" translatable="false">前天</string>
+    <string name="today" translatable="false">今天</string>
+    <string name="date_format" translatable="false">M月d日 HH:mm</string>
+    <string name="year_format" translatable="false">yyyy年 M月d日 HH:mm</string>
+
+    <string name="date_format_custom" translatable="false">yyyy.M.d</string>
+    <string name="date_format_work_place" translatable="false">yyyy年 M月</string>
+
     <string name="custom_title">客户</string>
     <string name="work_place_title">工作台</string>
     <string name="profile_title">我</string>
@@ -14,4 +30,10 @@
     <string name="custom_detail_title">客户详细信息</string>
     <string name="login_title">登录</string>
     <string name="message_loading_more_characters">加载更多数据</string>
+
+    <string name="custom_list_empty">还没有客户？赶紧添加吧！</string>
+    <string name="modify_password">修改密码</string>
+    <string name="user_info">用户信息</string>
+    <string name="custom_more_data">更多资料</string>
+    <string name="contact_title">联系人</string>
 </resources>

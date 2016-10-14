@@ -1,7 +1,7 @@
 package com.apec.crm.injector.modules;
 
 import com.apec.crm.domin.repository.GoodsRepository;
-import com.apec.crm.domin.useCase.user.GetVisitRecordUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitRecordUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
 

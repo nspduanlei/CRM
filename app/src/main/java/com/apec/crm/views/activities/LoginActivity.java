@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -34,21 +35,29 @@ public class LoginActivity extends BaseActivity implements LoginView {
     @BindView(R.id.et_password)
     EditText mEtPassword;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
+
     @Inject
     LoginPresenter mLoginPresenter;
 
     @Override
     protected void setUpContentView() {
-        setContentView(R.layout.activity_login, R.string.login_title);
+        setContentView(R.layout.activity_login, -1, MODE_NONE);
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
 
         //TODO  测试数据
-        mEtUserName.setText("15507586666");
+        mEtUserName.setText("15507588888");
         mEtPassword.setText("256");
 
+        //键盘右下角点击监听
+        mEtPassword.setOnEditorActionListener((v, actionId, event) -> {
+            onSubmitClicked(null);
+            return false;
+        });
     }
 
     @Override
@@ -67,7 +76,6 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @OnClick(R.id.btn_login)
     void onSubmitClicked(View view) {
-
         String userName = mEtUserName.getText().toString();
         String password = mEtPassword.getText().toString();
 
@@ -82,9 +90,8 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void onLoginSuccess(User user) {
-        SPUtils.put(this, SPUtils.USER_NAME, user.getRealName());
-        SPUtils.put(this, SPUtils.TOKEN, user.getToken());
-        SPUtils.put(this, SPUtils.USER_NO, user.getUserNo());
+
+        SPUtils.setUserInfo(this, user);
 
         T.showShort(this, "登录成功");
 
@@ -96,16 +103,17 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void showLoadingView() {
-
+        mLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoadingView() {
-
+        mLoading.setVisibility(View.GONE);
     }
 
     @Override
-    public void onError() {
+    public void onError(String errorCode, String errorMsg) {
 
     }
+
 }

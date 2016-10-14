@@ -7,6 +7,7 @@ package com.apec.crm.domin.entities;
 public class User {
     private String userNo;
     private String userName;
+    private String password;
 
     private String token;
 
@@ -17,7 +18,7 @@ public class User {
     private String depName;
 
     //职位名称
-    private String position;
+    private String positionName;
 
     //手机号码
     private String phoneNumber;
@@ -27,6 +28,18 @@ public class User {
 
     //邮箱地址
     private String email;
+
+    //用户头像
+    private String img;
+
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public String getToken() {
         return token;
@@ -68,12 +81,12 @@ public class User {
         this.depName = depName;
     }
 
-    public String getPosition() {
-        return position;
+    public String getPositionName() {
+        return positionName;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
     }
 
     public String getPhoneNumber() {
@@ -98,5 +111,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

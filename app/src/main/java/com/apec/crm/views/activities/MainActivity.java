@@ -1,7 +1,6 @@
 package com.apec.crm.views.activities;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -14,14 +13,13 @@ import com.apec.crm.views.fragments.ProfileFragment;
 import com.apec.crm.views.fragments.WorkPlaceFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 
 
-public class MainActivity extends BaseActivity implements BaseActivity.AddClickListener {
+public class MainActivity extends BaseActivity {
 
     @BindView(R.id.tl_main)
     CommonTabLayout mTlMain;
@@ -41,12 +39,9 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
-
-
     @Override
     protected void setUpContentView() {
-        setContentView(R.layout.activity_main, R.string.custom_title, BaseActivity.MODE_HOME);
-        setBtnImage(R.drawable.nav_add_drawable, this);
+        setContentView(R.layout.activity_main, -1, MODE_NONE);
     }
 
     @Override
@@ -70,30 +65,30 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
 
         mTlMain.setTabData(mTabEntities, this, R.id.fl_content, mFragments);
 
-        mTlMain.setOnTabSelectListener(new OnTabSelectListener() {
-            @Override
-            public void onTabSelect(int position) {
-
-                switch (position) {
-                    case 0:
-                        setUpTitle(R.string.custom_title);
-                        setBtnImage(R.drawable.nav_add_drawable, MainActivity.this);
-                        break;
-                    case 1:
-                        setUpTitle(R.string.work_place_title);
-                        hideBtnImage();
-                        break;
-                    case 2:
-                        setUpTitle(R.string.profile_title);
-                        hideBtnImage();
-                        break;
-                }
-            }
-
-            @Override
-            public void onTabReselect(int position) {
-            }
-        });
+//        mTlMain.setOnTabSelectListener(new OnTabSelectListener() {
+//            @Override
+//            public void onTabSelect(int position) {
+//
+//                switch (position) {
+//                    case 0:
+//                        setUpTitle(R.string.custom_title);
+//                        setBtnImage(R.drawable.nav_add_drawable, MainActivity.this);
+//                        break;
+//                    case 1:
+//                        setUpTitle(R.string.work_place_title);
+//                        hideBtnImage();
+//                        break;
+//                    case 2:
+//                        setUpTitle(R.string.profile_title);
+//                        hideBtnImage();
+//                        break;
+//                }
+//            }
+//
+//            @Override
+//            public void onTabReselect(int position) {
+//            }
+//        });
     }
 
 
@@ -105,15 +100,6 @@ public class MainActivity extends BaseActivity implements BaseActivity.AddClickL
     @Override
     protected void initPresenter() {
 
-    }
-
-    /**
-     * 添加客户
-     */
-    @Override
-    public void onAddClicked() {
-        Intent intent = new Intent(this, AddCustomActivity.class);
-        startActivity(intent);
     }
 
     @Override

@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/pageBgColor"
               android:orientation="vertical">
 
     <include
         layout="@layout/top_bar_layout"/>
 
-    <com.apec.collapsecalendar.CollapseCalendarView
-        android:id="@+id/calendar"
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        app:mcv_calendarMode="week"
+        app:mcv_selectionColor="@color/colorMain"
+        app:mcv_showOtherDates="all"
+        app:mcv_tileSize="30dp"/>
+
+    <Button
+        android:id="@+id/btn_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="切换"/>
 
     <FrameLayout
         android:layout_width="match_parent"

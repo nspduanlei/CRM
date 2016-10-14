@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite">
+
+    <include
+        layout="@layout/top_bar_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/top_bar_height"
+        android:orientation="vertical">
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:hint="请输入姓名"/>
+
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客户名称"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:layout_marginRight="15dp"
+                android:hint="请选择客户"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/triangle"/>
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="职位"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:hint="老板"/>
+
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系电话"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:hint="请输入联系电话"/>
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="座机"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:hint="请选择座机号码"/>
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:layout_marginRight="20dp"
+                android:hint="请选择类型"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/arrow_down"/>
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="年龄"
+                android:textColor="@color/colorFormTitle"
+                android:textSize="@dimen/common_font_size"/>
+
+            <EditText
+                style="@style/EditTextStyle"
+                android:layout_marginRight="20dp"
+                android:hint="请选择类型"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/arrow_down"/>
+        </FrameLayout>
+
+        <include
+            layout="@layout/layout_line"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

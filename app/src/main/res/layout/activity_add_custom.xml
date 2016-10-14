@@ -1,78 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:focusable="true"
-              android:focusableInTouchMode="true">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite"
+             android:focusable="true"
+             android:focusableInTouchMode="true">
 
     <include
         layout="@layout/top_bar_layout"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/top_bar_height">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
+                style="@style/FormFragmentStyle">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="客户名称"
-                    android:textColor="@color/titleColor"
+                    android:textColor="@color/colorFormTitle"
                     android:textSize="@dimen/common_font_size"/>
-
                 <EditText
                     style="@style/EditTextStyle"
                     android:hint="请输入客户名称"/>
             </FrameLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
+            <include
+                layout="@layout/layout_line"/>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
+                style="@style/FormFragmentStyle">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="客户类型"
-                    android:textColor="@color/titleColor"
+                    android:textColor="@color/colorFormTitle"
                     android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
                     android:src="@drawable/triangle"/>
+                <TextView
+                    android:id="@+id/editText"
+                    style="@style/EditTextStyle"
+                    android:layout_marginRight="15dp"
+                    android:hint="请选择类型"/>
             </FrameLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
+            <include
+                layout="@layout/layout_line"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/form_padding">
+                android:layout_marginLeft="@dimen/margin_left">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,11 +70,11 @@
                     android:layout_gravity="center_vertical"
                     android:paddingRight="20dp"
                     android:text="客户地址"
-                    android:textColor="@color/titleColor"
+                    android:textColor="@color/colorFormTitle"
                     android:textSize="@dimen/common_font_size"/>
 
                 <View
-                    android:layout_width="0.5dp"
+                    android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:background="@color/lineColor"/>
 
@@ -99,290 +89,100 @@
                         android:id="@+id/tv_address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="省/市/区"
-                        android:paddingBottom="@dimen/form_padding"
-                        android:paddingRight="@dimen/form_padding"
+                        android:drawableRight="@drawable/triangle"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="@dimen/margin_left"
                         android:paddingTop="@dimen/form_padding"
+                        android:text="省/市/区  "
                         android:textColor="@color/hintColor"
-                        android:textSize="@dimen/common_font_size"
-                        android:gravity="right"/>
+                        android:textSize="@dimen/common_font_size"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="1dp"
                         android:background="@color/lineColor"/>
 
                     <EditText
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:hint="街道"
-                        android:paddingBottom="@dimen/form_padding"
-                        android:paddingRight="@dimen/form_padding"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="@dimen/margin_left"
                         android:paddingTop="@dimen/form_padding"/>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
+                        android:layout_height="1dp"
                         android:background="@color/lineColor"/>
 
                     <TextView
                         android:id="@+id/tv_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="定位"
-                        android:paddingBottom="@dimen/form_padding"
-                        android:paddingRight="@dimen/form_padding"
+                        android:drawableRight="@drawable/icon_location"
+                        android:gravity="right"
+                        android:paddingBottom="5dp"
+                        android:paddingRight="@dimen/margin_left"
                         android:paddingTop="@dimen/form_padding"
+                        android:text="定位   "
                         android:textColor="@color/hintColor"
-                        android:textSize="@dimen/common_font_size"
-                        android:gravity="right"/>
+                        android:textSize="@dimen/common_font_size"/>
                 </LinearLayout>
             </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
+            <include
+                layout="@layout/layout_line"/>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
+                android:id="@+id/fl_more_data"
+                style="@style/FormTitleStyle"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="客户分类"
-                    android:textColor="@color/titleColor"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="更多资料"
+                    android:textColor="@color/colorMain"
                     android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon_more_data"/>
             </FrameLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户状态"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户来源"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="片区"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="车辆是否能进"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="营业时间"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="品类"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <EditText
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-            </FrameLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
-
+            <!--联系人-->
             <FrameLayout
                 android:id="@+id/fl_add_contact"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/form_padding">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/add_contact"
-                    android:layout_gravity="center_vertical"/>
-
+                style="@style/FormTitleStyle"
+                android:layout_marginTop="5dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="添加联系人"
-                    android:textColor="@color/titleColor"
-                    android:textSize="@dimen/common_font_size"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:text="联系人"
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/common_font_size"/>
             </FrameLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/lineColor"/>
 
             <com.apec.crm.views.widget.NoScrollListView
                 android:id="@+id/lv_contact_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_add_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="+ 添加联系人"
+                android:textColor="@color/colorMain"/>
         </LinearLayout>
-
     </ScrollView>
-
-
-</LinearLayout>
+</FrameLayout>

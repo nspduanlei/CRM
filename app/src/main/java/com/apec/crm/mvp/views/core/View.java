@@ -8,5 +8,5 @@ package com.apec.crm.mvp.views.core;
 public interface View {
     void showLoadingView();
     void hideLoadingView();
-    void onError();
+    void onError(String errorCode, String errorMsg);
 }

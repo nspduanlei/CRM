@@ -7,7 +7,12 @@ import android.widget.ListView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.domin.entities.MenuEntity;
 import com.apec.crm.views.activities.core.BaseActivity;
+import com.apec.crm.views.widget.listView.CommonAdapter;
+import com.apec.crm.views.widget.listView.MyViewHolder;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -15,7 +20,7 @@ import butterknife.OnClick;
 /**
  * Created by duanlei on 16/9/19.
  */
-public class CustomActivity extends BaseActivity implements BaseActivity.AddClickListener {
+public class CustomActivity extends BaseActivity {
 
     @BindView(R.id.lv_visit)
     ListView mLVVisit;
@@ -26,7 +31,13 @@ public class CustomActivity extends BaseActivity implements BaseActivity.AddClic
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom, R.string.custom_home);
-        setBtnImage(R.drawable.nav_more_drawable, this);
+        setBtnImage(R.drawable.nav_more_drawable, v -> {
+            if (mLVDialogMenu.getVisibility() == View.VISIBLE) {
+                mLVDialogMenu.setVisibility(View.GONE);
+            } else {
+                mLVDialogMenu.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -40,19 +51,20 @@ public class CustomActivity extends BaseActivity implements BaseActivity.AddClic
 //        }
 //
 //        mLVVisit.setAdapter(VisitAdapter.getAdapter(visitRecords, this));
-//
-//
-//        ArrayList<MenuEntity> menuEntities = new ArrayList<>();
-//        menuEntities.add(new MenuEntity(1, "添加拜访"));
-//        menuEntities.add(new MenuEntity(2, "退回公海"));
-//        menuEntities.add(new MenuEntity(3, "废弃"));
-//        mLVDialogMenu.setAdapter(new CommonAdapter<MenuEntity>(this, menuEntities,
-//                R.layout.item_dialog_menu) {
-//            @Override
-//            public void convert(MyViewHolder holder, MenuEntity menuEntity) {
-//                holder.setText(R.id.tv_menu_name, menuEntity.getName());
-//            }
-//        });
+
+
+
+        ArrayList<MenuEntity> menuEntities = new ArrayList<>();
+        menuEntities.add(new MenuEntity(1, "添加拜访"));
+        menuEntities.add(new MenuEntity(2, "退回公海"));
+        menuEntities.add(new MenuEntity(3, "废弃"));
+        mLVDialogMenu.setAdapter(new CommonAdapter<MenuEntity>(this, menuEntities,
+                R.layout.item_dialog_menu) {
+            @Override
+            public void convert(MyViewHolder holder, MenuEntity menuEntity) {
+                holder.setText(R.id.tv_menu_name, menuEntity.getName());
+            }
+        });
     }
 
     @Override
@@ -63,15 +75,6 @@ public class CustomActivity extends BaseActivity implements BaseActivity.AddClic
     @Override
     protected void initPresenter() {
 
-    }
-
-    @Override
-    public void onAddClicked() {
-        if (mLVDialogMenu.getVisibility() == View.VISIBLE) {
-            mLVDialogMenu.setVisibility(View.GONE);
-        } else {
-            mLVDialogMenu.setVisibility(View.VISIBLE);
-        }
     }
 
     @OnClick(R.id.rl_custom)

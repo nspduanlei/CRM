@@ -5,32 +5,28 @@ package com.apec.crm.domin.entities;
  * 客户
  */
 public class Custom {
-    private int id;
-    private String name;
+
+    private String id;
+    private String customerName;
     private String time;
-    private String address;
+    private String customerAddress;
+    private String icon;
 
-    public Custom(int id, String name, String time, String address) {
-        this.id = id;
-        this.name = name;
-        this.time = time;
-        this.address = address;
-    }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getTime() {
@@ -41,11 +37,19 @@ public class Custom {
         this.time = time;
     }
 
-    public String getAddress() {
-        return address;
+    public String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setCustomerAddress(String customerAddress) {
+        this.customerAddress = customerAddress;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

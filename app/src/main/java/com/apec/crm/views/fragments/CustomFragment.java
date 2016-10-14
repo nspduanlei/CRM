@@ -2,21 +2,14 @@ package com.apec.crm.views.fragments;
 
 import android.content.Intent;
 import android.view.View;
-import android.widget.ListView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
-import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.views.activities.CustomActivity;
+import com.apec.crm.views.activities.AddCustomActivity;
 import com.apec.crm.views.activities.FilterCustomActivity;
 import com.apec.crm.views.activities.SearchCustomActivity;
 import com.apec.crm.views.fragments.core.BaseFragment;
-import com.apec.crm.views.widget.listView.CommonAdapter;
-import com.apec.crm.views.widget.listView.MyViewHolder;
 
-import java.util.ArrayList;
-
-import butterknife.BindView;
 import butterknife.OnClick;
 
 /**
@@ -24,35 +17,13 @@ import butterknife.OnClick;
  */
 public class CustomFragment extends BaseFragment {
 
-    @BindView(R.id.lv_custom_list)
-    ListView mCustomList;
-
-
     @Override
     protected void initUI(View view) {
 
-        ArrayList<Custom> data = new ArrayList<>();
-        data.add(new Custom(1, "蛋糕店", "2016-6-20", "深圳市富强路发发发发嘎嘎嘎嘎322663号"));
-        data.add(new Custom(1, "蛋糕店", "2016-6-20", "深圳市富强路发发发发嘎嘎嘎嘎322663号"));
-        data.add(new Custom(1, "蛋糕店", "2016-6-20", "深圳市富强路发发发发嘎嘎嘎嘎322663号"));
-        data.add(new Custom(1, "蛋糕店", "2016-6-20", "深圳市富强路发发发发嘎嘎嘎嘎322663号"));
-        data.add(new Custom(1, "蛋糕店", "2016-6-20", "深圳市富强路发发发发嘎嘎嘎嘎322663号"));
-
-        mCustomList.setAdapter(new CommonAdapter<Custom>(getActivity(), data, R.layout.item_custom_list) {
-            @Override
-            public void convert(MyViewHolder holder, Custom custom) {
-                holder.setTextRound(R.id.tv_head, custom.getName().substring(0, 2))
-                        .setText(R.id.tv_custom_name, custom.getName())
-                        .setText(R.id.tv_address, custom.getAddress())
-                        .setText(R.id.tv_time, custom.getTime());
-            }
-        });
-
-        mCustomList.setOnItemClickListener((adapterView, view1, i, l) -> {
-            Intent intent = new Intent(getActivity(), CustomActivity.class);
-            intent.putExtra("id", data.get(i).getId());
-            startActivity(intent);
-        });
+        CustomListFragment customListFragment = new CustomListFragment();
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, customListFragment, "customList")
+                .commit();
     }
 
     @Override
@@ -86,5 +57,14 @@ public class CustomFragment extends BaseFragment {
     void onFlashClicked(View view) {
         FlashDialogFragment flashDialogFragment = new FlashDialogFragment();
         flashDialogFragment.show(getActivity().getFragmentManager(), "FlashDialogFragment");
+    }
+
+    /**
+     * 添加客户
+     */
+    @OnClick(R.id.tv_add_custom)
+    void onAddClicked() {
+        Intent intent = new Intent(getActivity(), AddCustomActivity.class);
+        startActivity(intent);
     }
 }

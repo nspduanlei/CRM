@@ -1,7 +1,5 @@
 package com.apec.crm.views.fragments;
 
-import android.view.View;
-
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.domin.entities.VisitRecord;
@@ -25,11 +23,6 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     @Inject
     VisitRecordPresenter mVisitRecordPresenter;
-
-    @Override
-    protected void initUI(View view) {
-
-    }
 
     @Override
     protected CommonRecyclerAdapter getAdapter() {
@@ -76,7 +69,12 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
     }
 
     @Override
-    public void onLoadMoreSuccess() {
+    public void onLoadMoreSuccess(ArrayList data) {
+        onLoadMoreComplete(data);
+    }
+
+    @Override
+    public void onNoMore() {
 
     }
 
@@ -91,7 +89,7 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
     }
 
     @Override
-    public void onError() {
+    public void onError(String errorCode, String errorMsg) {
 
     }
 }

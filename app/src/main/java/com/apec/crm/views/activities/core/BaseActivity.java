@@ -23,12 +23,13 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected TextView mToolbarTitle;
     protected Toolbar mToolbar;
     protected ImageView mToolbarBtn;
+    protected TextView mMenuText;
 
-    protected AddClickListener mOnClickListener;
-
-    public interface AddClickListener {
-        void onAddClicked();
-    }
+//    protected AddClickListener mOnClickListener;
+//
+//    public interface AddClickListener {
+//        void onAddClicked();
+//    }
 
     //有返回按钮
     public static final int MODE_BACK = 0;
@@ -88,12 +89,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
             mToolbar = (Toolbar) findViewById(R.id.toolbar);
             mToolbarTitle = (TextView) findViewById(R.id.toolbar_title);
             mToolbarBtn = (ImageView) findViewById(R.id.toolbar_image);
+            mMenuText = (TextView) findViewById(R.id.tv_menu);
 
             if (mode == MODE_BACK) {
-                mToolbar.setNavigationIcon(R.drawable.navigation_bar_back_drawable);
+                mToolbar.setNavigationIcon(R.drawable.arrow_back);
             }
 
             mToolbar.setNavigationOnClickListener(view -> onNavigationBtnClicked());
+
             setUpTitle(titleResId);
             setUpMenu(menuId);
         }
@@ -110,11 +113,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
      * @param resId
      * @param onClickListener
      */
-    protected void setBtnImage(int resId, AddClickListener onClickListener) {
-        mOnClickListener = onClickListener;
+    protected void setBtnImage(int resId, View.OnClickListener onClickListener) {
         mToolbarBtn.setVisibility(View.VISIBLE);
         mToolbarBtn.setImageResource(resId);
-        mToolbarBtn.setOnClickListener(view -> mOnClickListener.onAddClicked());
+        mToolbarBtn.setOnClickListener(onClickListener);
     }
 
     protected void hideBtnImage() {
@@ -138,5 +140,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         return false;
+    }
+
+    protected void setMenuText(String title, View.OnClickListener onClickListener) {
+        mMenuText.setText(title);
+        mMenuText.setOnClickListener(onClickListener);
     }
 }

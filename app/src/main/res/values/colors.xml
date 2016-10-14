@@ -4,10 +4,8 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#FF4081</color>
 
-
-
     <!--标题颜色-->
-    <color name="titleColor">#525252</color>
+    <color name="titleColor">#3c4350</color>
 
     <!--非要点内容颜色-->
     <color name="notImColor">#929292</color>
@@ -19,16 +17,16 @@
     <color name="clickTextColor">#507db0</color>
 
     <!--普通内容颜色-->
-    <color name="commonColor">#636363</color>
+    <color name="commonColor">#8e8e93</color>
 
-    <!--名称,按钮 颜色-->
-    <color name="nameColor">#f56200</color>
+    <!--名称-->
+    <color name="nameColor">@color/colorBlack</color>
 
     <!--页面 背景色-->
-    <color name="pageBgColor">#f2f2f2</color>
+    <color name="pageBgColor">#f0f0f0</color>
 
     <!--标题内容 背景色-->
-    <color name="titleBgColor">#ffffff</color>
+    <color name="titleBgColor">#F4F5F6</color>
 
     <!-- 一般内容 背景色-->
     <color name="commonBgColor">#f7f7f7</color>
@@ -36,18 +34,31 @@
     <!--线条颜色-->
     <color name="lineColor">#e6e6e6</color>
 
+    <!--控件背景色-->
+    <color name="colorBgButton">@color/colorMain</color>
+    <color name="colorBgEdit">#f7f7f8</color>
+
+    <!--基本色-->
+    <color name="colorMain">#3CDD93</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorBlack">#000000</color>
-
     <color name="colorBlackT">#aaffffff</color>
-
     <color name="colorTransparent">#00000000</color>
+
 
     <!--下拉刷新-->
     <color name="swipe_color_1">#00ff00</color>
     <color name="swipe_color_2">#ccff00</color>
     <color name="swipe_color_3">#ffff00</color>
     <color name="swipe_color_4">#ee00ee</color>
+
+    <!--other-->
+    <color name="color_1">#bcc5c9</color>
+    <color name="color_2">#a6a6a6</color>
+    <color name="color_3">#162435</color>
+    <color name="color_4">#cdced2</color>
+    <color name="color_5">#585c64</color>
+    <color name="colorFormTitle">#B4B7BB</color>
 
 
 </resources>

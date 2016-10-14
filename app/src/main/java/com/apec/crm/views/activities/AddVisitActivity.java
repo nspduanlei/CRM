@@ -9,11 +9,13 @@ import com.apec.crm.views.activities.core.BaseActivity;
 /**
  * Created by duanlei on 16/9/19.
  */
-public class AddVisitActivity extends BaseActivity implements BaseActivity.AddClickListener {
+public class AddVisitActivity extends BaseActivity {
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_visit, R.string.add_visit_title);
-        setBtnImage(R.drawable.nav_finish_drawable, this);
+        setBtnImage(R.drawable.nav_finish_drawable, v -> {
+            //TODO 添加拜访
+        });
     }
 
     @Override
@@ -28,11 +30,6 @@ public class AddVisitActivity extends BaseActivity implements BaseActivity.AddCl
 
     @Override
     protected void initPresenter() {
-
-    }
-
-    @Override
-    public void onAddClicked() {
 
     }
 }

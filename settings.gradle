@@ -1,1 +1,1 @@
-include ':app', ':collapsecalendar'
+include ':app', ':calendarview'

@@ -5,6 +5,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.widget.TextView;
 
+import com.apec.crm.views.widget.RoundTextView;
+
 import butterknife.ButterKnife;
 
 /**
@@ -70,6 +72,11 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
+    public MyViewHolder setTextRound(int viewId, int color) {
+        RoundTextView tv = getView(viewId);
+        tv.setColor(color);
+        return this;
+    }
 
 
 

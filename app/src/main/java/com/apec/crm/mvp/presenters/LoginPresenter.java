@@ -68,7 +68,6 @@ public class LoginPresenter implements Presenter {
 
     private void manageError(Throwable throwable) {
         mLoginView.hideLoadingView();
-
     }
 
     private void onLoginReceived(Result<User> result) {

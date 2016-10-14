@@ -3,6 +3,8 @@ package com.apec.crm.support.rest;
 import android.content.Context;
 
 import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
@@ -20,6 +22,7 @@ import javax.inject.Inject;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -28,9 +31,7 @@ import rx.Observable;
 public class RestDataSource implements GoodsRepository {
 
     private static final long HTTP_RESPONSE_DISK_CACHE_MAX_SIZE = 10 * 1024 * 1024;
-
     public static String END_POINT = Constants.TEST_BASE_URL;
-
     private final CrmApi mCrmApi;
 
     @Inject
@@ -70,12 +71,22 @@ public class RestDataSource implements GoodsRepository {
 
 
     @Override
-    public Observable<Result<User>> login(String userName, String password) {
-        return mCrmApi.login(userName, password);
+    public Observable<Result<User>> login(RequestBody jsonString) {
+        return mCrmApi.login(jsonString);
     }
 
     @Override
-    public Observable<Result<ListPage<VisitRecord>>> getVisitRecord(String jsonString) {
+    public Observable<Result<ListPage<VisitRecord>>> getVisitRecord(RequestBody jsonString) {
         return mCrmApi.getVisitRecord(jsonString);
+    }
+
+    @Override
+    public Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody) {
+        return mCrmApi.getCustomList(requestBody);
+    }
+
+    @Override
+    public Observable<Result<MyCount>> getMyCount() {
+        return mCrmApi.getMyCount();
     }
 }

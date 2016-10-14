@@ -2,26 +2,49 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/common_margin">
+                android:layout_height="wrap_content">
 
-    <com.apec.crm.views.widget.RoundTextView
-        android:id="@+id/tv_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginRight="10dp"
-        app:circle_color="#ff2222"
-        app:circle_text="蛋糕"/>
+    <!--<com.apec.crm.views.widget.RoundTextView-->
+    <!--android:id="@+id/tv_head"-->
+    <!--android:layout_width="50dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_marginLeft="@dimen/common_margin"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_marginTop="@dimen/common_margin"-->
+    <!--app:circle_color="#ff2222"-->
+    <!--app:circle_text="蛋糕"/>-->
+
+    <FrameLayout
+        android:id="@+id/fl_head"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="20dp">
+
+        <com.apec.crm.views.widget.RoundTextView
+            android:id="@+id/roundTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/tv_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="QQ"
+            android:textColor="@color/colorWhite"/>
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tv_custom_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_toRightOf="@id/tv_head"
+        android:layout_alignTop="@id/fl_head"
+        android:layout_toRightOf="@id/fl_head"
         android:text="fafafafasf"
         android:textColor="@color/nameColor"
-        android:textSize="@dimen/name_font_size"/>
+        android:textSize="16sp"/>
 
     <TextView
         android:id="@+id/tv_address"
@@ -29,20 +52,29 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_custom_name"
         android:layout_marginTop="5dp"
-        android:layout_toRightOf="@id/tv_head"
+        android:layout_toRightOf="@id/fl_head"
         android:text="fasfasfasfafasfasfsfasffadfasfas"
         android:textColor="@color/commonColor"
-        android:textSize="@dimen/common_font_size"/>
-
+        android:textSize="12sp"/>
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/fl_head"
+        android:layout_marginRight="@dimen/margin_left"
         android:layout_marginTop="5dp"
         android:text="dfafasf"
         android:textColor="@color/hintColor"
         android:textSize="@dimen/tip_font_size"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_address"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/fl_head"
+        android:background="@color/lineColor"/>
 
 </RelativeLayout>

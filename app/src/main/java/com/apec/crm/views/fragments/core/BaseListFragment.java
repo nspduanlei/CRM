@@ -1,7 +1,6 @@
 package com.apec.crm.views.fragments.core;
 
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -35,27 +36,33 @@ public abstract class BaseListFragment extends Fragment {
     @BindView(android.R.id.list)
     RecyclerView mRecyclerView;
 
-    private CommonRecyclerAdapter mListAdapter;
+    @BindView(R.id.tv_empty)
+    TextView mEmptyDes;
 
-    //底部提示
-    private Snackbar mLoadingMoreSnack;
+    @BindView(R.id.ll_empty)
+    LinearLayout mEmptyView;
+
+    private CommonRecyclerAdapter mListAdapter;
 
     //默认允许下拉刷新
     private boolean mIsRefresh = true;
+
+    private boolean isLoading;
+
+//    private int visibleThreshold = 20;
+//    private int lastVisibleItem, totalItemCount;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         ButterKnife.bind(this, view);
-        initUI(view);
         MyApplication myApplication = (MyApplication) getActivity().getApplication();
         initDependencyInjector(myApplication);
         initPresenter();
         return view;
     }
 
-    protected abstract void initUI(View view);
     protected abstract CommonRecyclerAdapter getAdapter();
     protected abstract void initDependencyInjector(MyApplication myApplication);
     protected abstract void initPresenter();
@@ -83,7 +90,6 @@ public abstract class BaseListFragment extends Fragment {
         mListAdapter = getAdapter();
         mRecyclerView.setAdapter(mListAdapter);
 
-
         mSwipeRefreshLayout.setRefreshing(true);
         initiateRefresh();
 
@@ -101,16 +107,21 @@ public abstract class BaseListFragment extends Fragment {
     }
 
     public void onRefreshComplete(List result) {
-        Log.i(LOG_TAG, "onRefreshComplete");
         mListAdapter.clear();
         mListAdapter.addAll(result);
         mSwipeRefreshLayout.setRefreshing(false);
+        isLoading = false;
     }
 
     public void onLoadMoreComplete(List result) {
-        mListAdapter.clear();
+        mListAdapter.removeLoading();
         mListAdapter.addAll(result);
-        hideLoadingMore();
+        isLoading = false;
+    }
+
+    public void onDataEnd() {
+        mListAdapter.removeLoading();
+        isLoading = false;
     }
 
     private RecyclerView.OnScrollListener mOnScrollListener = new RecyclerView.OnScrollListener() {
@@ -121,32 +132,44 @@ public abstract class BaseListFragment extends Fragment {
             int totalItemsCount     = layoutManager.getItemCount();
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
 
-            if (visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
+            if (!isLoading && visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
                 //加载更多
                 onListEndReached();
+                isLoading = true;
             }
         }
+
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+//            totalItemCount = layoutManager.getItemCount();
+//            lastVisibleItem = layoutManager.findLastVisibleItemPosition();
+//
+//            L.e("totalItemCount：" + totalItemCount + "， lastVisibleItem：" + lastVisibleItem);
+//
+//            if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+//                onListEndReached();
+//                isLoading = true;
+//            }
+//        }
     };
 
     private void onListEndReached() {
-        if (mLoadingMoreSnack != null && mLoadingMoreSnack.isShown()) {
-            return;
-        }
         Log.i(LOG_TAG, "loadMore");
-        showLoadingMore();
-
+        mListAdapter.insertedLoading();
         loadOtherPage();
     }
 
-    public void showLoadingMore() {
-        mLoadingMoreSnack = Snackbar.make(mRecyclerView,
-                getString(R.string.message_loading_more_characters), Snackbar.LENGTH_INDEFINITE);
-        mLoadingMoreSnack.show();
+    protected void setEmptyText(String msg) {
+        mEmptyDes.setText(msg);
     }
 
-    public void hideLoadingMore() {
-        if (mLoadingMoreSnack != null)
-            mLoadingMoreSnack.dismiss();
+    protected void showEmpty() {
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
+    protected void hideEmpty() {
+        mEmptyView.setVisibility(View.GONE);
+    }
 }

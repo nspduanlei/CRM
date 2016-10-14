@@ -3,6 +3,8 @@ package com.apec.crm.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.apec.crm.domin.entities.User;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -16,8 +18,8 @@ public class SPUtils {
     //是否第一次进入app
     public static final String IS_FIRST_LAUNCH = "is_first_launch";
 
-    //用户登录token
-    public static final String TOKEN = "token";
+    //是否有新的系统消息
+    public static final String HAS_NEW_MESSAGE = "has_new_message";
 
     //用户选择不更新版本
     public static final String IS_NOT_UPDATE_VERSION = "select_not_update_version";
@@ -34,8 +36,17 @@ public class SPUtils {
     //用户编号
     public static final String USER_NO = "user_no";
 
-    //是否有新的系统消息
-    public static final String HAS_NEW_MESSAGE = "has_new_message";
+    //用户登录token
+    public static final String TOKEN = "token";
+
+    //职位名称
+    public static final String POSITION_NAME = "position_name";
+
+    //部门名称
+    public static final String DEP_NAME = "dep_name";
+
+    //用户头像
+    public static final String USER_IMG = "user_img";
 
     /**
      * =================================================================
@@ -158,6 +169,25 @@ public class SPUtils {
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
         return sp.getAll();
+    }
+
+    public static void setUserInfo(Context context, User user) {
+        SPUtils.put(context, SPUtils.USER_NAME, user.getRealName());
+        SPUtils.put(context, SPUtils.TOKEN, user.getToken());
+        SPUtils.put(context, SPUtils.USER_NO, user.getUserNo());
+        SPUtils.put(context, SPUtils.POSITION_NAME, user.getPositionName());
+        SPUtils.put(context, SPUtils.DEP_NAME, user.getDepName());
+        SPUtils.put(context, SPUtils.USER_IMG, user.getImg());
+    }
+
+    public static User getUserInfo(Context context) {
+        User user = new User();
+        user.setUserName((String) SPUtils.get(context, SPUtils.USER_NAME, ""));
+        user.setPositionName((String) SPUtils.get(context, SPUtils.POSITION_NAME, ""));
+        user.setDepName((String) SPUtils.get(context, SPUtils.DEP_NAME, ""));
+        user.setImg((String) SPUtils.get(context, SPUtils.USER_IMG, ""));
+
+        return user;
     }
 
 

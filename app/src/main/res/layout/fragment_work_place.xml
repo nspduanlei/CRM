@@ -1,99 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/pageBgColor"
-              android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tv_month"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:padding="@dimen/common_margin"
-        android:text="2016年9月"
-        android:textColor="@color/commonColor"/>
-
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@color/colorWhite"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/common_margin">
-
+        android:layout_height="match_parent"
+        android:background="@color/pageBgColor"
+        android:orientation="vertical">
         <LinearLayout
-            android:id="@+id/ll_custom"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
+            android:background="@color/colorWhite"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/tv_num_custom"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_month"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="30"
-                android:textColor="@color/nameColor"
-                android:textSize="50sp"
-                android:textStyle="bold"/>
-
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginTop="14dp"
+                android:text="2016年9月"
+                android:textColor="@color/commonColor"/>
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="新增客户"/>
+                android:id="@+id/tv_title"
+                style="@style/MainTitleStyle"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="8dp"
+                android:text="工作台"/>
+            <include
+                layout="@layout/layout_line"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_order"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_num_order"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="30"
-                android:textColor="@color/nameColor"
-                android:textSize="50sp"
-                android:textStyle="bold"/>
+            android:background="@color/colorWhite"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/common_margin">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/ll_custom"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="订单数量"/>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_icon_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/icon_custom_num"/>
+
+                <TextView
+                    android:id="@+id/tv_num_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/iv_icon_custom"
+                    android:text="30"
+                    android:textColor="@color/color_3"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/tv_txt_add_custom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_num_custom"
+                    android:layout_toRightOf="@id/iv_icon_custom"
+                    android:text="新增客户"
+                    android:textColor="@color/commonColor"
+                    android:textSize="10sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_txt_add_custom"
+                    android:src="@drawable/img_custom_num"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ll_order"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_icon_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/icon_order_num"/>
+
+                <TextView
+                    android:id="@+id/tv_num_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/iv_icon_order"
+                    android:text="30"
+                    android:textColor="@color/color_3"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/tv_txt_add_order"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_num_order"
+                    android:layout_toRightOf="@id/iv_icon_order"
+                    android:text="新增客户"
+                    android:textColor="@color/commonColor"
+                    android:textSize="10sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/tv_txt_add_order"
+                    android:src="@drawable/img_order_num"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ll_visit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_icon_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/icon_visit_num"/>
+
+                <TextView
+                    android:id="@+id/tv_num_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/iv_icon_visit"
+                    android:text="30"
+                    android:textColor="@color/color_3"
+                    android:textSize="24sp"/>
+
+                <TextView
+                    android:id="@+id/tv_txt_add_visit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_num_visit"
+                    android:layout_toRightOf="@id/iv_icon_visit"
+                    android:text="新增客户"
+                    android:textColor="@color/commonColor"
+                    android:textSize="10sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_below="@id/tv_txt_add_visit"
+                    android:src="@drawable/img_visit_num"/>
+            </RelativeLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_visit"
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/tv_num_visit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="30"
-                android:textColor="@color/nameColor"
-                android:textSize="50sp"
-                android:textStyle="bold"/>
+            android:layout_marginTop="10dp"
+            android:background="@color/colorWhite"
+            android:paddingBottom="10dp"
+            android:paddingLeft="@dimen/margin_left"
+            android:paddingTop="15dp"
+            android:text="服务"
+            android:textColor="@color/colorBlack"
+            android:textSize="19sp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="拜访次数"/>
-        </LinearLayout>
+        <GridView
+            android:id="@+id/gv_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:numColumns="3"
+            android:padding="@dimen/common_margin"/>
+
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/gv_menu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        android:numColumns="3"/>
+    <include
+        layout="@layout/loading_layout"/>
 
-</LinearLayout>
+</FrameLayout>

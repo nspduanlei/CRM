@@ -1,6 +1,6 @@
 package com.apec.crm.injector.components;
 
-import com.apec.crm.domin.useCase.user.GetVisitRecordUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitRecordUseCase;
 import com.apec.crm.injector.Activity;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.injector.modules.VisitModule;

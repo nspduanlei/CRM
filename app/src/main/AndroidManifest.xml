@@ -72,6 +72,19 @@
                   android:screenOrientation="portrait"/>
 
         <activity android:name=".views.activities.LoginActivity"
+                  android:launchMode="singleTask"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".views.activities.ModifyPasswordActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".views.activities.UserInfoActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".views.activities.CustomMoreDataActivity"
+                  android:screenOrientation="portrait"/>
+
+        <activity android:name=".views.activities.ContactActivity"
                   android:screenOrientation="portrait"/>
 
         <!--umeng-->

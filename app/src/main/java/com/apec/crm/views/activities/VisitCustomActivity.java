@@ -2,65 +2,55 @@ package com.apec.crm.views.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
-import com.apec.collapsecalendar.CollapseCalendarView;
-import com.apec.collapsecalendar.manager.CalendarManager;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
+import com.apec.crm.utils.ScreenUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.VisitRecordFragment;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-import org.joda.time.LocalDate;
+import java.util.Date;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by duanlei on 16/9/19.
  */
-public class VisitCustomActivity extends BaseActivity implements
-        BaseActivity.AddClickListener {
+public class VisitCustomActivity extends BaseActivity {
 
-    @BindView(R.id.calendar)
-    CollapseCalendarView mCalendarView;
-
-//    @BindView(R.id.lv_visit)
-//    ListView mLVVisit;
+    @BindView(R.id.calendarView)
+    MaterialCalendarView mCalendarView;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_visit_custom, R.string.visit_custom_title);
-        setBtnImage(R.drawable.nav_add_drawable, this);
+
+        setBtnImage(R.drawable.nav_add_drawable, v -> {
+            Intent intent = new Intent(this, AddVisitActivity.class);
+            startActivityForResult(intent, Constants.REQUEST_CODE_ADD_VISIT);
+        });
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-        CalendarManager manager = new CalendarManager(LocalDate.now(),
-                CalendarManager.State.WEEK, LocalDate.now().minusYears(1), LocalDate.now());
+        mCalendarView.setTileWidth(ScreenUtils.getScreenWidth(this)/7);
+        mCalendarView.state().edit().setMaximumDate(new Date()).commit();
+        mCalendarView.setSelectedDate(new Date());
 
-        mCalendarView.init(manager);
-        mCalendarView.setListener(date ->
-                T.showShort(VisitCustomActivity.this, date.getYear() + "-" + date.getMonthOfYear()
-                    + "-" + date.getDayOfMonth()));
-
-//        ArrayList<VisitRecord> visitRecords = new ArrayList<>();
-//
-//        for (int i = 0; i < 10; i++) {
-//            visitRecords.add(new VisitRecord("宏发食品厂", "2016-9-19",
-//                    "fasfaffafaaffsfaffasfsfasfasfafasfa", "李某某", null, "深圳市福田区发发发嘎嘎嘎嘎嘎嘎"));
-//        }
-//
-//        mLVVisit.setAdapter(VisitAdapter.getAdapter(visitRecords, this));
-
+        mCalendarView.setOnDateChangedListener((widget, date, selected) -> {
+            T.showShort(this, date.toString());
+        });
 
         VisitRecordFragment visitRecordFragment = new VisitRecordFragment();
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, visitRecordFragment, "visitRecord")
                 .commit();
-
-
     }
 
     @Override
@@ -73,9 +63,13 @@ public class VisitCustomActivity extends BaseActivity implements
 
     }
 
-    @Override
-    public void onAddClicked() {
-        Intent intent = new Intent(this, AddVisitActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_ADD_VISIT);
+
+    @OnClick(R.id.btn_switch)
+    void onSwitchClicked(View v) {
+        if (mCalendarView.state().calendarMode == CalendarMode.WEEKS) {
+            mCalendarView.state().edit().setCalendarDisplayMode(CalendarMode.MONTHS).commit();
+        } else {
+            mCalendarView.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit();
+        }
     }
 }

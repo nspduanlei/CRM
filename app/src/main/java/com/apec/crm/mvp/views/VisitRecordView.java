@@ -1,16 +1,12 @@
 package com.apec.crm.mvp.views;
 
-import com.apec.crm.mvp.views.core.View;
-
-import java.util.ArrayList;
+import com.apec.crm.mvp.views.core.ListView;
 
 /**
  * Created by duanlei on 16/9/27.
  */
 
-public interface VisitRecordView extends View {
+public interface VisitRecordView extends ListView {
 
-    void onRefreshSuccess(ArrayList data);
-    void onLoadMoreSuccess();
 
 }

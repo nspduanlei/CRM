@@ -7,16 +7,16 @@ import java.util.ArrayList;
  */
 
 public class ListPage<T> {
-    private ArrayList<T> content;
+    private ArrayList<T> rows;
     private int totalElements;
     private int totalPages;
 
-    public ArrayList<T> getContent() {
-        return content;
+    public ArrayList<T> getRows() {
+        return rows;
     }
 
-    public void setContent(ArrayList<T> content) {
-        this.content = content;
+    public void setRows(ArrayList<T> rows) {
+        this.rows = rows;
     }
 
     public int getTotalElements() {
