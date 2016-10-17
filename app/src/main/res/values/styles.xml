@@ -23,7 +23,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/top_bar_height</item>
         <item name="android:minHeight">@dimen/top_bar_height</item>
-        <item name="android:background">@drawable/navigationbar_background</item>
+        <!--<item name="android:background">@drawable/navigationbar_background</item>-->
+        <item name="android:background">@color/colorWhite</item>
         <item name="android:theme">@style/PopWindowStyle</item>
     </style>
 
@@ -84,6 +85,17 @@
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_marginRight">@dimen/margin_left</item>
         <item name="android:background">@color/titleBgColor</item>
+    </style>
+
+    <!--地区选择-->
+    <style name="btn_style_radio_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@null</item>
+        <item name="android:textColor">@color/radio_selector_text_1</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/radio_selector_1</item>
     </style>
 
 </resources>

@@ -1537,7 +1537,9 @@ public class MaterialCalendarView extends ViewGroup {
         } else if (specWidthMode == MeasureSpec.EXACTLY) {
             if (specHeightMode == MeasureSpec.EXACTLY) {
                 //Pick the larger of the two explicit sizes
-                measureTileSize = Math.max(desiredTileWidth, desiredTileHeight);
+                //TODO duanlei
+                //measureTileSize = Math.max(desiredTileWidth, desiredTileHeight);
+                measureTileSize = desiredTileHeight;
             } else {
                 //Be the width size the user wants
                 measureTileSize = desiredTileWidth;

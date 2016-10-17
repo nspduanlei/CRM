@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="所在地区"/>
+
+            <ImageButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="48dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@null"
+                android:onClick="cancel"
+                android:scaleType="center"
+                android:src="@drawable/cancel"/>
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lineColor"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_province"
+                style="@style/btn_style_radio_1"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:id="@+id/rb_city"
+                style="@style/btn_style_radio_1"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:id="@+id/rb_area"
+                style="@style/btn_style_radio_1"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:id="@+id/rb_road"
+                style="@style/btn_style_radio_1"
+                android:visibility="gone"/>
+
+            <RadioButton
+                android:id="@+id/rb_please_select"
+                style="@style/btn_style_radio_1"
+                android:checked="true"
+                android:text="请选择"/>
+        </RadioGroup>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/lineColor"/>
+
+        <ListView
+            android:id="@+id/lv_areas"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/loading_layout"/>
+</FrameLayout>

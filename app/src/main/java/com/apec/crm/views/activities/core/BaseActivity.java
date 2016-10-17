@@ -25,12 +25,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     protected ImageView mToolbarBtn;
     protected TextView mMenuText;
 
-//    protected AddClickListener mOnClickListener;
-//
-//    public interface AddClickListener {
-//        void onAddClicked();
-//    }
-
     //有返回按钮
     public static final int MODE_BACK = 0;
     //不显示toolber

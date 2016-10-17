@@ -87,6 +87,9 @@
         <activity android:name=".views.activities.ContactActivity"
                   android:screenOrientation="portrait"/>
 
+        <activity android:name=".views.activities.SelectListActivity"
+                  android:screenOrientation="portrait"/>
+
         <!--umeng-->
         <meta-data android:name="UMENG_APPKEY" android:value="5719c65267e58e7b5d002445"/>
         <meta-data android:name="UMENG_CHANNEL" android:value="${TD_CHANNEL_ID}"/>

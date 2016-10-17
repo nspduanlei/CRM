@@ -1,6 +1,7 @@
 package com.apec.crm.views.widget.listView;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -173,5 +174,11 @@ public class MyViewHolder {
     public int getVisibility(int tv_content) {
         View view = getView(tv_content);
         return view.getVisibility();
+    }
+
+    public MyViewHolder setTextColor(int viewId, String color) {
+        TextView tv = getView(viewId);
+        tv.setTextColor(Color.parseColor(color));
+        return this;
     }
 }

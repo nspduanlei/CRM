@@ -67,6 +67,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     @Override
     protected void loadFirstPage() {
         mCustomListPresenter.refresh();
+        setListCount(String.format("共%s个客户", mCustomListPresenter.getTotalNumber()));
     }
 
     @Override

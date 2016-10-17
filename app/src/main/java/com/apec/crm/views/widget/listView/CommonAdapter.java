@@ -15,25 +15,25 @@ import java.util.List;
 public abstract class CommonAdapter<T> extends BaseAdapter {
 
     protected Context mContext;
-    protected List<T> mDatas;
+    protected List<T> mData;
     protected LayoutInflater mInflater;
     protected int mLayoutId;
 
     public CommonAdapter(Context context, List<T> datas, int layoutId) {
         mContext = context;
-        mDatas = datas;
+        mData = datas;
         mInflater = LayoutInflater.from(context);
         mLayoutId = layoutId;
     }
 
     @Override
     public int getCount() {
-        return mDatas.size();
+        return mData.size();
     }
 
     @Override
     public T getItem(int position) {
-        return mDatas.get(position);
+        return mData.get(position);
     }
 
     @Override
@@ -53,4 +53,13 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     }
 
     public abstract void convert(MyViewHolder holder, T t);
+
+    public void clear() {
+        mData.clear();
+    }
+
+    public void addAll(List<T> data) {
+        mData.addAll(data);
+        notifyDataSetChanged();
+    }
 }

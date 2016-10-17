@@ -25,4 +25,13 @@ public class Constants {
     public static final int REQUEST_CODE_SEARCH_MAP = 1003; //搜索地址
     public static final int REQUEST_CODE_ADD_CONTACT = 1004; //添加客户
     public static final int REQUEST_CODE_MORE_DATA = 1005; //更多资料
+
+    /**
+     * 客户属性类型
+     */
+    public static final String CUSTOMER_TYPE = "customerType"; //客户类型
+    public static final String CUSTOMER_CLASS = "class"; //销售品类
+    public static final String CUSTOMER_LEVEL = "customerLevel"; //客户分类
+
 }
+

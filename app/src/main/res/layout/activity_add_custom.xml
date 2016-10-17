@@ -27,6 +27,7 @@
                     android:textColor="@color/colorFormTitle"
                     android:textSize="@dimen/common_font_size"/>
                 <EditText
+                    android:id="@+id/et_custom_name"
                     style="@style/EditTextStyle"
                     android:hint="请输入客户名称"/>
             </FrameLayout>
@@ -35,6 +36,7 @@
                 layout="@layout/layout_line"/>
 
             <FrameLayout
+                android:id="@+id/fl_custom_type"
                 style="@style/FormFragmentStyle">
 
                 <TextView
@@ -49,8 +51,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
                     android:src="@drawable/triangle"/>
+
                 <TextView
-                    android:id="@+id/editText"
+                    android:id="@+id/tv_custom_type"
                     style="@style/EditTextStyle"
                     android:layout_marginRight="15dp"
                     android:hint="请选择类型"/>
@@ -86,7 +89,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/tv_address"
+                        android:id="@+id/tv_address_pca"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableRight="@drawable/triangle"
@@ -104,6 +107,7 @@
                         android:background="@color/lineColor"/>
 
                     <EditText
+                        android:id="@+id/et_road"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:hint="街道"

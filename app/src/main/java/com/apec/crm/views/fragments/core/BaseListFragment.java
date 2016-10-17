@@ -42,6 +42,9 @@ public abstract class BaseListFragment extends Fragment {
     @BindView(R.id.ll_empty)
     LinearLayout mEmptyView;
 
+    @BindView(R.id.tv_text_list)
+    TextView mListCount;
+
     private CommonRecyclerAdapter mListAdapter;
 
     //默认允许下拉刷新
@@ -159,6 +162,10 @@ public abstract class BaseListFragment extends Fragment {
         Log.i(LOG_TAG, "loadMore");
         mListAdapter.insertedLoading();
         loadOtherPage();
+    }
+
+    protected void setListCount(String s) {
+        mListCount.setText(s);
     }
 
     protected void setEmptyText(String msg) {

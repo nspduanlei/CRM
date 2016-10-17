@@ -104,5 +104,9 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
         }
     }
 
+    public int getTotalNumber() {
+        return totalNumber;
+    }
+
 
 }

@@ -1,11 +1,14 @@
 package com.apec.crm.support.rest;
 
 
+import com.apec.crm.domin.entities.Area;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MyCount;
+import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
+import com.apec.crm.domin.entities.func.ListResult;
 import com.apec.crm.domin.entities.func.Result;
 
 import okhttp3.RequestBody;
@@ -38,5 +41,24 @@ public interface CrmApi {
      */
     @POST("CUSTOMER-SERVICE/searchCustomer.apec")
     Observable<Result<ListPage<Custom>>> getCustomList(@Body RequestBody body);
+
+
+    /**
+     * 选择行政区域
+     */
+    @POST("CUSTOMER-SERVICE/getArear.apec")
+    Observable<ListResult<Area>> getArea(@Body RequestBody body);
+
+    /**
+     * 添加客户
+     */
+    @POST("CUSTOMER-SERVICE/addCustomer.apec")
+    Observable<Result> addCustom(@Body RequestBody body);
+
+    /**
+     * 获取供选择的客户属性
+     */
+    @POST("CUSTOMER-SERVICE/getAllSysparam.apec")
+    Observable<ListResult<SelectContent>> getCustomAttr(@Body RequestBody body);
 
 }

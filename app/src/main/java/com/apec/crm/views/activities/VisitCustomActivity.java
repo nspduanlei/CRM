@@ -39,6 +39,7 @@ public class VisitCustomActivity extends BaseActivity {
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+
         mCalendarView.setTileWidth(ScreenUtils.getScreenWidth(this)/7);
         mCalendarView.state().edit().setMaximumDate(new Date()).commit();
         mCalendarView.setSelectedDate(new Date());
@@ -62,7 +63,6 @@ public class VisitCustomActivity extends BaseActivity {
     protected void initPresenter() {
 
     }
-
 
     @OnClick(R.id.btn_switch)
     void onSwitchClicked(View v) {

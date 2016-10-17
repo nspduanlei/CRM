@@ -3,11 +3,14 @@ package com.apec.crm.support.rest;
 import android.content.Context;
 
 import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.Area;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MyCount;
+import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
+import com.apec.crm.domin.entities.func.ListResult;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.support.rest.interceptors.CacheInterceptor;
@@ -88,5 +91,20 @@ public class RestDataSource implements GoodsRepository {
     @Override
     public Observable<Result<MyCount>> getMyCount() {
         return mCrmApi.getMyCount();
+    }
+
+    @Override
+    public Observable<ListResult<Area>> getArea(RequestBody requestBody) {
+        return mCrmApi.getArea(requestBody);
+    }
+
+    @Override
+    public Observable<ListResult<SelectContent>> getCustomAttribute(RequestBody requestBody) {
+        return mCrmApi.getCustomAttr(requestBody);
+    }
+
+    @Override
+    public Observable<Result> addCustom(RequestBody requestBody) {
+        return mCrmApi.addCustom(requestBody);
     }
 }
