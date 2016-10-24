@@ -6,6 +6,7 @@ import com.apec.crm.injector.components.AppComponent;
 import com.apec.crm.injector.components.DaggerAppComponent;
 import com.apec.crm.injector.modules.AppModule;
 import com.facebook.stetho.Stetho;
+import com.squareup.leakcanary.LeakCanary;
 
 /**
  * Created by duanlei on 16/9/9.
@@ -26,6 +27,8 @@ public class MyApplication extends Application {
         initializeInjector();
         initializeDebug();
         sInstance = this;
+
+        LeakCanary.install(this);
     }
 
 

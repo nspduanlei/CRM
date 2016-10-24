@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/pageBgColor"
+              android:background="@color/colorWhite"
               android:orientation="vertical">
 
     <include
@@ -13,152 +13,269 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/plate_click_selector"
-                android:orientation="vertical"
-                android:padding="@dimen/common_margin">
+
+            <FrameLayout
+                android:id="@+id/fl_base_data"
+                style="@style/FormTitleStyle"
+                android:layout_marginTop="10dp">
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/triangle"
+                    android:layout_gravity="center_vertical"
                     android:text="基本信息"
-                    android:textColor="@color/colorBlack"/>
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/common_font_size"/>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon_more_data"/>
+            </FrameLayout>
+
+
+            <FrameLayout
+                style="@style/fl_style_show">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_title_top"
-                    android:text="客户名称: QQ蛋糕店"
+                    android:text="客户名称"
                     android:textColor="@color/commonColor"
                     android:textSize="@dimen/common_font_size"/>
+                <TextView
+                    android:id="@+id/tv_custom_name"
+                    style="@style/tv_style_show"
+                    android:text="test"/>
+            </FrameLayout>
 
+            <FrameLayout
+                style="@style/fl_style_show">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
+                    android:text="客户类型"
                     android:textColor="@color/commonColor"
                     android:textSize="@dimen/common_font_size"/>
+                <TextView
+                    android:id="@+id/tv_custom_type"
+                    style="@style/tv_style_show"
+                    android:text="test"/>
+            </FrameLayout>
 
+            <FrameLayout
+                style="@style/fl_style_show">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
+                    android:text="地址"
                     android:textColor="@color/commonColor"
                     android:textSize="@dimen/common_font_size"/>
+                <TextView
+                    android:id="@+id/tv_custom_address"
+                    style="@style/tv_style_show"
+                    android:text="test"/>
+            </FrameLayout>
 
+            <FrameLayout
+                style="@style/fl_style_show">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
+                    android:text="定位"
                     android:textColor="@color/commonColor"
                     android:textSize="@dimen/common_font_size"/>
+                <TextView
+                    android:id="@+id/tv_custom_location"
+                    style="@style/tv_style_show"
+                    android:text="test"/>
+            </FrameLayout>
 
+
+            <FrameLayout
+                android:id="@+id/fl_more_data"
+                style="@style/FormTitleStyle"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
+                    android:layout_gravity="center_vertical"
+                    android:text="更多信息"
+                    android:textColor="@color/colorMain"
                     android:textSize="@dimen/common_font_size"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/icon_more_data"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_more_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客户分类"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_class"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客户状态"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_state"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客户来源"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_source"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="片区"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_area"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="车辆是否能进"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_car"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="营业时间"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_time"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="营业时间"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_cate"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="所属人"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_belong"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
+
+                <FrameLayout
+                    style="@style/fl_style_show">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="创建时间"
+                        android:textColor="@color/commonColor"
+                        android:textSize="@dimen/common_font_size"/>
+                    <TextView
+                        android:id="@+id/tv_custom_create"
+                        style="@style/tv_style_show"
+                        android:text="test"/>
+                </FrameLayout>
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/plate_margin_top"
-                android:background="@drawable/plate_click_selector"
-                android:orientation="vertical"
-                android:padding="@dimen/common_margin">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/triangle"
-                    android:text="其它信息"
-                    android:textColor="@color/colorBlack"/>
-
+            <FrameLayout
+                style="@style/FormTitleStyle"
+                android:layout_marginTop="10dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_title_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/text_margin_top"
-                    android:text="客户名称: QQ蛋糕店"
-                    android:textColor="@color/commonColor"
-                    android:textSize="@dimen/common_font_size"/>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/plate_margin_top"
-                android:background="@color/colorWhite"
-                android:orientation="vertical"
-                android:padding="@dimen/common_margin">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="联系人"
-                    android:textColor="@color/colorBlack"/>
+                    android:textColor="@color/colorMain"
+                    android:textSize="@dimen/common_font_size"/>
+            </FrameLayout>
 
-                <com.apec.crm.views.widget.NoScrollListView
-                    android:id="@+id/lv_contact_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@color/lineColor"
-                    android:dividerHeight="0.5dp"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@color/lineColor"/>
+            <com.apec.crm.views.widget.NoScrollListView
+                android:id="@+id/lv_contact_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/lineColor"
+                android:dividerHeight="0.5dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:background="@drawable/plate_click_selector"
-                    android:drawableLeft="@drawable/add_contact"
-                    android:gravity="center_vertical"
-                    android:text=" 添加联系人"
-                    android:textColor="@color/colorBlack"/>
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/tv_add_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="+ 添加联系人"
+                android:textColor="@color/button_text_click"/>
 
         </LinearLayout>
     </ScrollView>

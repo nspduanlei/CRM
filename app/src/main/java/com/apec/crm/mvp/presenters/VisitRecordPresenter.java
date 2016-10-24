@@ -1,7 +1,7 @@
 package com.apec.crm.mvp.presenters;
 
 
-import com.apec.crm.domin.entities.RecordFilter;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
@@ -54,11 +54,11 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doRefresh() {
-        RecordFilter recordFilter = new RecordFilter();
-        recordFilter.setStartDate("2016-09-14");
-        recordFilter.setEndDate("2016-09-27");
+        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
+        visitRecordFilter.setStartDate("2016-09-14");
+        visitRecordFilter.setEndDate("2016-09-27");
 
-        mGetVisitRecordUseCase.setData(recordFilter);
+        mGetVisitRecordUseCase.setData(visitRecordFilter);
         mGetVisitRecordUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
 

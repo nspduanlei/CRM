@@ -18,10 +18,11 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_custom_level"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择客户分类"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -43,10 +44,11 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_custom_state"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择客户状态"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -68,7 +70,8 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_custom_source"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
             android:hint="请选择类型"/>
@@ -93,10 +96,11 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_area"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择片区"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -109,6 +113,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_car"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -118,22 +123,24 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_car"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择是或否"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:src="@drawable/triangle"/>
+            android:src="@drawable/arrow_down"/>
     </FrameLayout>
 
     <include
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_business"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -143,16 +150,17 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_buss_time"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择营业时间"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:src="@drawable/triangle"/>
+            android:src="@drawable/arrow_down"/>
     </FrameLayout>
 
     <include
@@ -168,10 +176,11 @@
             android:textColor="@color/colorFormTitle"
             android:textSize="@dimen/common_font_size"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_class"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:hint="请选择销售品类"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -180,9 +189,6 @@
             android:src="@drawable/triangle"/>
     </FrameLayout>
 
-
     <include
         layout="@layout/layout_line"/>
-
-
 </LinearLayout>

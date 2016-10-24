@@ -2,6 +2,7 @@ package com.apec.crm.support.rest;
 
 
 import com.apec.crm.domin.entities.Area;
+import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.SelectContent;
@@ -29,6 +30,12 @@ public interface CrmApi {
      */
     @POST("sysparam-service/getMyCount.apec")
     Observable<Result<MyCount>> getMyCount();
+
+    /**
+     * 获取用户信息
+     */
+    @POST("userAppInterface-service/getUserInfo.apec")
+    Observable<Result<User>> getUserInfo();
 
     /**
      * 获取拜访记录
@@ -60,5 +67,11 @@ public interface CrmApi {
      */
     @POST("CUSTOMER-SERVICE/getAllSysparam.apec")
     Observable<ListResult<SelectContent>> getCustomAttr(@Body RequestBody body);
+
+    /**
+     * 获取客户联系人
+     */
+    @POST("CUSTOMER-SERVICE/searchContact.apec")
+    Observable<ListResult<Contact>> getContacts(@Body RequestBody body);
 
 }

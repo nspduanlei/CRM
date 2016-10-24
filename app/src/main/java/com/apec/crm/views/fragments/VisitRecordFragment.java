@@ -18,7 +18,6 @@ import javax.inject.Inject;
 /**
  * Created by duanlei on 16/9/28.
  */
-
 public class VisitRecordFragment extends BaseListFragment implements VisitRecordView {
 
     @Inject
@@ -26,6 +25,8 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     @Override
     protected CommonRecyclerAdapter getAdapter() {
+        //隐藏头部
+        hideHead();
 
         CommonRecyclerAdapter adapter = new CommonRecyclerAdapter<VisitRecord>(getActivity(),
                 R.layout.item_visit_record,
@@ -55,7 +56,14 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     @Override
     protected void loadFirstPage() {
-        mVisitRecordPresenter.refresh();
+        //TODO test
+        ArrayList<VisitRecord> visitRecords = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            visitRecords.add(new VisitRecord());
+        }
+        onRefreshComplete(visitRecords);
+
+        //mVisitRecordPresenter.refresh();
     }
 
     @Override

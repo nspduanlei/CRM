@@ -1,47 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/common_margin"
-android:background="@color/colorWhite">
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/visit_item_bg"
+                android:padding="12dp">
+
 
     <TextView
         android:id="@+id/tv_custom_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="QQ蛋糕店"
+        android:layout_alignParentRight="true"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:maxWidth="150dp"
+        android:text="QQ蛋糕店affasfafafaaafafafafa"
         android:textColor="@color/titleColor"
-        android:textStyle="bold"/>
+        android:textSize="30sp"/>
 
     <TextView
-        android:id="@+id/tv_visit_time"
+        android:id="@+id/tv_visit_des"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_custom_name"
-        android:text="2016-6-20"
-        android:textColor="@color/notImColor"/>
+        android:layout_marginRight="5dp"
+        android:layout_toLeftOf="@id/tv_custom_name"
+        android:ellipsize="end"
+        android:lines="3"
+        android:text="嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的"
+        android:textColor="@color/titleColor"/>
 
     <TextView
         android:id="@+id/tv_contact_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_custom_name"
+        android:layout_marginTop="5dp"
         android:text="李某某"
-        android:textColor="@color/commonColor"/>
+        android:textColor="@color/color_6"
+        android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/tv_visit_des"
+        android:id="@+id/tv_visit_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_visit_time"
-        android:text="嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的"
-        android:textColor="@color/commonColor"/>
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tv_contact_name"
+        android:layout_marginTop="3dp"
+        android:text="今天，11:25 AM"
+        android:textColor="@color/color_6"
+        android:textSize="12sp"/>
+
+    <LinearLayout
+        android:id="@+id/ll_visit_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_visit_des"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:layout_width="93dp"
+            android:layout_height="60dp"
+            android:background="@color/colorMain"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="9dp"
+            android:background="@color/colorMain"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="32dp"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="9dp"
+            android:background="@color/colorMain"/>
+
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_visit_des"
+        android:layout_below="@id/ll_visit_img"
+        android:layout_marginTop="6dp"
         android:text="深圳市福田区发撒嘎嘎好地方哈的哈哈哈哈"
         android:textColor="@color/notImColor"
         android:textSize="@dimen/common_font_size"/>

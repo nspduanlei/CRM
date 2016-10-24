@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 
 import java.util.List;
 
@@ -18,6 +19,30 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
     protected List<T> mData;
     protected LayoutInflater mInflater;
     protected int mLayoutId;
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener<T> {
+        void onItemClick(T data);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener<T> onItemClickListener) {
+        mOnItemClickListener = onItemClickListener;
+    }
+
+
+    public CommonAdapter(Context context, List<T> datas, int layoutId, ListView listView) {
+        mContext = context;
+        mData = datas;
+        mInflater = LayoutInflater.from(context);
+        mLayoutId = layoutId;
+
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(mData.get(position));
+            }
+        });
+    }
 
     public CommonAdapter(Context context, List<T> datas, int layoutId) {
         mContext = context;
@@ -62,4 +87,8 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
         mData.addAll(data);
         notifyDataSetChanged();
     }
+
+
+
+
 }

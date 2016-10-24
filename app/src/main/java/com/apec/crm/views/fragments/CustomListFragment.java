@@ -13,6 +13,7 @@ import com.apec.crm.mvp.views.CustomListView;
 import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.T;
+import com.apec.crm.views.activities.CustomActivity;
 import com.apec.crm.views.activities.LoginActivity;
 import com.apec.crm.views.fragments.core.BaseListFragment;
 import com.apec.crm.views.widget.recyclerView.CommonRecyclerAdapter;
@@ -39,14 +40,22 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
             @Override
             public void convert(MyViewHolder holder, Custom custom, int position) {
 
-                holder.setTextRound(R.id.roundTextView, MyUtils.getRandomColor())
-                        .setText(R.id.tv_head, custom.getCustomerName().substring(0, 2))
+                holder.setTextRound(R.id.roundTextView, MyUtils.getColor(custom.getIcon()))
                         .setText(R.id.tv_custom_name, custom.getCustomerName())
                         .setText(R.id.tv_address, custom.getCustomerAddress())
                         .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
                                 getString(R.string.date_format_custom)));
+
+                MyUtils.setHeadText(holder.getView(R.id.tv_head), custom.getCustomerName());
+
+                holder.setOnItemClickListener(v -> {
+                    Intent intent = new Intent(getActivity(), CustomActivity.class);
+                    intent.putExtra("custom", custom);
+                    getActivity().startActivity(intent);
+                });
             }
         };
+
         return adapter;
     }
 
@@ -67,7 +76,6 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     @Override
     protected void loadFirstPage() {
         mCustomListPresenter.refresh();
-        setListCount(String.format("共%s个客户", mCustomListPresenter.getTotalNumber()));
     }
 
     @Override
@@ -84,6 +92,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
             hideEmpty();
         }
 
+        setListCount(String.format("共%s个客户", mCustomListPresenter.getTotalNumber()));
         onRefreshComplete(data);
     }
 

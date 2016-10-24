@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_body"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="gone">
+    <!--菜单-->
+    <ListView
+        android:id="@+id/lv_dialog_menu"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginRight="84dp"
+        android:layout_marginTop="@dimen/top_bar_height_e"
+        android:background="@drawable/public_dropdown_bg"/>
+</FrameLayout>

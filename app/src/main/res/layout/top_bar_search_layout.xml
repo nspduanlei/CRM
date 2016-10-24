@@ -20,7 +20,7 @@
                 android:id="@id/et_content"
                 android:layout_width="match_parent"
                 android:layout_height="28dp"
-                android:background="@drawable/search_navigationbar_textfield_background"
+                android:background="@drawable/edit_shape_bg"
                 android:gravity="center_vertical"
                 android:hint="输入关键字搜索"
                 android:imeOptions="actionSearch"

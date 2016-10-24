@@ -51,10 +51,9 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         mConvertView = view;
         mViews = new SparseArray<>();
         ButterKnife.bind(this, view);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        view.setOnClickListener(v -> {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onItemClick(v);
             }
         });
     }

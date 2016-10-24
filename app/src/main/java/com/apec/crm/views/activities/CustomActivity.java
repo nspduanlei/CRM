@@ -3,12 +3,18 @@ package com.apec.crm.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.utils.MyUtils;
 import com.apec.crm.views.activities.core.BaseActivity;
+import com.apec.crm.views.fragments.VisitRecordFragment;
+import com.apec.crm.views.widget.RoundTextView;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
 
@@ -22,38 +28,55 @@ import butterknife.OnClick;
  */
 public class CustomActivity extends BaseActivity {
 
-    @BindView(R.id.lv_visit)
-    ListView mLVVisit;
-
     @BindView(R.id.lv_dialog_menu)
     ListView mLVDialogMenu;
+
+    Custom mCustom;
+
+    @BindView(R.id.tv_custom_name)
+    TextView mTvCustomName;
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    @BindView(R.id.roundTextView)
+    RoundTextView mRoundTextView;
+    @BindView(R.id.tv_head)
+    TextView mTvHead;
+
+    @BindView(R.id.fl_body)
+    FrameLayout mFlMenu;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom, R.string.custom_home);
+
         setBtnImage(R.drawable.nav_more_drawable, v -> {
-            if (mLVDialogMenu.getVisibility() == View.VISIBLE) {
-                mLVDialogMenu.setVisibility(View.GONE);
+            if (mFlMenu.getVisibility() == View.VISIBLE) {
+                mFlMenu.setVisibility(View.GONE);
             } else {
-                mLVDialogMenu.setVisibility(View.VISIBLE);
+                mFlMenu.setVisibility(View.VISIBLE);
             }
         });
+
+        VisitRecordFragment visitRecordFragment = new VisitRecordFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, visitRecordFragment, "visitList")
+                .commit();
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+        mCustom = getIntent().getParcelableExtra("custom");
+        mRoundTextView.setColor(MyUtils.getColor(mCustom.getIcon()));
 
-//        ArrayList<VisitRecord> visitRecords = new ArrayList<>();
-//
-//        for (int i = 0; i < 10; i++) {
-//            visitRecords.add(new VisitRecord("宏发食品厂", "2016-9-19",
-//                    "fasfaffafaaffsfaffasfsfasfasfafasfa", "李某某", null, "深圳市福田区发发发嘎嘎嘎嘎嘎嘎"));
-//        }
-//
-//        mLVVisit.setAdapter(VisitAdapter.getAdapter(visitRecords, this));
+        MyUtils.setHeadText(mTvHead, mCustom.getCustomerName());
 
+        mTvCustomName.setText(mCustom.getCustomerName());
+        mTvAddress.setText(mCustom.getCustomerAddress());
 
+        initMenu();
+    }
 
+    private void initMenu() {
         ArrayList<MenuEntity> menuEntities = new ArrayList<>();
         menuEntities.add(new MenuEntity(1, "添加拜访"));
         menuEntities.add(new MenuEntity(2, "退回公海"));
@@ -64,6 +87,10 @@ public class CustomActivity extends BaseActivity {
             public void convert(MyViewHolder holder, MenuEntity menuEntity) {
                 holder.setText(R.id.tv_menu_name, menuEntity.getName());
             }
+        });
+
+        mLVDialogMenu.setOnItemClickListener((parent, view, position, id) -> {
+
         });
     }
 
@@ -81,5 +108,18 @@ public class CustomActivity extends BaseActivity {
     void OnPlateCustomClicked(View view) {
         Intent intent = new Intent(this, CustomDetailActivity.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.btn_add_visit)
+    void OnAddVisitClicked(View view) {
+        Intent intent = new Intent(this, AddVisitActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.fl_body)
+    void OnBodyClicked(View view) {
+        if (mFlMenu.getVisibility() == View.VISIBLE) {
+            mFlMenu.setVisibility(View.GONE);
+        }
     }
 }

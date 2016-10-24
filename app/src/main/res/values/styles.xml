@@ -73,8 +73,8 @@
     <style name="FormFragmentStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/margin_left</item>
-        <item name="android:layout_marginRight">@dimen/margin_left</item>
+        <item name="android:paddingLeft">@dimen/margin_left</item>
+        <item name="android:paddingRight">@dimen/margin_left</item>
         <item name="android:paddingBottom">5dp</item>
         <item name="android:paddingTop">20dp</item>
     </style>
@@ -85,6 +85,7 @@
         <item name="android:layout_height">30dp</item>
         <item name="android:layout_marginRight">@dimen/margin_left</item>
         <item name="android:background">@color/titleBgColor</item>
+        <item name="android:paddingLeft">@dimen/margin_left</item>
     </style>
 
     <!--地区选择-->
@@ -98,4 +99,32 @@
         <item name="android:background">@drawable/radio_selector_1</item>
     </style>
 
+    <!--button 样式-->
+    <style name="btn_style_1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginLeft">@dimen/margin_left</item>
+        <item name="android:layout_marginRight">@dimen/margin_left</item>
+        <item name="android:background">@drawable/button_bg_1</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <!--显示客户资料-->
+    <style name="fl_style_show">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/margin_left</item>
+        <item name="android:paddingRight">@dimen/margin_left</item>
+        <item name="android:paddingTop">6dp</item>
+    </style>
+    <style name="tv_style_show">
+        <item name="android:layout_width">200dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:textColor">@color/commonColor</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:textSize">@dimen/common_font_size</item>
+        <item name="android:ellipsize">end</item>
+    </style>
 </resources>

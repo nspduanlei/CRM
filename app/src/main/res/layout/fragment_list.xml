@@ -16,6 +16,7 @@
         android:textColor="@color/colorBlack"/>
 
     <include
+        android:id="@+id/line"
         layout="@layout/layout_line"/>
 
     <FrameLayout

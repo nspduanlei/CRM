@@ -1,8 +1,9 @@
 package com.apec.crm.mvp.presenters;
 
-import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.func.ListResult;
+import com.apec.crm.domin.useCase.custom.GetContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.SelectListView;
@@ -17,12 +18,15 @@ import javax.inject.Inject;
 public class SelectListPresenter implements Presenter {
 
     GetCustomAttributeUseCase mGetCustomAttributeUseCase;
+    GetContactUseCase mGetContactUseCase;
 
     SelectListView mSelectListView;
 
     @Inject
-    public SelectListPresenter(GetCustomAttributeUseCase getCustomAttributeUseCase) {
+    public SelectListPresenter(GetCustomAttributeUseCase getCustomAttributeUseCase,
+                               GetContactUseCase getContactUseCase) {
         mGetCustomAttributeUseCase = getCustomAttributeUseCase;
+        mGetContactUseCase = getContactUseCase;
     }
 
     @Override
@@ -53,10 +57,10 @@ public class SelectListPresenter implements Presenter {
     /**
      * 获取客户类型选择项
      */
-    public void getCustomTypeList() {
+    public void getCustomTypeList(String type) {
         mSelectListView.showLoadingView();
 
-        mGetCustomAttributeUseCase.setData(Constants.CUSTOMER_TYPE);
+        mGetCustomAttributeUseCase.setData(type);
         mGetCustomAttributeUseCase.execute()
                 .subscribe(this::onGetDataReceived, this::manageError);
     }
@@ -67,8 +71,22 @@ public class SelectListPresenter implements Presenter {
     }
 
     private void onGetDataReceived(ListResult<SelectContent> selectContentListResult) {
+        mSelectListView.hideLoadingView();
+
         if (selectContentListResult.isSucceed()) {
             mSelectListView.onGetListSuccess(selectContentListResult.getData());
         }
+    }
+
+    public void getContacts(String customId) {
+        mSelectListView.hideLoadingView();
+
+        mGetContactUseCase.setData(customId);
+        mGetContactUseCase.execute().subscribe(this::onGetContactReceived, this::manageError);
+
+    }
+
+    private void onGetContactReceived(ListResult<Contact> contactListResult) {
+
     }
 }

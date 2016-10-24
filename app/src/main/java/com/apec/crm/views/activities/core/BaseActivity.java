@@ -35,12 +35,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         MyApplication myApplication = (MyApplication) getApplication();
         initDependencyInjector(myApplication);
         setUpContentView();
-        initUi(savedInstanceState);
+
         initPresenter();
+        initUi(savedInstanceState);
     }
 
     //设置布局，在里面调用setContentView方法
@@ -102,6 +102,12 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         }
     }
 
+    protected void setUpTitle(String title) {
+        if (mToolbarTitle != null) {
+            mToolbarTitle.setText(title);
+        }
+    }
+
     /**
      * 设置右侧图片
      * @param resId
@@ -137,6 +143,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
     }
 
     protected void setMenuText(String title, View.OnClickListener onClickListener) {
+        mMenuText.setVisibility(View.VISIBLE);
         mMenuText.setText(title);
         mMenuText.setOnClickListener(onClickListener);
     }

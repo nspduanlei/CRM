@@ -352,10 +352,15 @@ public class SelectCityUtil implements OnClickListener {
     private void dismiss() {
         dialog.dismiss();
 
-        mSelectArea.selectCityFinish(
-                new Address(rbProvince.getText().toString(),
-                    rbCity.getText().toString(),
-                    rbArea.getText().toString(), selProvince, selCity, selArea));
+        Address address = new Address();
+        address.setProvinceName(rbProvince.getText().toString());
+        address.setCityName(rbCity.getText().toString());
+        address.setAreaName(rbArea.getText().toString());
+        address.setProviceId(String.valueOf(selProvince));
+        address.setCityId(String.valueOf(selCity));
+        address.setAreaId(String.valueOf(selArea));
+
+        mSelectArea.selectCityFinish(address);
     }
 
     public void showDialog() {

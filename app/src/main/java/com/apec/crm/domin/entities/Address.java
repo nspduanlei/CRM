@@ -6,58 +6,22 @@ package com.apec.crm.domin.entities;
 
 public class Address {
 
-    private String provinceName;
-    private String cityName;
+    private String areaId;
     private String areaName;
-    private int provinceId;
-    private int selCityId;
-    private int selAreaId;
+    private String cityId;
+    private String cityName;
+    private double latitude; //进度
+    private double longitude; //纬度
+    private String proviceId;
+    private String provinceName;
+    private String rodeName;
 
-    //定位地址
-    private String longitude; //经度
-    private String latitude; //纬度
-    //街道
-    private String rode;
-
-
-    public String getLongitude() {
-        return longitude;
+    public String getAreaId() {
+        return areaId;
     }
 
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getRode() {
-        return rode;
-    }
-
-    public void setRode(String rode) {
-        this.rode = rode;
-    }
-
-    public String getProvinceName() {
-        return provinceName;
-    }
-
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
+    public void setAreaId(String areaId) {
+        this.areaId = areaId;
     }
 
     public String getAreaName() {
@@ -68,27 +32,59 @@ public class Address {
         this.areaName = areaName;
     }
 
-    public int getProvinceId() {
-        return provinceId;
+    public String getCityId() {
+        return cityId;
     }
 
-    public void setProvinceId(int provinceId) {
-        this.provinceId = provinceId;
+    public void setCityId(String cityId) {
+        this.cityId = cityId;
     }
 
-    public int getSelCityId() {
-        return selCityId;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setSelCityId(int selCityId) {
-        this.selCityId = selCityId;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
-    public int getSelAreaId() {
-        return selAreaId;
+    public double getLatitude() {
+        return latitude;
     }
 
-    public void setSelAreaId(int selAreaId) {
-        this.selAreaId = selAreaId;
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public String getProviceId() {
+        return proviceId;
+    }
+
+    public void setProviceId(String proviceId) {
+        this.proviceId = proviceId;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
+
+    public String getRodeName() {
+        return rodeName;
+    }
+
+    public void setRodeName(String rodeName) {
+        this.rodeName = rodeName;
     }
 }

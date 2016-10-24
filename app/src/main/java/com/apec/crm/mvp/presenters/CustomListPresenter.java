@@ -2,7 +2,7 @@ package com.apec.crm.mvp.presenters;
 
 
 import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.RecordFilter;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
@@ -55,11 +55,11 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doRefresh() {
-        RecordFilter recordFilter = new RecordFilter();
-        recordFilter.setPageSize(LIST_ITEM_COUNT);
-        recordFilter.setPageNumber(String.valueOf(mCurrentPage));
+        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
+        visitRecordFilter.setPageSize(LIST_ITEM_COUNT);
+        visitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
 
-        mGetCustomListUseCase.setData(recordFilter);
+        mGetCustomListUseCase.setData(visitRecordFilter);
         mGetCustomListUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
     }
@@ -81,11 +81,11 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doLoadMore() {
-        RecordFilter recordFilter = new RecordFilter();
-        recordFilter.setPageSize(LIST_ITEM_COUNT);
-        recordFilter.setPageNumber(String.valueOf(mCurrentPage));
+        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
+        visitRecordFilter.setPageSize(LIST_ITEM_COUNT);
+        visitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
 
-        mGetCustomListUseCase.setData(recordFilter);
+        mGetCustomListUseCase.setData(visitRecordFilter);
         mGetCustomListUseCase.execute()
                 .subscribe(this::onLoadMoreSuccess, this::manageError);
     }

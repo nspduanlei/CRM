@@ -1,23 +1,133 @@
 package com.apec.crm.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.Contact;
+import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.utils.MyUtils;
+import com.apec.crm.utils.StringUtils;
+import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by duanlei on 2016/10/14.
  */
 
 public class ContactActivity extends BaseActivity {
+
+    public static final int TYPE_ADD_HAS_C = 0; //添加联系人，已知客户
+    public static final int TYPE_ADD_NO_C = 1; //添加联系人，未知客户
+    public static final int TYPE_SHOW = 2;
+    public static final int TYPE_EDIT = 3;
+
+    public static final String ARG_TYPE = "arg_type";
+    public static final String ARG_contact = "arg_contact";
+
+    @BindView(R.id.et_contact_name)
+    EditText mEtContactName;
+    @BindView(R.id.tv_custom)
+    TextView mTvCustom;
+    @BindView(R.id.et_position)
+    EditText mEtPosition;
+    @BindView(R.id.et_phone)
+    EditText mEtPhone;
+    @BindView(R.id.et_tel)
+    EditText mEtTel;
+    @BindView(R.id.tv_sex)
+    TextView mTvSex;
+    @BindView(R.id.tv_contact_age)
+    TextView mTvContactAge;
+
+    @BindView(R.id.fl_custom)
+    FrameLayout mFLCustom;
+
+    private int mType;
+
+    Contact mContact;
+
+    String mSex, mAge;
+
     @Override
     protected void setUpContentView() {
-        setContentView(R.layout.activity_contact, R.string.contact_title);
+        setContentView(R.layout.activity_contact);
         setMenuText("保存", v -> {
-
+            saveData();
         });
+
+        mType = getIntent().getIntExtra(ARG_TYPE, 0);
+
+        switch (mType) {
+            case TYPE_ADD_HAS_C:
+                setUpTitle("添加联系人");
+                mFLCustom.setVisibility(View.GONE);
+                break;
+
+            case TYPE_ADD_NO_C:
+                setUpTitle("添加联系人");
+                break;
+
+            case TYPE_EDIT:
+                setUpTitle("联系人详情");
+                setBtnImage(R.drawable.nav_delete_drawable, v -> {
+
+                });
+                break;
+            case TYPE_SHOW:
+                setUpTitle("联系人详情");
+                break;
+        }
     }
+
+    public void saveData() {
+        String name = mEtContactName.getText().toString();
+        String post = mEtPosition.getText().toString();
+        String phone = mEtPhone.getText().toString();
+
+        String msgPhone = StringUtils.checkMobile(phone);
+
+        if (StringUtils.isNullOrEmpty(name)) {
+            T.showShort(this, "姓名不能为空");
+        } else if (StringUtils.isNullOrEmpty(post)) {
+            T.showShort(this, "职位不能为空");
+        } else if (!msgPhone.equals("")) {
+            T.showShort(this, msgPhone);
+        } else {
+            mContact = new Contact();
+
+            mContact.setContactName(name);
+            mContact.setContactPhone(phone);
+            mContact.setContactPost(post);
+
+
+            if (mEtTel.getText().length() != 0) {
+                mContact.setContactTel(mEtTel.getText().toString());
+            }
+            if (mSex != null) {
+                mContact.setContactTel(mSex);
+            }
+            if (mAge != null) {
+                mContact.setContactTel(mAge);
+            }
+
+            setResult(Constants.RESULT_CODE_ADD_CONTACT,
+                    getIntent().putExtra(ARG_contact, mContact));
+            this.finish();
+        }
+    }
+
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
@@ -33,4 +143,61 @@ public class ContactActivity extends BaseActivity {
     protected void initPresenter() {
 
     }
+
+    /**
+     * 选择性别
+     *
+     * @param view
+     */
+    @OnClick(R.id.fl_sex)
+    void onSexClicked(View view) {
+
+        ArrayList<MenuEntity> menuEntities = new ArrayList<>();
+        menuEntities.add(new MenuEntity(0, "男"));
+        menuEntities.add(new MenuEntity(1, "女"));
+
+        MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
+            mTvSex.setText(menuEntities.get(position).getName());
+            //mTvSex.setTextColor(Color.BLACK);
+
+            dialog.dismiss();
+        });
+
+    }
+
+    /**
+     * 选择年龄
+     *
+     * @param view
+     */
+    @OnClick(R.id.fl_age)
+    void onAgeClicked(View view) {
+        ArrayList<MenuEntity> menuEntities = new ArrayList<>();
+        menuEntities.add(new MenuEntity(0, "20岁以下"));
+        menuEntities.add(new MenuEntity(1, "21-30"));
+        menuEntities.add(new MenuEntity(2, "31-40"));
+        menuEntities.add(new MenuEntity(3, "41-50"));
+        menuEntities.add(new MenuEntity(4, "51以上"));
+
+        MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
+            mTvContactAge.setText(menuEntities.get(position).getName());
+            //mTvSex.setTextColor(Color.BLACK);
+
+            dialog.dismiss();
+        });
+
+    }
+
+    /**
+     * 选择客户
+     *
+     * @param view
+     */
+    @OnClick(R.id.fl_custom)
+    void onCustomClicked(View view) {
+        Intent intent = new Intent(this, SearchCustomActivity.class);
+        intent.putExtra(SearchCustomActivity.FROM_TYPE, SearchCustomActivity.SEARCH_CUSTOM);
+        startActivity(intent);
+    }
+
 }

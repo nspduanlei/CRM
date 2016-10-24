@@ -1,64 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/pageBgColor"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite">
 
     <include
         layout="@layout/top_bar_layout"/>
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:id="@+id/calendarView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorWhite"
-        app:mcv_calendarMode="week"
-        app:mcv_selectionColor="@color/colorMain"
-        app:mcv_showOtherDates="all"
-        app:mcv_tileSize="30dp"/>
+        android:layout_marginTop="@dimen/top_bar_height_e"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btn_switch"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="切换"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/common_margin">
-        <TextView
-            android:layout_width="wrap_content"
+        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="共100个客户"
-            android:textColor="@color/commonColor"/>
+            android:background="@color/colorWhite"
+            app:mcv_calendarMode="week"
+            app:mcv_selectionColor="@color/colorMain"
+            app:mcv_showOtherDates="all"
+            app:mcv_tileSize="30dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <include
+            layout="@layout/layout_line_long"/>
+
+        <FrameLayout
+            android:id="@+id/fl_switch_date"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|right"
-            android:text="筛选"/>
-    </FrameLayout>
+            android:background="@drawable/plate_click_selector"
+            android:padding="@dimen/common_margin">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="共100个客户"
+                android:textColor="@color/commonColor"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/lineColor"/>
+            <ImageView
+                android:id="@+id/iv_arrow_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/arrow_down_date"/>
+        </FrameLayout>
 
-    <!--<ListView-->
-    <!--android:id="@id/lv_visit"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:divider="@color/lineColor"-->
-    <!--android:dividerHeight="0.5dp"/>-->
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+    </LinearLayout>
 
-</LinearLayout>
+    <include
+        layout="@layout/layout_dialog_menu_visit"/>
+
+
+</FrameLayout>

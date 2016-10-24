@@ -1,39 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/pageBgColor"
+              android:background="@color/colorWhite"
               android:orientation="vertical">
 
     <include
         layout="@layout/top_bar_layout"/>
 
     <FrameLayout
+        android:id="@+id/ll_body"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/rl_custom"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="79dp"
             android:background="@drawable/plate_click_selector"
-            android:padding="@dimen/common_margin">
+            android:paddingLeft="@dimen/common_margin"
+            android:paddingRight="@dimen/common_margin">
 
-            <com.apec.crm.views.widget.RoundTextView
-                android:id="@+id/rtv_title"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:circle_text="蛋糕"/>
+            <FrameLayout
+                android:id="@+id/fl_head"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true">
+
+                <com.apec.crm.views.widget.RoundTextView
+                    android:id="@+id/roundTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/tv_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="QQ"
+                    android:textColor="@color/colorWhite"/>
+            </FrameLayout>
 
             <TextView
+                android:id="@+id/tv_custom_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignTop="@id/fl_head"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/rtv_title"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/fl_head"
                 android:text="QQ蛋糕店"
-                android:textColor="@color/commonColor"/>
+                android:textColor="@color/colorBlack"/>
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/tv_custom_name"
+                android:layout_below="@id/tv_custom_name"
+                android:layout_marginTop="2dp"
+                android:text="深圳市福田区啊发发嗦嘎是嘎嘎是嘎嘎哈嘎哈哈哈"
+                android:textColor="@color/commonColor"
+                android:textSize="10sp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -43,13 +70,18 @@
                 android:src="@drawable/triangle"/>
         </RelativeLayout>
 
-        <ListView
-            android:id="@id/lv_visit"
+        <FrameLayout
+            android:id="@+id/fragment_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
-            android:divider="@color/lineColor"
-            android:dividerHeight="0.5dp"/>
+            android:layout_height="match_parent"
+            android:layout_marginTop="79dp"/>
+
+        <Button
+            android:id="@+id/btn_add_visit"
+            style="@style/btn_style_1"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="18dp"
+            android:text="添加拜访"/>
 
         <include
             layout="@layout/layout_dialog_menu"/>

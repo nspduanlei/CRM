@@ -10,7 +10,7 @@
         android:right="5dp"
         android:top="5dp"/>
 
-    <corners android:radius="@dimen/bg_radius"/>
+    <corners android:radius="5dp"/>
 
     <!--设置边框  -->
     <!--<stroke-->

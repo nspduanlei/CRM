@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.apec.crm.views.widget.RoundTextView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -179,6 +180,12 @@ public class MyViewHolder {
     public MyViewHolder setTextColor(int viewId, String color) {
         TextView tv = getView(viewId);
         tv.setTextColor(Color.parseColor(color));
+        return this;
+    }
+
+    public MyViewHolder setTextRound(int viewId, int color) {
+        RoundTextView tv = getView(viewId);
+        tv.setColor(color);
         return this;
     }
 }

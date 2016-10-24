@@ -2,6 +2,7 @@ package com.apec.crm.injector.modules;
 
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
+import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
@@ -37,6 +38,14 @@ public class UserModule {
         return new GetMyCountUseCase(repository, uiThread, executorThread);
     }
 
+    @Provides
+    @Activity
+    GetUserInfoUseCase provideGetUserInfoUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread) {
+        return new GetUserInfoUseCase(repository, uiThread, executorThread);
+    }
 
 
 }

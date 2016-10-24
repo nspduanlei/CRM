@@ -1,7 +1,7 @@
 package com.apec.crm.domin.useCase.custom;
 
 import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.RecordFilter;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
@@ -38,7 +38,7 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
         mGson = gson;
     }
 
-    public void setData(RecordFilter filter) {
+    public void setData(VisitRecordFilter filter) {
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
                 mGson.toJson(filter));

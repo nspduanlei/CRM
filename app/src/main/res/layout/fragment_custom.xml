@@ -26,11 +26,11 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/tv_title"
                 android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginBottom="5dp"
                 android:layout_marginRight="@dimen/margin_left"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
                 android:text="添加客户"
-                android:textColor="@color/colorMain"/>
+                android:textColor="@color/button_text_click"/>
         </RelativeLayout>
 
         <LinearLayout
@@ -47,7 +47,7 @@
                 android:drawableLeft="@drawable/icon_search"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text=" 搜索搜索搜索搜索搜索"
+                android:text=" 输入关键字"
                 android:textColor="@color/color_4"/>
 
             <TextView

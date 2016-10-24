@@ -4,16 +4,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-    <!--<com.apec.crm.views.widget.RoundTextView-->
-    <!--android:id="@+id/tv_head"-->
-    <!--android:layout_width="50dp"-->
-    <!--android:layout_height="50dp"-->
-    <!--android:layout_marginLeft="@dimen/common_margin"-->
-    <!--android:layout_marginRight="10dp"-->
-    <!--android:layout_marginTop="@dimen/common_margin"-->
-    <!--app:circle_color="#ff2222"-->
-    <!--app:circle_text="蛋糕"/>-->
-
     <FrameLayout
         android:id="@+id/fl_head"
         android:layout_width="40dp"

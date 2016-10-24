@@ -17,6 +17,17 @@ public class Constants {
     public static final int RESULT_CODE_MAP_SELECT_SUC = 101; //地址搜索成功返回
     public static final int RESULT_CODE_ADD_CONTACT = 102; //添加客户
     public static final int RESULT_CODE_MORE_DATA = 103; //添加客户
+
+    public static final int RESULT_CODE_SELECT_CUSTOM = 104; //选择客户
+
+    public static final int RESULT_CODE_SELECT_CONTACT = 105; //选择联系人
+
+    public static final int RESULT_CODE_SELECT_CUSTOM_TYPE = 106; //选择客户类型
+    public static final int RESULT_CODE_SELECT_CUSTOM_LEVEL = 107; //选择客户分类
+    public static final int RESULT_CODE_SELECT_CUSTOM_STATE = 108; //选择客户状态
+    public static final int RESULT_CODE_SELECT_CUSTOM_SOURCE = 109; //选择客户来源
+    public static final int RESULT_CODE_SELECT_CUSTOM_CLASS = 110; //销售品类
+
     /**
      * request
      */
@@ -26,12 +37,20 @@ public class Constants {
     public static final int REQUEST_CODE_ADD_CONTACT = 1004; //添加客户
     public static final int REQUEST_CODE_MORE_DATA = 1005; //更多资料
 
+    public static final int REQUEST_CODE_SELECT_CUSTOM = 1006; //选择客户
+
+    public static final int REQUEST_CODE_SELECT_ATTR = 1007; //选择联系人
+
     /**
      * 客户属性类型
      */
-    public static final String CUSTOMER_TYPE = "customerType"; //客户类型
+    public static final String CUSTOMER_TYPE = "type"; //客户类型
     public static final String CUSTOMER_CLASS = "class"; //销售品类
-    public static final String CUSTOMER_LEVEL = "customerLevel"; //客户分类
+    public static final String CUSTOMER_LEVEL = "level"; //客户分类
+    public static final String CUSTOMER_STATE = "state"; //客户状态
+    public static final String CUSTOMER_SOURCE = "source"; //客户来源
+
+
 
 }
 

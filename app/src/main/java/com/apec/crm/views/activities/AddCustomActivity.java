@@ -6,10 +6,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amap.api.maps.model.LatLng;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Address;
+import com.apec.crm.domin.entities.CustomDetail;
+import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.AddCustomPresenter;
@@ -52,12 +55,21 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @Inject
     AddCustomPresenter mAddCustomPresenter;
 
+    //当前选择经纬度
+    LatLng mLatLng;
+
+    //客户类型
+    String mCustomTypeId;
+
+    CustomDetail mCustom = new CustomDetail();
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_custom, R.string.add_custom_title);
         setMenuText("保存", v -> {
 
         });
+
     }
 
     @Override
@@ -76,6 +88,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @Override
     protected void initPresenter() {
         mAddCustomPresenter.attachView(this);
+        mAddCustomPresenter.onCreate();
     }
 
     /**
@@ -86,6 +99,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @OnClick(R.id.tv_add_contact)
     void onAddContactClicked(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
+        intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD_HAS_C);
         startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
     }
 
@@ -106,7 +120,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
      *
      * @param view
      */
-    @OnClick(R.id.tv_address)
+    @OnClick(R.id.tv_address_pca)
     void onSelectAreaClicked(View view) {
         mSelectCityUtil.showDialog();
 
@@ -122,7 +136,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     void onCustomTypeClicked(View view) {
         Intent intent = new Intent(this, SelectListActivity.class);
         intent.putExtra("listType", SelectListActivity.CUSTOM_TYPE);
-        startActivityForResult(intent, Constants.REQUEST_CODE_MORE_DATA);
+        startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_ATTR);
     }
 
     @Override
@@ -131,6 +145,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
 
         mTvAddressPca.setText(String.format("%s/%s/%s", address.getProvinceName(),
                 address.getCityName(), address.getAreaName()));
+        //mTvAddressPca.setTextColor(Color.BLACK);
     }
 
     @Override
@@ -151,5 +166,28 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @Override
     public void onError(String errorCode, String errorMsg) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE_MARK_MAP) { //定位返回
+            if (resultCode == Constants.RESULT_CODE_MARK_MAP) {
+                Bundle bundle = data.getExtras();
+                mLatLng = bundle.getParcelable(MapLocationActivity.LOCATION_LATLOG);
+
+                mTvLocation.setText(bundle.getString(MapLocationActivity.LOCATION_DETAIL));
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_SELECT_ATTR) { //选择客户类型
+            if (resultCode == Constants.RESULT_CODE_SELECT_CUSTOM_TYPE) {
+                SelectContent selectContent =
+                        data.getParcelableExtra(SelectListActivity.RESULT);
+
+                mCustom.setCustomerType(selectContent.getId());
+                mTvCustomType.setText(selectContent.getName());
+                //mTvCustomType.setTextColor(Color.BLACK);
+            }
+        }
     }
 }

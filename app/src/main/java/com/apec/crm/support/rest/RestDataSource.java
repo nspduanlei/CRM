@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Area;
+import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.SelectContent;
@@ -106,5 +107,15 @@ public class RestDataSource implements GoodsRepository {
     @Override
     public Observable<Result> addCustom(RequestBody requestBody) {
         return mCrmApi.addCustom(requestBody);
+    }
+
+    @Override
+    public Observable<Result<User>> getUserInfo() {
+        return mCrmApi.getUserInfo();
+    }
+
+    @Override
+    public Observable<ListResult<Contact>> getContact(RequestBody requestBody) {
+        return mCrmApi.getContacts(requestBody);
     }
 }

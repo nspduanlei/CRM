@@ -4,6 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="3dp"
+    android:paddingLeft="@dimen/margin_left"
+    android:paddingRight="@dimen/margin_left"
     android:paddingTop="3dp">
 
     <TextView
@@ -25,11 +27,10 @@
         android:textColor="@color/commonColor"/>
 
     <ImageView
+        android:id="@+id/iv_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:focusable="true"
         android:src="@drawable/contact_phone_drawable"/>
 
 </RelativeLayout>

@@ -24,6 +24,7 @@
                 android:textSize="@dimen/common_font_size"/>
 
             <EditText
+                android:id="@+id/et_contact_name"
                 style="@style/EditTextStyle"
                 android:hint="请输入姓名"/>
 
@@ -33,6 +34,7 @@
             layout="@layout/layout_line"/>
 
         <FrameLayout
+            android:id="@+id/fl_custom"
             style="@style/FormFragmentStyle">
 
             <TextView
@@ -42,7 +44,8 @@
                 android:textColor="@color/colorFormTitle"
                 android:textSize="@dimen/common_font_size"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_custom"
                 style="@style/EditTextStyle"
                 android:layout_marginRight="15dp"
                 android:hint="请选择客户"/>
@@ -68,6 +71,7 @@
                 android:textSize="@dimen/common_font_size"/>
 
             <EditText
+                android:id="@+id/et_position"
                 style="@style/EditTextStyle"
                 android:hint="老板"/>
 
@@ -87,8 +91,10 @@
                 android:textSize="@dimen/common_font_size"/>
 
             <EditText
+                android:id="@+id/et_phone"
                 style="@style/EditTextStyle"
-                android:hint="请输入联系电话"/>
+                android:hint="请输入联系电话"
+                android:inputType="number"/>
         </FrameLayout>
 
         <include
@@ -105,14 +111,17 @@
                 android:textSize="@dimen/common_font_size"/>
 
             <EditText
+                android:id="@+id/et_tel"
                 style="@style/EditTextStyle"
-                android:hint="请选择座机号码"/>
+                android:hint="请选择座机号码"
+                android:inputType="number"/>
         </FrameLayout>
 
         <include
             layout="@layout/layout_line"/>
 
         <FrameLayout
+            android:id="@+id/fl_sex"
             style="@style/FormFragmentStyle">
 
             <TextView
@@ -122,10 +131,11 @@
                 android:textColor="@color/colorFormTitle"
                 android:textSize="@dimen/common_font_size"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_sex"
                 style="@style/EditTextStyle"
                 android:layout_marginRight="20dp"
-                android:hint="请选择类型"/>
+                android:hint="请选择性别"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -136,7 +146,9 @@
 
         <include
             layout="@layout/layout_line"/>
+
         <FrameLayout
+            android:id="@+id/fl_age"
             style="@style/FormFragmentStyle">
 
             <TextView
@@ -146,10 +158,11 @@
                 android:textColor="@color/colorFormTitle"
                 android:textSize="@dimen/common_font_size"/>
 
-            <EditText
+            <TextView
+                android:id="@+id/tv_contact_age"
                 style="@style/EditTextStyle"
                 android:layout_marginRight="20dp"
-                android:hint="请选择类型"/>
+                android:hint="请选择年龄"/>
 
             <ImageView
                 android:layout_width="wrap_content"

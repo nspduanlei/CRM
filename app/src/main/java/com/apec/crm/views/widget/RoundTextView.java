@@ -80,6 +80,7 @@ public class RoundTextView extends View {
 
     public void setColor(int color) {
         mColor = color;
+        mPaintCircle.setColor(color);
         invalidate();
     }
 }

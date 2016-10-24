@@ -59,6 +59,9 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     //城市编码, 用于搜索
     String mCityCode;
 
+    public static final String LOCATION_DETAIL = "locationStr";
+    public static final String LOCATION_LATLOG = "latLng";
+
     private void initLocation() {
         //启动定位
         mLocationTask = new LocationTask(getApplicationContext());
@@ -69,6 +72,15 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_map_location, R.string.location_title);
+        setMenuText("确定", v -> {
+
+            Bundle bundle = new Bundle();
+            bundle.putString(LOCATION_DETAIL, mTvAddressSelect.getText().toString());
+            bundle.putParcelable(LOCATION_LATLOG, mLatLng);
+
+            setResult(Constants.RESULT_CODE_MARK_MAP, getIntent().putExtras(bundle));
+            this.finish();
+        });
     }
 
     @Override
@@ -180,19 +192,19 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         mGeocodeSearch.setOnGeocodeSearchListener(this);
     }
 
-    @OnClick(R.id.btn_location)
+    @OnClick(R.id.iv_location)
     void onLocationClicked(View view) {
         mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 18));
     }
 
-    @OnClick(R.id.btn_search)
-    void onSearchClicked(View view) {
-        Intent intent = new Intent(this, MapSearchActivity.class);
-        if (mCityCode != null) {
-            intent.putExtra("cityCode", mCityCode);
-        }
-        startActivityForResult(intent, Constants.REQUEST_CODE_SEARCH_MAP);
-    }
+//    @OnClick(R.id.btn_search)
+//    void onSearchClicked(View view) {
+//        Intent intent = new Intent(this, MapSearchActivity.class);
+//        if (mCityCode != null) {
+//            intent.putExtra("cityCode", mCityCode);
+//        }
+//        startActivityForResult(intent, Constants.REQUEST_CODE_SEARCH_MAP);
+//    }
 
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {

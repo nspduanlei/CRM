@@ -44,6 +44,8 @@ public abstract class BaseListFragment extends Fragment {
 
     @BindView(R.id.tv_text_list)
     TextView mListCount;
+    @BindView(R.id.line)
+    View mLine;
 
     private CommonRecyclerAdapter mListAdapter;
 
@@ -71,6 +73,15 @@ public abstract class BaseListFragment extends Fragment {
     protected abstract void initPresenter();
     protected abstract void loadFirstPage();
     protected abstract void loadOtherPage();
+
+
+    /**
+     * 隐藏头部
+     */
+    protected void hideHead() {
+        mListCount.setVisibility(View.GONE);
+        mLine.setVisibility(View.GONE);
+    }
 
     /**
      * 设置是否启用下拉刷新

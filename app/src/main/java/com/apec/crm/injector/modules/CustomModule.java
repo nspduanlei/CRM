@@ -2,6 +2,7 @@ package com.apec.crm.injector.modules;
 
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.custom.AddCustomUseCase;
+import com.apec.crm.domin.useCase.custom.GetContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.domin.useCase.sys.GetAreaUseCase;
@@ -58,6 +59,16 @@ public class CustomModule {
             @Named("executor_thread") Scheduler executorThread,
             @Named("gson") Gson gson) {
         return new AddCustomUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    GetContactUseCase provideGetContactUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new GetContactUseCase(repository, uiThread, executorThread, gson);
     }
 
 

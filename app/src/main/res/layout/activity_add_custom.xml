@@ -18,125 +18,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                style="@style/FormFragmentStyle">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户名称"
-                    android:textColor="@color/colorFormTitle"
-                    android:textSize="@dimen/common_font_size"/>
-                <EditText
-                    android:id="@+id/et_custom_name"
-                    style="@style/EditTextStyle"
-                    android:hint="请输入客户名称"/>
-            </FrameLayout>
-
             <include
-                layout="@layout/layout_line"/>
-
-            <FrameLayout
-                android:id="@+id/fl_custom_type"
-                style="@style/FormFragmentStyle">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户类型"
-                    android:textColor="@color/colorFormTitle"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right|center_vertical"
-                    android:src="@drawable/triangle"/>
-
-                <TextView
-                    android:id="@+id/tv_custom_type"
-                    style="@style/EditTextStyle"
-                    android:layout_marginRight="15dp"
-                    android:hint="请选择类型"/>
-            </FrameLayout>
-
-            <include
-                layout="@layout/layout_line"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:paddingRight="20dp"
-                    android:text="客户地址"
-                    android:textColor="@color/colorFormTitle"
-                    android:textSize="@dimen/common_font_size"/>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/lineColor"/>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tv_address_pca"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/triangle"
-                        android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:paddingRight="@dimen/margin_left"
-                        android:paddingTop="@dimen/form_padding"
-                        android:text="省/市/区  "
-                        android:textColor="@color/hintColor"
-                        android:textSize="@dimen/common_font_size"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lineColor"/>
-
-                    <EditText
-                        android:id="@+id/et_road"
-                        style="@style/EditTextStyle"
-                        android:layout_width="match_parent"
-                        android:hint="街道"
-                        android:paddingBottom="5dp"
-                        android:paddingRight="@dimen/margin_left"
-                        android:paddingTop="@dimen/form_padding"/>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/lineColor"/>
-
-                    <TextView
-                        android:id="@+id/tv_location"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableRight="@drawable/icon_location"
-                        android:gravity="right"
-                        android:paddingBottom="5dp"
-                        android:paddingRight="@dimen/margin_left"
-                        android:paddingTop="@dimen/form_padding"
-                        android:text="定位   "
-                        android:textColor="@color/hintColor"
-                        android:textSize="@dimen/common_font_size"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <include
-                layout="@layout/layout_line"/>
+                layout="@layout/layout_base_data"/>
 
             <FrameLayout
                 android:id="@+id/fl_more_data"
@@ -146,7 +29,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
                     android:text="更多资料"
                     android:textColor="@color/colorMain"
                     android:textSize="@dimen/common_font_size"/>
@@ -168,7 +50,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="20dp"
                     android:text="联系人"
                     android:textColor="@color/colorMain"
                     android:textSize="@dimen/common_font_size"/>
@@ -181,12 +62,14 @@
 
             <TextView
                 android:id="@+id/tv_add_contact"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="+ 添加联系人"
-                android:textColor="@color/colorMain"/>
+                android:textColor="@color/button_text_click"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

@@ -2,6 +2,7 @@ package com.apec.crm.domin.repository;
 
 
 import com.apec.crm.domin.entities.Area;
+import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.SelectContent;
@@ -32,4 +33,8 @@ public interface GoodsRepository {
     Observable<ListResult<SelectContent>> getCustomAttribute(RequestBody requestBody);
 
     Observable<Result> addCustom(RequestBody requestBody);
+
+    Observable<Result<User>> getUserInfo();
+
+    Observable<ListResult<Contact>> getContact(RequestBody requestBody);
 }

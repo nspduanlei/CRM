@@ -1,227 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorWhite"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite">
 
     <include
         layout="@layout/top_bar_layout"/>
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_marginTop="@dimen/top_bar_height_e"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin_left"
-            android:text="头像"
-            android:textColor="@color/colorBlack"
-            android:textSize="22sp"/>
-
-        <ImageView
-            android:id="@+id/iv_head"
-            android:layout_width="67dp"
-            android:layout_height="67dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_left"
-            android:src="@drawable/default_head"/>
-
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="姓名"
-            android:textColor="@color/commonColor"/>
-
-        <TextView
-            android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
-
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical">
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_username"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="职位"
-            android:textColor="@color/commonColor"/>
+            android:layout_marginTop="30dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:text="头像"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"/>
 
-        <TextView
-            android:id="@+id/tv_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
+            <ImageView
+                android:id="@+id/iv_head"
+                android:layout_width="67dp"
+                android:layout_height="67dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="@dimen/margin_left"
+                android:src="@drawable/default_head"/>
+        </FrameLayout>
 
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_position"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:textColor="@color/commonColor"/>
+            <TextView
+                android:id="@+id/tv_username"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-    </RelativeLayout>
+        <include
+            layout="@layout/layout_line"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        <FrameLayout
+            style="@style/FormFragmentStyle">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="手机"
-            android:textColor="@color/commonColor"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="职位"
+                android:textColor="@color/commonColor"/>
 
-        <TextView
-            android:id="@+id/tv_phone_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
+            <TextView
+                android:id="@+id/tv_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_phone_number"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
+        <include
+            layout="@layout/layout_line"/>
 
-    </RelativeLayout>
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="手机"
+                android:textColor="@color/commonColor"/>
+            <TextView
+                android:id="@+id/tv_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        <include
+            layout="@layout/layout_line"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="性别"
-            android:textColor="@color/commonColor"/>
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="性别"
+                android:textColor="@color/commonColor"/>
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-        <TextView
-            android:id="@+id/tv_sex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
+        <include
+            layout="@layout/layout_line"/>
 
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_sex"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
+        <FrameLayout
+            style="@style/FormFragmentStyle">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="部门"
+                android:textColor="@color/commonColor"/>
+            <TextView
+                android:id="@+id/tv_dep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-    </RelativeLayout>
+        <include
+            layout="@layout/layout_line"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        <FrameLayout
+            style="@style/FormFragmentStyle">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="部门"
-            android:textColor="@color/commonColor"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邮件"
+                android:textColor="@color/commonColor"/>
 
-        <TextView
-            android:id="@+id/tv_dep"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="12M"
+                android:textColor="@color/titleColor"/>
+        </FrameLayout>
 
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_dep"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
+        <include
+            layout="@layout/layout_line"/>
 
-    </RelativeLayout>
+    </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:text="邮件"
-            android:textColor="@color/commonColor"/>
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="20dp"
-            android:text="12M"
-            android:textColor="@color/titleColor"/>
-
-        <View
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_below="@id/tv_email"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="3dp"
-            android:background="@color/lineColor"/>
-
-    </RelativeLayout>
-
-</LinearLayout>
+    <include
+        layout="@layout/loading_layout"/>
+</FrameLayout>

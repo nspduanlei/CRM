@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/pageBgColor"
+              android:background="@color/colorWhite"
               android:orientation="vertical">
 
     <include
@@ -17,11 +17,11 @@
         <EditText
             android:id="@+id/et_content"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="100dp"
             android:background="@null"
             android:gravity="top"
-            android:hint="说点什么吧..."/>
-
+            android:hint="说点什么吧..."
+            android:textColorHint="@color/hintColor"/>
 
         <LinearLayout
             android:id="@+id/ll_pic"
@@ -29,58 +29,61 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/et_content">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/pic_add_drawable"/>
+                android:id="@+id/iv_add_image"
+                android:layout_width="59dp"
+                android:layout_height="59dp"
+                android:layout_marginRight="@dimen/common_margin"
+                android:src="@drawable/compose_pic_add"/>
         </LinearLayout>
     </RelativeLayout>
 
-    <FrameLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/form_padding"
-    android:layout_marginTop="10dp"
-    android:background="@color/colorWhite">
+        android:layout_height="1dp"
+        android:background="@color/lineColor"/>
+
+    <FrameLayout
+        android:id="@+id/fl_location"
+        style="@style/FormFragmentStyle">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="选择地址"
-            android:textColor="@color/titleColor"
-            android:textSize="@dimen/common_font_size"/>
+            android:text="地址"
+            android:textColor="@color/commonColor"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_location"
             style="@style/EditTextStyle"
-            android:layout_marginRight="15dp"
-            android:hint="请选择类型"/>
+            android:layout_width="match_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="20dp"
+            android:ellipsize="end"
+            android:hint="获取地址"
+            android:lines="1"/>
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right|center_vertical"
-            android:src="@drawable/triangle"/>
+            android:src="@drawable/icon_location"/>
     </FrameLayout>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/lineColor"/>
+    <include
+        layout="@layout/layout_line"/>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/form_padding"
-        android:background="@color/colorWhite">
+        android:id="@+id/fl_custom"
+        style="@style/FormFragmentStyle">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="客户"
-            android:textColor="@color/titleColor"
-            android:textSize="@dimen/common_font_size"/>
+            android:textColor="@color/commonColor"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_custom"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
             android:hint="请选择客户"/>
@@ -92,26 +95,21 @@
             android:src="@drawable/triangle"/>
     </FrameLayout>
 
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/lineColor"/>
+    <include
+        layout="@layout/layout_line"/>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/form_padding"
-        android:background="@color/colorWhite">
+        android:id="@+id/fl_contact"
+        style="@style/FormFragmentStyle">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="联系人"
-            android:textColor="@color/titleColor"
-            android:textSize="@dimen/common_font_size"/>
+            android:textColor="@color/commonColor"/>
 
-        <EditText
+        <TextView
+            android:id="@+id/tv_contact"
             style="@style/EditTextStyle"
             android:layout_marginRight="15dp"
             android:hint="请选择联系人"/>
@@ -124,12 +122,8 @@
     </FrameLayout>
 
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/lineColor"/>
-
-
+    <include
+        layout="@layout/layout_line"/>
 
 
 </LinearLayout>

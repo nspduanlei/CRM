@@ -1,6 +1,6 @@
 package com.apec.crm.domin.useCase.visit;
 
-import com.apec.crm.domin.entities.RecordFilter;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
@@ -39,7 +39,7 @@ public class GetVisitRecordUseCase extends UseCase<Result<ListPage<VisitRecord>>
         mGson = gson;
     }
 
-    public void setData(RecordFilter filter) {
+    public void setData(VisitRecordFilter filter) {
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
                 mGson.toJson(filter));
