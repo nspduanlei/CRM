@@ -31,18 +31,20 @@ public class SelectListActivity extends BaseActivity implements SelectListView {
 
     public static final String LIST_TYPE = "listType";
     public static final String CUSTOM_ID = "customId";
+    public static final String AREA_ID = "areaId";
 
     public static final int CUSTOM_TYPE = 0; //客户类型
     public static final int CUSTOM_CLASS = 1; //销售品类
     public static final int CUSTOM_LEVEL = 2; //客户分类
     public static final int CUSTOM_STATE = 3; //客户状态
     public static final int CUSTOM_SOURCE = 4; //客户来源
-
-    public static final int CUSTOM_CONTACT = 5; //联系人
+    public static final int CUSTOM_OPEN_SEA = 5; //片区，先选择行政区域
+    public static final int CUSTOM_CONTACT = 6; //联系人，先选择客户
 
     public static final String RESULT = "result"; //返回参数名
 
-    private String mCustomId;
+    private String mCustomId; //客户id
+    private String mAreaId; //区id
 
     private int mListType;
 
@@ -84,13 +86,37 @@ public class SelectListActivity extends BaseActivity implements SelectListView {
                         setResult(Constants.RESULT_CODE_SELECT_CUSTOM_TYPE,
                                 getIntent().putExtra(RESULT, data));
                         break;
+
+                    case CUSTOM_CLASS:
+                        setResult(Constants.RESULT_CODE_SELECT_CUSTOM_CLASS,
+                                getIntent().putExtra(RESULT, data));
+                        break;
+                    case CUSTOM_LEVEL:
+                        setResult(Constants.RESULT_CODE_SELECT_CUSTOM_LEVEL,
+                                getIntent().putExtra(RESULT, data));
+                        break;
+
+                    case CUSTOM_STATE:
+                        setResult(Constants.RESULT_CODE_SELECT_CUSTOM_STATE,
+                                getIntent().putExtra(RESULT, data));
+                        break;
+
+                    case CUSTOM_SOURCE:
+                        setResult(Constants.RESULT_CODE_SELECT_CUSTOM_SOURCE,
+                                getIntent().putExtra(RESULT, data));
+
+                        break;
+
+                    case CUSTOM_OPEN_SEA:
+                        setResult(Constants.RESULT_CODE_SELECT_CUSTOM_OPEN_SEA,
+                                getIntent().putExtra(RESULT, data));
+                        break;
+
                     case CUSTOM_CONTACT:
                         setResult(Constants.RESULT_CODE_SELECT_CONTACT,
                                 getIntent().putExtra(RESULT, data));
                         break;
                 }
-
-
                 SelectListActivity.this.finish();
             }
         });
@@ -116,6 +142,17 @@ public class SelectListActivity extends BaseActivity implements SelectListView {
                 setUpTitle("选择客户来源");
                 mSelectListPresenter.getCustomTypeList(Constants.CUSTOMER_SOURCE);
                 break;
+
+            case CUSTOM_OPEN_SEA:
+                setUpTitle("选择片区");
+
+                mAreaId = getIntent().getStringExtra(AREA_ID);
+                if (mAreaId != null) {
+                    mSelectListPresenter.getOpenSeas(mAreaId);
+                }
+
+                break;
+
             case CUSTOM_CONTACT:
                 setUpTitle("选择联系人");
 

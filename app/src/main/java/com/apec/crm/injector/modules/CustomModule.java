@@ -4,7 +4,9 @@ import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.custom.AddCustomUseCase;
 import com.apec.crm.domin.useCase.custom.GetContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
+import com.apec.crm.domin.useCase.custom.GetCustomDetailUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
+import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
 import com.apec.crm.domin.useCase.sys.GetAreaUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
@@ -71,6 +73,25 @@ public class CustomModule {
         return new GetContactUseCase(repository, uiThread, executorThread, gson);
     }
 
+    @Provides
+    @Activity
+    GetOpenSeaUseCase provideGetOpenSeaUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new GetOpenSeaUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    GetCustomDetailUseCase provideGetCustomDetailUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new GetCustomDetailUseCase(repository, uiThread, executorThread, gson);
+    }
 
 
 }

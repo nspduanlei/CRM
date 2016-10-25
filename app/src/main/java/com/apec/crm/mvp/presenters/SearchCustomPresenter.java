@@ -1,7 +1,7 @@
 package com.apec.crm.mvp.presenters;
 
 import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.VisitRecordFilter;
+import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
@@ -10,6 +10,8 @@ import com.apec.crm.mvp.views.SearchCustomView;
 import com.apec.crm.mvp.views.core.View;
 
 import javax.inject.Inject;
+
+import static android.R.attr.filter;
 
 /**
  * Created by duanlei on 2016/10/18.
@@ -21,6 +23,7 @@ public class SearchCustomPresenter implements Presenter {
 
     SearchCustomView mSearchCustomView;
 
+    FilterCustomBean mFilter;
 
     @Inject
     public SearchCustomPresenter(GetCustomListUseCase getCustomListUseCase) {
@@ -49,13 +52,12 @@ public class SearchCustomPresenter implements Presenter {
 
     @Override
     public void onCreate() {
-
+        mFilter = new FilterCustomBean();
     }
 
     public void searchCustom(String searchKey) {
-        VisitRecordFilter filter = new VisitRecordFilter();
-        filter.setKeywords(searchKey);
-        mGetCustomListUseCase.setData(filter);
+        mFilter.setKeywords(searchKey);
+        mGetCustomListUseCase.setData(mFilter);
 
         mSearchCustomView.showLoadingView();
         mGetCustomListUseCase.execute().subscribe(this::onSearchReceived,

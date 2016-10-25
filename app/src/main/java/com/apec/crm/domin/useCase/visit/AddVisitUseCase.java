@@ -1,8 +1,6 @@
-package com.apec.crm.domin.useCase.custom;
+package com.apec.crm.domin.useCase.visit;
 
-import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.FilterCustomBean;
-import com.apec.crm.domin.entities.func.ListPage;
+import com.apec.crm.domin.entities.CustomDetail;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.UseCase;
@@ -18,8 +16,10 @@ import rx.Scheduler;
 
 /**
  * Created by duanlei on 16/9/27.
+ * 添加拜访
  */
-public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
+
+public class AddVisitUseCase extends UseCase<Result> {
     private final GoodsRepository mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
@@ -28,25 +28,30 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
     RequestBody mRequestBody;
 
     @Inject
-    public GetCustomListUseCase(GoodsRepository repository,
-                                     @Named("ui_thread") Scheduler uiThread,
-                                     @Named("executor_thread") Scheduler executorThread,
-                                     @Named("gson") Gson gson) {
+    public AddVisitUseCase(GoodsRepository repository,
+                           @Named("ui_thread") Scheduler uiThread,
+                           @Named("executor_thread") Scheduler executorThread,
+                           @Named("gson") Gson gson) {
         mRepository = repository;
         mUiThread = uiThread;
         mExecutorThread = executorThread;
         mGson = gson;
     }
 
-    public void setData(FilterCustomBean filter) {
+    public void setData(CustomDetail customDetail) {
+
+
+
+
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
-                mGson.toJson(filter));
+                mGson.toJson(customDetail));
     }
 
     @Override
-    public Observable<Result<ListPage<Custom>>> buildObservable() {
-        return mRepository.getCustomerList(mRequestBody)
+    public Observable<Result> buildObservable() {
+
+        return mRepository.addCustom(mRequestBody)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);
     }

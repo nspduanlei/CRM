@@ -127,6 +127,11 @@ public abstract class BaseListFragment extends Fragment {
         isLoading = false;
     }
 
+    public void onLoadError() {
+        mSwipeRefreshLayout.setRefreshing(false);
+        isLoading = false;
+    }
+
     public void onLoadMoreComplete(List result) {
         mListAdapter.removeLoading();
         mListAdapter.addAll(result);

@@ -235,6 +235,9 @@ public class SelectCityUtil implements OnClickListener {
      * @param id
      */
     private void obtainArea(int id) {
+        mData.clear();
+        mAdapter.notifyDataSetChanged();
+
         mProgressBar.setVisibility(View.VISIBLE);
         mGetAreaUseCase.setData(id);
         mGetAreaUseCase.execute().subscribe(this::onAreaReceived, this::managerError);

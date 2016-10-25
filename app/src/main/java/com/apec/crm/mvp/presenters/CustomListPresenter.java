@@ -2,7 +2,7 @@ package com.apec.crm.mvp.presenters;
 
 
 import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.VisitRecordFilter;
+import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
@@ -22,6 +22,8 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     CustomListView mCustomListView;
 
     GetCustomListUseCase mGetCustomListUseCase;
+
+    FilterCustomBean mFilterCustomBean;
 
     @Inject
     public CustomListPresenter(GetCustomListUseCase getCustomListUseCase) {
@@ -50,22 +52,21 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     public void onCreate() {
-
+        mFilterCustomBean = new FilterCustomBean();
     }
 
     @Override
     protected void doRefresh() {
-        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
-        visitRecordFilter.setPageSize(LIST_ITEM_COUNT);
-        visitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
+        mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
 
-        mGetCustomListUseCase.setData(visitRecordFilter);
+        mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {
         throwable.printStackTrace();
+        mCustomListView.onError("0", "");
     }
 
     private void onRefreshReceived(Result<ListPage<Custom>> listPageResult) {
@@ -81,11 +82,10 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doLoadMore() {
-        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
-        visitRecordFilter.setPageSize(LIST_ITEM_COUNT);
-        visitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
 
-        mGetCustomListUseCase.setData(visitRecordFilter);
+        mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
+
+        mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
                 .subscribe(this::onLoadMoreSuccess, this::manageError);
     }
@@ -109,4 +109,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     }
 
 
+    public void setFilter(FilterCustomBean filterCustomBean) {
+        mFilterCustomBean = filterCustomBean;
+    }
 }

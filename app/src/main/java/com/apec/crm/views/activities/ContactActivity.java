@@ -34,7 +34,7 @@ public class ContactActivity extends BaseActivity {
     public static final int TYPE_EDIT = 3;
 
     public static final String ARG_TYPE = "arg_type";
-    public static final String ARG_contact = "arg_contact";
+    public static final String ARG_CONTACT = "arg_contact";
 
     @BindView(R.id.et_contact_name)
     EditText mEtContactName;
@@ -53,6 +53,9 @@ public class ContactActivity extends BaseActivity {
 
     @BindView(R.id.fl_custom)
     FrameLayout mFLCustom;
+    @BindView(R.id.custom_line)
+    View mCustomLine;
+
 
     private int mType;
 
@@ -73,6 +76,7 @@ public class ContactActivity extends BaseActivity {
             case TYPE_ADD_HAS_C:
                 setUpTitle("添加联系人");
                 mFLCustom.setVisibility(View.GONE);
+                mCustomLine.setVisibility(View.GONE);
                 break;
 
             case TYPE_ADD_NO_C:
@@ -123,7 +127,7 @@ public class ContactActivity extends BaseActivity {
             }
 
             setResult(Constants.RESULT_CODE_ADD_CONTACT,
-                    getIntent().putExtra(ARG_contact, mContact));
+                    getIntent().putExtra(ARG_CONTACT, mContact));
             this.finish();
         }
     }

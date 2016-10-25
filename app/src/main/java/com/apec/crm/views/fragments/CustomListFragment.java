@@ -6,6 +6,7 @@ import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.ErrorCode;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.CustomListPresenter;
@@ -119,10 +120,18 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
     @Override
     public void onError(String errorCode, String errorMsg) {
+
+        onLoadError();
+
         if (errorCode.equals(ErrorCode.SESSION_OUT)) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
             getActivity().finish();
         }
+    }
+
+    public void updateForFilter(FilterCustomBean filterCustomBean) {
+        mCustomListPresenter.setFilter(filterCustomBean);
+        mCustomListPresenter.refresh();
     }
 }

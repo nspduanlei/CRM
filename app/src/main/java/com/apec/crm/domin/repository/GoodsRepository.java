@@ -4,7 +4,9 @@ package com.apec.crm.domin.repository;
 import com.apec.crm.domin.entities.Area;
 import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.CustomDetail;
 import com.apec.crm.domin.entities.MyCount;
+import com.apec.crm.domin.entities.OpenSea;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitRecord;
@@ -37,4 +39,8 @@ public interface GoodsRepository {
     Observable<Result<User>> getUserInfo();
 
     Observable<ListResult<Contact>> getContact(RequestBody requestBody);
+
+    Observable<ListResult<OpenSea>> getOpenSea(RequestBody requestBody);
+
+    Observable<Result<CustomDetail>> getCustomDetail(RequestBody requestBody);
 }

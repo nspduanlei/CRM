@@ -15,19 +15,16 @@
 
         <FrameLayout
             style="@style/FormFragmentStyle">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="姓名"
                 android:textColor="@color/colorFormTitle"
                 android:textSize="@dimen/common_font_size"/>
-
             <EditText
                 android:id="@+id/et_contact_name"
                 style="@style/EditTextStyle"
                 android:hint="请输入姓名"/>
-
         </FrameLayout>
 
         <include
@@ -58,6 +55,7 @@
         </FrameLayout>
 
         <include
+            android:id="@+id/custom_line"
             layout="@layout/layout_line"/>
 
         <FrameLayout

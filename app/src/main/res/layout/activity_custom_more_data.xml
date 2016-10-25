@@ -9,6 +9,7 @@
         layout="@layout/top_bar_layout"/>
 
     <FrameLayout
+        android:id="@+id/fl_custom_level"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -35,6 +36,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_custom_state"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -61,6 +63,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_custom_source"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -87,6 +90,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_custom_area"
         style="@style/FormFragmentStyle">
 
         <TextView
@@ -110,6 +114,7 @@
     </FrameLayout>
 
     <include
+        android:id="@+id/area_line"
         layout="@layout/layout_line"/>
 
     <FrameLayout
@@ -167,6 +172,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
+        android:id="@+id/fl_custom_class"
         style="@style/FormFragmentStyle">
 
         <TextView

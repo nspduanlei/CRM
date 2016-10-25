@@ -76,16 +76,13 @@
 
             <TextView
                 android:id="@+id/tv_address_pca"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:drawableRight="@drawable/triangle"
-                android:gravity="right"
                 android:paddingBottom="5dp"
                 android:paddingRight="@dimen/margin_left"
                 android:paddingTop="@dimen/form_padding"
-                android:text="省/市/区  "
-                android:textColor="@color/hintColor"
-                android:textSize="@dimen/common_font_size"/>
+                android:hint="省/市/区  "/>
 
             <View
                 android:layout_width="match_parent"
@@ -108,18 +105,13 @@
 
             <TextView
                 android:id="@+id/tv_location"
+                style="@style/EditTextStyle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:drawableRight="@drawable/icon_location"
-                android:ellipsize="end"
-                android:gravity="right"
-                android:lines="1"
                 android:paddingBottom="5dp"
                 android:paddingRight="@dimen/margin_left"
                 android:paddingTop="@dimen/form_padding"
-                android:text="定位   "
-                android:textColor="@color/hintColor"
-                android:textSize="@dimen/common_font_size"/>
+                android:hint="定位   "/>
         </LinearLayout>
     </LinearLayout>
 

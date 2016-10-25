@@ -23,6 +23,21 @@ public class CustomDetail {
     private List<Contact> contacts;
 
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
 
     public String getAreaNo() {
         return areaNo;
@@ -105,4 +120,13 @@ public class CustomDetail {
     }
 
 
+    public void setSelectContent(MoreDataBean moreDataBean) {
+        this.setAreaNo(moreDataBean.getAreaNo());
+        this.setBusinessHours(moreDataBean.getBusinessHours());
+        this.setClassId(moreDataBean.getClassId());
+        this.setCustomerLevel(moreDataBean.getCustomerLevel());
+        this.setCustomerState(moreDataBean.getCustomerState());
+        this.setIsSpeedInto(moreDataBean.getIsSpeedInto());
+        this.setSource(moreDataBean.getSource());
+    }
 }

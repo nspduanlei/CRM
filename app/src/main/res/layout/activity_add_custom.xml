@@ -72,4 +72,7 @@
                 android:textColor="@color/button_text_click"/>
         </LinearLayout>
     </ScrollView>
+
+    <include
+        layout="@layout/loading_layout"/>
 </FrameLayout>

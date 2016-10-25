@@ -8,12 +8,19 @@ import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Contact;
+import com.apec.crm.domin.entities.CustomDetail;
+import com.apec.crm.injector.components.DaggerCustomComponent;
+import com.apec.crm.injector.modules.ActivityModule;
+import com.apec.crm.mvp.presenters.CustomDetailPresenter;
+import com.apec.crm.mvp.views.CustomDetailView;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.widget.NoScrollListView;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,10 +29,13 @@ import butterknife.OnClick;
  * Created by duanlei on 16/9/20.
  */
 
-public class CustomDetailActivity extends BaseActivity {
+public class CustomDetailActivity extends BaseActivity implements CustomDetailView {
 
     @BindView(R.id.lv_contact_list)
     NoScrollListView mLVContactList;
+
+    @Inject
+    CustomDetailPresenter mCustomDetailPresenter;
 
     @Override
     protected void setUpContentView() {
@@ -34,11 +44,6 @@ public class CustomDetailActivity extends BaseActivity {
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-
-//        ArrayList<Contact> contacts = new ArrayList<>();
-//        for (int i = 0; i < 4; i++) {
-//            contacts.add(new Contact("老板娘", "李小姐", "15669698989"));
-//        }
 
         mLVContactList.setAdapter(new CommonAdapter<Contact>(this, new ArrayList<>(),
                 R.layout.item_contact) {
@@ -59,12 +64,16 @@ public class CustomDetailActivity extends BaseActivity {
 
     @Override
     protected void initDependencyInjector(MyApplication application) {
-
+        DaggerCustomComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(application.getAppComponent())
+                .build().inject(this);
     }
 
     @Override
     protected void initPresenter() {
-
+        mCustomDetailPresenter.attachView(this);
+        mCustomDetailPresenter.onCreate();
     }
 
     /**
@@ -98,5 +107,25 @@ public class CustomDetailActivity extends BaseActivity {
     void onAddContactClicked(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
         startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
+    }
+
+    @Override
+    public void getCustomDetailSuccess(CustomDetail customDetail) {
+
+    }
+
+    @Override
+    public void showLoadingView() {
+
+    }
+
+    @Override
+    public void hideLoadingView() {
+
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMsg) {
+
     }
 }

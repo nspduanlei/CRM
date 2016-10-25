@@ -1,12 +1,13 @@
 package com.apec.crm.domin.useCase.custom;
 
-import com.apec.crm.domin.entities.Custom;
-import com.apec.crm.domin.entities.FilterCustomBean;
-import com.apec.crm.domin.entities.func.ListPage;
-import com.apec.crm.domin.entities.func.Result;
+import com.apec.crm.domin.entities.OpenSea;
+import com.apec.crm.domin.entities.func.ListResult;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.UseCase;
 import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,8 +19,9 @@ import rx.Scheduler;
 
 /**
  * Created by duanlei on 16/9/27.
+ * 根据区域id查询片区
  */
-public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
+public class GetOpenSeaUseCase extends UseCase<ListResult<OpenSea>> {
     private final GoodsRepository mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
@@ -28,25 +30,28 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
     RequestBody mRequestBody;
 
     @Inject
-    public GetCustomListUseCase(GoodsRepository repository,
-                                     @Named("ui_thread") Scheduler uiThread,
-                                     @Named("executor_thread") Scheduler executorThread,
-                                     @Named("gson") Gson gson) {
+    public GetOpenSeaUseCase(GoodsRepository repository,
+                             @Named("ui_thread") Scheduler uiThread,
+                             @Named("executor_thread") Scheduler executorThread,
+                             @Named("gson") Gson gson) {
         mRepository = repository;
         mUiThread = uiThread;
         mExecutorThread = executorThread;
         mGson = gson;
     }
 
-    public void setData(FilterCustomBean filter) {
+    public void setData(String areaId) {
+        Map param =  new HashMap<String, String>();
+        param.put("id", areaId);
+
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
-                mGson.toJson(filter));
+                mGson.toJson(param));
     }
 
     @Override
-    public Observable<Result<ListPage<Custom>>> buildObservable() {
-        return mRepository.getCustomerList(mRequestBody)
+    public Observable<ListResult<OpenSea>> buildObservable() {
+        return mRepository.getOpenSea(mRequestBody)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);
     }

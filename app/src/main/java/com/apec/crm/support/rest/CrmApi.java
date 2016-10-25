@@ -4,7 +4,9 @@ package com.apec.crm.support.rest;
 import com.apec.crm.domin.entities.Area;
 import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.CustomDetail;
 import com.apec.crm.domin.entities.MyCount;
+import com.apec.crm.domin.entities.OpenSea;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitRecord;
@@ -73,5 +75,19 @@ public interface CrmApi {
      */
     @POST("CUSTOMER-SERVICE/searchContact.apec")
     Observable<ListResult<Contact>> getContacts(@Body RequestBody body);
+
+
+    /**
+     * 根据区域id获取片区
+     */
+    @POST("CUSTOMER-SERVICE/queryOpenSeaByRegionId.apec")
+    Observable<ListResult<OpenSea>> getOpenSea(@Body RequestBody body);
+
+
+    /**
+     * 获取客户详情
+     */
+    @POST("CUSTOMER-SERVICE/findOneCustomer.apec")
+    Observable<Result<CustomDetail>> getCustomDetail(@Body RequestBody body);
 
 }
