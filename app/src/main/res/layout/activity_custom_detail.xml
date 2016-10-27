@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/colorWhite"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite">
 
     <include
         layout="@layout/top_bar_layout"/>
 
     <ScrollView android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/top_bar_height_e">
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:orientation="vertical">
@@ -45,8 +45,7 @@
                     android:textSize="@dimen/common_font_size"/>
                 <TextView
                     android:id="@+id/tv_custom_name"
-                    style="@style/tv_style_show"
-                    android:text="test"/>
+                    style="@style/tv_style_show"/>
             </FrameLayout>
 
             <FrameLayout
@@ -59,8 +58,7 @@
                     android:textSize="@dimen/common_font_size"/>
                 <TextView
                     android:id="@+id/tv_custom_type"
-                    style="@style/tv_style_show"
-                    android:text="test"/>
+                    style="@style/tv_style_show"/>
             </FrameLayout>
 
             <FrameLayout
@@ -73,8 +71,7 @@
                     android:textSize="@dimen/common_font_size"/>
                 <TextView
                     android:id="@+id/tv_custom_address"
-                    style="@style/tv_style_show"
-                    android:text="test"/>
+                    style="@style/tv_style_show"/>
             </FrameLayout>
 
             <FrameLayout
@@ -87,8 +84,7 @@
                     android:textSize="@dimen/common_font_size"/>
                 <TextView
                     android:id="@+id/tv_custom_location"
-                    style="@style/tv_style_show"
-                    android:text="test"/>
+                    style="@style/tv_style_show"/>
             </FrameLayout>
 
 
@@ -127,8 +123,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_class"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -141,8 +136,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_state"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -155,8 +149,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_source"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -169,8 +162,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_area"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -183,8 +175,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_car"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -197,8 +188,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_time"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -211,8 +201,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_cate"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
 
@@ -226,8 +215,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_belong"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
 
                 <FrameLayout
@@ -240,8 +228,7 @@
                         android:textSize="@dimen/common_font_size"/>
                     <TextView
                         android:id="@+id/tv_custom_create"
-                        style="@style/tv_style_show"
-                        android:text="test"/>
+                        style="@style/tv_style_show"/>
                 </FrameLayout>
             </LinearLayout>
 
@@ -263,8 +250,7 @@
                 android:id="@+id/lv_contact_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:divider="@color/lineColor"
-                android:dividerHeight="0.5dp"/>
+                android:divider="@null"/>
 
             <TextView
                 android:id="@+id/tv_add_contact"
@@ -279,4 +265,7 @@
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
+    <include
+        layout="@layout/loading_layout"/>
+</FrameLayout>

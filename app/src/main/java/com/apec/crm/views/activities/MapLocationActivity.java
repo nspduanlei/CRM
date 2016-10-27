@@ -1,7 +1,6 @@
 package com.apec.crm.views.activities;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +20,6 @@ import com.amap.api.services.geocoder.GeocodeResult;
 import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 import com.amap.api.services.geocoder.RegeocodeResult;
-import com.amap.api.services.help.Tip;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
@@ -46,10 +44,12 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     MapView mMapView;
 
     //当前选择经纬度
-    LatLng mLatLng;
+    LatLng mLatLngFirst;
+    LatLng mLatLngSelect;
 
     @BindView(R.id.iv_location_icon)
     ImageView mLocationIcon;
+
     //显示当前选择的地址
     @BindView(R.id.tv_address_select)
     TextView mTvAddressSelect;
@@ -59,8 +59,13 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     //城市编码, 用于搜索
     String mCityCode;
 
-    public static final String LOCATION_DETAIL = "locationStr";
-    public static final String LOCATION_LATLOG = "latLng";
+    public static final String RESULT_DETAIL = "locationStr";
+    public static final String RESULT_LATLNG = "latLng";
+
+    public static final String ARG_LATLNG = "arg_latlng";
+    public static final String ARG_LOCATION_DES = "arg_location_des";
+
+    String mLocationDes;
 
     private void initLocation() {
         //启动定位
@@ -75,8 +80,8 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         setMenuText("确定", v -> {
 
             Bundle bundle = new Bundle();
-            bundle.putString(LOCATION_DETAIL, mTvAddressSelect.getText().toString());
-            bundle.putParcelable(LOCATION_LATLOG, mLatLng);
+            bundle.putString(RESULT_DETAIL, mLocationDes);
+            bundle.putParcelable(RESULT_LATLNG, mLatLngSelect);
 
             setResult(Constants.RESULT_CODE_MARK_MAP, getIntent().putExtras(bundle));
             this.finish();
@@ -85,6 +90,9 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+        mLatLngFirst = getIntent().getParcelableExtra(ARG_LATLNG);
+        mLocationDes = getIntent().getStringExtra(ARG_LOCATION_DES);
+
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，实现地图生命周期管理
         mMapView.onCreate(savedInstanceState);
         mAMap = mMapView.getMap();
@@ -99,12 +107,12 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
 
     private void addMarker() {
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(mLatLng);
+        markerOptions.position(mLatLngSelect);
         markerOptions.draggable(false);
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.location_poi_loc));
         markerOptions.setFlat(true);
         mAMap.addMarker(markerOptions);
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 18));
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngSelect, 18));
     }
 
     @Override
@@ -149,10 +157,14 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     public void onLocationChanged(AMapLocation aMapLocation) {
         //定位地址变化
         if (aMapLocation != null) {
+
             //当前位置描点
             mCityCode = aMapLocation.getCityCode();
-            mLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+            mLatLngFirst = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+            mLatLngSelect = mLatLngFirst;
             addMarker();
+
+            initGeocodeSearch();
         }
     }
 
@@ -166,8 +178,8 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         if (cameraPosition != null) {
             LatLonPoint latLonPoint =
                     new LatLonPoint(cameraPosition.target.latitude, cameraPosition.target.longitude);
+            mLatLngSelect = new LatLng(cameraPosition.target.latitude, cameraPosition.target.longitude);
 
-            //地址选择完成,根据经纬度获取地址信息
             startLoading();
             RegeocodeQuery query = new RegeocodeQuery(latLonPoint, 100, GeocodeSearch.AMAP);
             mGeocodeSearch.getFromLocationAsyn(query);
@@ -178,8 +190,18 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     public void onMapLoaded() {
         mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         initMap();
-        initLocation();
-        initGeocodeSearch();
+
+        if (mLatLngFirst != null) {
+            mLatLngSelect = mLatLngFirst;
+            addMarker();
+            mTvAddressSelect.setText(mLocationDes);
+
+            //地址选择完成,根据经纬度获取地址信息
+            initGeocodeSearch();
+
+        } else {
+            initLocation();
+        }
     }
 
     private void initMap() {
@@ -194,7 +216,7 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
 
     @OnClick(R.id.iv_location)
     void onLocationClicked(View view) {
-        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLng, 18));
+        mAMap.moveCamera(CameraUpdateFactory.newLatLngZoom(mLatLngFirst, 18));
     }
 
 //    @OnClick(R.id.btn_search)
@@ -209,7 +231,8 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     @Override
     public void onRegeocodeSearched(RegeocodeResult regeocodeResult, int i) {
         if (i == 1000) {
-            mTvAddressSelect.setText(regeocodeResult.getRegeocodeAddress().getFormatAddress());
+            mLocationDes = regeocodeResult.getRegeocodeAddress().getFormatAddress();
+            mTvAddressSelect.setText(mLocationDes);
         }
     }
 
@@ -224,16 +247,16 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST_CODE_SEARCH_MAP) {
-            if (resultCode == Constants.RESULT_CODE_MAP_SELECT_SUC) {
-
-                Tip tip = data.getParcelableExtra("address");
-                mLatLng = new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude());
-                addMarker();
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == Constants.REQUEST_CODE_SEARCH_MAP) {
+//            if (resultCode == Constants.RESULT_CODE_MAP_SELECT_SUC) {
+//
+//                Tip tip = data.getParcelableExtra("address");
+//                mLatLngSelect = new LatLng(tip.getPoint().getLatitude(), tip.getPoint().getLongitude());
+//                addMarker();
+//            }
+//        }
+//    }
 }

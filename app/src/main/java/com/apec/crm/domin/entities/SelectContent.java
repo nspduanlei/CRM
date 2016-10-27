@@ -10,11 +10,32 @@ import android.os.Parcelable;
 public class SelectContent implements Parcelable {
     private String id;
     private String name;
+    private String other;
 
-    public SelectContent(String id, String name) {
+
+    public SelectContent(String id, String name, String other) {
         this.id = id;
         this.name = name;
+        this.other = other;
     }
+
+    protected SelectContent(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        other = in.readString();
+    }
+
+    public static final Creator<SelectContent> CREATOR = new Creator<SelectContent>() {
+        @Override
+        public SelectContent createFromParcel(Parcel in) {
+            return new SelectContent(in);
+        }
+
+        @Override
+        public SelectContent[] newArray(int size) {
+            return new SelectContent[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -32,6 +53,14 @@ public class SelectContent implements Parcelable {
         this.name = name;
     }
 
+    public String getOther() {
+        return other;
+    }
+
+    public void setOther(String other) {
+        this.other = other;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -41,22 +70,6 @@ public class SelectContent implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(id);
         dest.writeString(name);
+        dest.writeString(other);
     }
-
-    protected SelectContent(Parcel in) {
-        id = in.readString();
-        name = in.readString();
-    }
-
-    public static final Creator<SelectContent> CREATOR = new Creator<SelectContent>() {
-        @Override
-        public SelectContent createFromParcel(Parcel in) {
-            return new SelectContent(in);
-        }
-
-        @Override
-        public SelectContent[] newArray(int size) {
-            return new SelectContent[size];
-        }
-    };
 }

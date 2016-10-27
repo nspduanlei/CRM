@@ -1,16 +1,21 @@
 package com.apec.crm.injector.components;
 
+import com.apec.crm.domin.useCase.custom.AddContactUseCase;
 import com.apec.crm.domin.useCase.custom.AddCustomUseCase;
+import com.apec.crm.domin.useCase.custom.DelContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomDetailUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
+import com.apec.crm.domin.useCase.custom.UpdateContactUseCase;
+import com.apec.crm.domin.useCase.custom.UpdateCustomUseCase;
 import com.apec.crm.domin.useCase.sys.GetAreaUseCase;
 import com.apec.crm.injector.Activity;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.injector.modules.CustomModule;
 import com.apec.crm.views.activities.AddCustomActivity;
+import com.apec.crm.views.activities.ContactActivity;
 import com.apec.crm.views.activities.CustomDetailActivity;
 import com.apec.crm.views.activities.FilterCustomActivity;
 import com.apec.crm.views.activities.SearchCustomActivity;
@@ -32,6 +37,7 @@ public interface CustomComponent extends ActivityComponent {
     void inject(SearchCustomActivity searchCustomActivity);
     void inject(FilterCustomActivity filterCustomActivity);
     void inject(CustomDetailActivity customDetailActivity);
+    void inject(ContactActivity contactActivity);
 
     //获取客户列表
     GetCustomListUseCase getCustomListUseCase();
@@ -53,5 +59,17 @@ public interface CustomComponent extends ActivityComponent {
 
     //获取客户详情
     GetCustomDetailUseCase getCustomDetailUseCase();
+
+    //添加联系人
+    AddContactUseCase addContactUseCase();
+
+    //删除联系人
+    DelContactUseCase delContactUse();
+
+    //删除联系人
+    UpdateContactUseCase updateContactUseCase();
+
+    //更新客户
+    UpdateCustomUseCase updateCustomUseCase();
 
 }

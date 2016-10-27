@@ -105,7 +105,7 @@ public class SelectListPresenter implements Presenter {
 
             for (int i = 0; i < contacts.size(); i++) {
                 selectContents.add(new SelectContent(contacts.get(i).getId(),
-                        contacts.get(i).getContactName()));
+                        contacts.get(i).getContactName(), contacts.get(i).getContactPhone()));
             }
 
 
@@ -134,7 +134,7 @@ public class SelectListPresenter implements Presenter {
 
             for (int i = 0; i < openSeas.size(); i++) {
                 selectContents.add(new SelectContent(openSeas.get(i).getOpenSeaNo(),
-                        openSeas.get(i).getOpenSeaName()));
+                        openSeas.get(i).getOpenSeaName(), null));
             }
 
 

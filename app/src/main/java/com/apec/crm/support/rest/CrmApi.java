@@ -16,7 +16,9 @@ import com.apec.crm.domin.entities.func.Result;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import rx.Observable;
 
 public interface CrmApi {
@@ -38,12 +40,6 @@ public interface CrmApi {
      */
     @POST("userAppInterface-service/getUserInfo.apec")
     Observable<Result<User>> getUserInfo();
-
-    /**
-     * 获取拜访记录
-     */
-    @POST("VISIT-RECORD-SERVICE/getVisitRecordsByUser.apec")
-    Observable<Result<ListPage<VisitRecord>>> getVisitRecord(@Body RequestBody body);
 
     /**
      * 获取客户列表
@@ -89,5 +85,63 @@ public interface CrmApi {
      */
     @POST("CUSTOMER-SERVICE/findOneCustomer.apec")
     Observable<Result<CustomDetail>> getCustomDetail(@Body RequestBody body);
+
+    /**
+     * 更新客户
+     */
+    @POST("CUSTOMER-SERVICE/updateCustomer.apec")
+    Observable<Result> updateCustom(@Body RequestBody body);
+
+
+    /**
+     * 添加客户联系人
+     */
+    @POST("CUSTOMER-SERVICE/addContact.apec")
+    Observable<Result> addContact(@Body RequestBody body);
+
+    /**
+     * 删除客户联系人
+     */
+    @POST("CUSTOMER-SERVICE/deleteContact.apec")
+    Observable<Result> delContact(@Body RequestBody body);
+
+    /**
+     * 更新客户联系人
+     */
+    @POST("CUSTOMER-SERVICE/updateContact.apec")
+    Observable<Result> updateContact(@Body RequestBody body);
+
+    /**
+     * 添加拜访
+     */
+    @Multipart
+    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    Observable<Result> addVisit(@Part("data") RequestBody data,
+                                @Part("file\"; filename=\"image1.png\"")RequestBody img1,
+                                @Part("file\"; filename=\"image2.png\"")RequestBody img2,
+                                @Part("file\"; filename=\"image3.png\"")RequestBody img3);
+    @Multipart
+    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    Observable<Result> addVisit(@Part("data") RequestBody data,
+                                @Part("file\"; filename=\"image1.png\"")RequestBody img1,
+                                @Part("file\"; filename=\"image2.png\"")RequestBody img2);
+
+    @Multipart
+    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    Observable<Result> addVisit(@Part("data") RequestBody data,
+                                @Part("file\"; filename=\"image3.png\"")RequestBody img1);
+
+    @POST("VISIT-RECORD-SERVICE/addVisitRecord.apec")
+    Observable<Result> addVisit(@Body RequestBody body);
+
+
+    /**
+     * 获取拜访记录
+     */
+    @POST("VISIT-RECORD-SERVICE/getVisitRecordsByUser.apec")
+    Observable<Result<ListPage<VisitRecord>>> getVisitByU(@Body RequestBody body);
+
+    @POST("VISIT-RECORD-SERVICE/getVisitRecordsByCustomer.apec")
+    Observable<Result<ListPage<VisitRecord>>> getVisitByC(@Body RequestBody body);
 
 }

@@ -21,6 +21,7 @@
         android:layout_marginTop="80dp"
         android:background="@color/colorBlackT"
         android:gravity="center"
+        android:text="正在定位。。。。"
         android:textColor="@color/colorBlack"/>
 
     <ImageView
@@ -28,15 +29,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:src="@drawable/location_btn"
-    android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:src="@drawable/location_btn"/>
 
     <!--<Button-->
-        <!--android:id="@+id/btn_search"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|right"-->
-        <!--android:text="搜索"/>-->
+    <!--android:id="@+id/btn_search"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="bottom|right"-->
+    <!--android:text="搜索"/>-->
 
     <FrameLayout
         android:layout_width="wrap_content"

@@ -11,6 +11,7 @@ import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Address;
 import com.apec.crm.domin.entities.FilterCustomBean;
+import com.apec.crm.domin.entities.FilterCustomNameBean;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
@@ -46,13 +47,18 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
     View mUserLine;
 
     boolean isSelect = false;
+    boolean hasData = false;
 
     @Inject
     SelectCityUtil mSelectCityUtil;
 
-    FilterCustomBean mFilterCustomBean = new FilterCustomBean();
+    FilterCustomBean mFilterCustomBean;
+    FilterCustomNameBean mFilterCustomNameBean;
 
     public static final String ARG_RESULT = "arg_result";
+    public static final String ARG_RESULT_NAME = "arg_result_name";
+    public static final String ARG_FILTER_BEAN = "arg_filter_bean";
+    public static final String ARG_FILTER_BEAN_NAME = "arg_filter_bean_name";
 
     @Override
     protected void setUpContentView() {
@@ -62,6 +68,25 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mSelectCityUtil.init(this);
+        mFilterCustomNameBean = getIntent().getParcelableExtra(ARG_FILTER_BEAN_NAME);
+        mFilterCustomBean = getIntent().getParcelableExtra(ARG_FILTER_BEAN);
+
+        if (mFilterCustomNameBean != null) {
+            hasData = true;
+
+            mTvArea.setText(mFilterCustomNameBean.getAreaName());
+            mTvCustomType.setText(mFilterCustomNameBean.getCustomerTypeName());
+            mTvCustomLevel.setText(mFilterCustomNameBean.getCustomerLevelName());
+            mTvCustomState.setText(mFilterCustomNameBean.getCustomerStateName());
+            mTvCustomClass.setText(mFilterCustomNameBean.getClassName());
+            mTvUser.setText(mFilterCustomNameBean.getUserName());
+        } else {
+            mFilterCustomNameBean = new FilterCustomNameBean();
+        }
+
+        if (mFilterCustomBean == null) {
+            mFilterCustomBean = new FilterCustomBean();
+        }
     }
 
     @Override
@@ -85,8 +110,11 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
     @OnClick(R.id.btn_sure)
     void onSureClicked(View view) {
         if (isSelect) {
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(ARG_RESULT, mFilterCustomBean);
+            bundle.putParcelable(ARG_RESULT_NAME, mFilterCustomNameBean);
             setResult(Constants.RESULT_CODE_FILTER_CUSTOM,
-                    getIntent().putExtra(ARG_RESULT, mFilterCustomBean));
+                    getIntent().putExtras(bundle));
         } else {
             setResult(RESULT_CANCELED);
         }
@@ -101,14 +129,19 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
     @OnClick(R.id.btn_reset)
     void onReSetClicked(View view) {
 
-        isSelect = false;
+        if (hasData || isSelect) {
+            mTvArea.setText("");
+            mTvCustomType.setText("");
+            mTvCustomLevel.setText("");
+            mTvCustomState.setText("");
+            mTvCustomClass.setText("");
+            mTvUser.setText("");
 
-        mTvArea.setText("");
-        mTvCustomType.setText("");
-        mTvCustomLevel.setText("");
-        mTvCustomState.setText("");
-        mTvCustomClass.setText("");
-        mTvUser.setText("");
+            mFilterCustomBean = new FilterCustomBean();
+            mFilterCustomNameBean = new FilterCustomNameBean();
+
+            isSelect = true;
+        }
     }
 
     @OnClick(R.id.fl_area)
@@ -152,8 +185,15 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
 
     @Override
     public void selectCityFinish(Address address) {
-        mTvArea.setText(String.format("%s/%s/%s", address.getProvinceName(),
-                address.getCityName(), address.getAreaName()));
+        isSelect = true;
+        mFilterCustomBean.setAreaId(address.getAreaId());
+
+        String areaString = String.format("%s/%s/%s", address.getProvinceName(),
+                address.getCityName(), address.getAreaName());
+
+        mFilterCustomNameBean.setAreaName(areaString);
+
+        mTvArea.setText(areaString);
     }
 
     @Override
@@ -170,25 +210,37 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
 
             switch (resultCode) {
                 case Constants.RESULT_CODE_SELECT_CUSTOM_TYPE:
+
                     mFilterCustomBean.setCustomerType(selectContent.getId());
+                    mFilterCustomNameBean.setCustomerTypeName(selectContent.getName());
+
                     mTvCustomType.setText(selectContent.getName());
                     isSelect = true;
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_LEVEL:
+
                     mFilterCustomBean.setCustomerLevel(selectContent.getId());
+                    mFilterCustomNameBean.setCustomerLevelName(selectContent.getName());
+
                     mTvCustomLevel.setText(selectContent.getName());
                     isSelect = true;
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_STATE:
+
                     mFilterCustomBean.setCustomerState(selectContent.getId());
+                    mFilterCustomNameBean.setCustomerStateName(selectContent.getName());
+
                     mTvCustomState.setText(selectContent.getName());
                     isSelect = true;
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_CLASS:
+
                     mFilterCustomBean.setClassId(selectContent.getId());
+                    mFilterCustomNameBean.setClassName(selectContent.getName());
+
                     mTvCustomClass.setText(selectContent.getName());
                     isSelect = true;
                     break;

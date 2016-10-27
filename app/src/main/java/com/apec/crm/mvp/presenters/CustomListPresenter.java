@@ -82,7 +82,6 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doLoadMore() {
-
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
 
         mGetCustomListUseCase.setData(mFilterCustomBean);

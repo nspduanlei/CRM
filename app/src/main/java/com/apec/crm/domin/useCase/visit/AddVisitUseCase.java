@@ -1,10 +1,13 @@
 package com.apec.crm.domin.useCase.visit;
 
-import com.apec.crm.domin.entities.CustomDetail;
+import com.apec.crm.domin.entities.AddVisitBean;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.UseCase;
 import com.google.gson.Gson;
+
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,9 +26,11 @@ public class AddVisitUseCase extends UseCase<Result> {
     private final GoodsRepository mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
+
     private final Gson mGson;
 
-    RequestBody mRequestBody;
+    RequestBody mData;
+    ArrayList<RequestBody> mImages;
 
     @Inject
     public AddVisitUseCase(GoodsRepository repository,
@@ -38,20 +43,23 @@ public class AddVisitUseCase extends UseCase<Result> {
         mGson = gson;
     }
 
-    public void setData(CustomDetail customDetail) {
-
-
-
-
-        mRequestBody = RequestBody.create(
+    public void setData(AddVisitBean addVisitBean, ArrayList<File> files) {
+        mData = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
-                mGson.toJson(customDetail));
+                mGson.toJson(addVisitBean));
+
+        mImages = new ArrayList<>();
+        for (int i = 0 ; i < files.size(); i++) {
+            RequestBody requestBody =
+                    RequestBody.create(MediaType.parse("multipart/form-data"), files.get(i));
+            mImages.add(requestBody);
+        }
     }
 
     @Override
     public Observable<Result> buildObservable() {
 
-        return mRepository.addCustom(mRequestBody)
+        return mRepository.addVisit(mData, mImages)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);
     }

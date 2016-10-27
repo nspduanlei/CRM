@@ -1,5 +1,7 @@
 package com.apec.crm.views.fragments;
 
+import android.os.Bundle;
+
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.domin.entities.VisitRecord;
@@ -23,6 +25,18 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
     @Inject
     VisitRecordPresenter mVisitRecordPresenter;
 
+    //根据客户搜索拜访记录
+    public static final String ARG_CUSTOM_ID = "arg_custom_id";
+    private String mCustomId;
+
+    //根据日期搜索拜访记录 2016-09-19
+    public static final String ARG_DATE_STR = "arg_date_str";
+    private String mDataStr;
+
+    //根据用户搜索拜访记录
+    public static final String ARG_USER_ID = "arg_user_id";
+    private String mUserId;
+
     @Override
     protected CommonRecyclerAdapter getAdapter() {
         //隐藏头部
@@ -38,6 +52,12 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
         };
 
         return adapter;
+    }
+
+    public static VisitRecordFragment newInstance(Bundle args) {
+        VisitRecordFragment newFragment = new VisitRecordFragment();
+        newFragment.setArguments(args);
+        return newFragment;
     }
 
     @Override
@@ -64,6 +84,10 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
         onRefreshComplete(visitRecords);
 
         //mVisitRecordPresenter.refresh();
+    }
+
+    public void refreshData() {
+        loadFirstPage();
     }
 
     @Override

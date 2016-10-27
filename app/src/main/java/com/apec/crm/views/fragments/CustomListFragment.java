@@ -51,7 +51,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
                 holder.setOnItemClickListener(v -> {
                     Intent intent = new Intent(getActivity(), CustomActivity.class);
-                    intent.putExtra("custom", custom);
+                    intent.putExtra(CustomActivity.ARG_CUSTOM, custom);
                     getActivity().startActivity(intent);
                 });
             }
@@ -131,7 +131,9 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     }
 
     public void updateForFilter(FilterCustomBean filterCustomBean) {
-        mCustomListPresenter.setFilter(filterCustomBean);
+        if (filterCustomBean != null) {
+            mCustomListPresenter.setFilter(filterCustomBean);
+        }
         mCustomListPresenter.refresh();
     }
 }

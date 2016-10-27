@@ -10,7 +10,7 @@
 
     <style name="StartAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@color/nameColor</item>
+        <item name="android:windowBackground">@color/colorWhite</item>
     </style>
 
     <style name="PopWindowStyle" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">

@@ -88,6 +88,11 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void clearData() {
+        mData.clear();
+        notifyDataSetChanged();
+    }
+
 
 
 

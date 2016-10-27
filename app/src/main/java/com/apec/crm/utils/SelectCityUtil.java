@@ -58,7 +58,6 @@ public class SelectCityUtil implements OnClickListener {
     private int selProvince, selCity, selArea;
 
 
-
     @Inject
     public SelectCityUtil(Context context, GetAreaUseCase getAreaUseCase) {
         mContext = context;
@@ -67,35 +66,25 @@ public class SelectCityUtil implements OnClickListener {
 
     /**
      * 编辑地址
-     * @param selectArea
-     * @param selCity
-     * @param selArea
-     * @param selCityId
-     * @param selAreaId
      */
-    public void init(SelectArea selectArea,
-                        String selCity, String selArea,
-                        int selCityId, int selAreaId) {
+    public void init(SelectArea selectArea, Address address) {
         init(selectArea);
 
-        if (!StringUtils.isNullOrEmpty(selCity)) {
-            rbCity.setVisibility(View.VISIBLE);
-            rbCity.setText(selCity);
+        this.selProvince = Integer.valueOf(address.getProviceId());
+        this.selCity = Integer.valueOf(address.getCityId());
+        this.selArea = Integer.valueOf(address.getAreaId());
 
-        }
-        if (!StringUtils.isNullOrEmpty(selArea)) {
-            rbArea.setVisibility(View.VISIBLE);
-            rbArea.setText(selArea);
-        }
 
-        if (selCityId != 0) {
-            curIndex = 1;
-            obtainAreaForShow(1);
-            this.selCity = selCityId;
-        }
-        if (selAreaId != 0) {
-            this.selArea = selAreaId;
-        }
+        rbProvince.setVisibility(View.VISIBLE);
+        rbProvince.setText(address.getProvinceName());
+
+        rbCity.setVisibility(View.VISIBLE);
+        rbCity.setText(address.getCityName());
+
+        rbArea.setVisibility(View.VISIBLE);
+        rbArea.setText(address.getAreaName());
+
+        obtainAreaForShow(PROVINCE);
 
         isShowArea = true;
         rbPlease.setVisibility(View.GONE);
@@ -287,12 +276,17 @@ public class SelectCityUtil implements OnClickListener {
 
             if (areas.size() > 0) { //如果有地区数据
                 switch (curIndex) {
-                    case 1:
+                    case PROVINCE:
+                        provinceList = areas;
+                        curIndex = 1;
+                        obtainAreaForShow(selProvince);
+                        break;
+                    case CITY:
                         cityList = areas;
                         curIndex = 2;
                         obtainAreaForShow(selCity);
                         break;
-                    case 2:
+                    case AREA:
                         areaList = areas;
                         rbArea.performClick();
                         break;

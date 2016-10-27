@@ -44,6 +44,8 @@ public class VisitCustomActivity extends BaseActivity {
     @BindView(R.id.iv_arrow_date)
     ImageView mIvArrowDate;
 
+    VisitRecordFragment mVisitRecordFragment;
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_visit_custom, R.string.visit_custom_title);
@@ -61,7 +63,6 @@ public class VisitCustomActivity extends BaseActivity {
         setMenuText("添加拜访", v -> {
             Intent intent = new Intent(this, AddVisitActivity.class);
             startActivityForResult(intent, Constants.REQUEST_CODE_ADD_VISIT);
-
         });
     }
 
@@ -76,9 +77,9 @@ public class VisitCustomActivity extends BaseActivity {
             T.showShort(this, date.toString());
         });
 
-        VisitRecordFragment visitRecordFragment = new VisitRecordFragment();
+        mVisitRecordFragment = new VisitRecordFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, visitRecordFragment, "visitRecord")
+                .replace(R.id.fragment_container, mVisitRecordFragment, "visitRecord")
                 .commit();
 
         initMenu();
@@ -133,6 +134,17 @@ public class VisitCustomActivity extends BaseActivity {
     void OnBodyClicked(View view) {
         if (mFlMenu.getVisibility() == View.VISIBLE) {
             mFlMenu.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE_ADD_VISIT) {
+            if (resultCode == Constants.RESULT_CODE_ADD_VISIT) {
+                mVisitRecordFragment.refreshData();
+            }
         }
     }
 }

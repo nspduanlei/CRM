@@ -2,13 +2,13 @@ package com.apec.crm.views.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
@@ -17,10 +17,16 @@ import com.amap.api.maps.model.LatLng;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.AddVisitBean;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.SelectContent;
+import com.apec.crm.injector.components.DaggerVisitComponent;
+import com.apec.crm.injector.modules.ActivityModule;
+import com.apec.crm.mvp.presenters.AddVisitPresenter;
+import com.apec.crm.mvp.views.AddVisitView;
 import com.apec.crm.utils.GalleryFinalUtils;
 import com.apec.crm.utils.LocationTask;
+import com.apec.crm.utils.StringUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.squareup.picasso.MemoryPolicy;
@@ -30,6 +36,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.finalteam.galleryfinal.GalleryFinal;
@@ -38,7 +46,8 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 /**
  * Created by duanlei on 16/9/19.
  */
-public class AddVisitActivity extends BaseActivity implements AMapLocationListener, GalleryFinal.OnHanlderResultCallback {
+public class AddVisitActivity extends BaseActivity implements AMapLocationListener,
+        GalleryFinal.OnHanlderResultCallback, AddVisitView {
 
     @BindView(R.id.et_content)
     EditText mEtContent;
@@ -55,58 +64,77 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @BindView(R.id.ll_pic)
     LinearLayout mLlPic;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
+
     LocationTask mLocationTask;
     //当前选择经纬度
     LatLng mLatLng;
 
-    public static final int FROM_CUSTOM = 0;
-    public static final int FROM_MAIN = 1;
-
-    private int mType;
+    @Inject
+    AddVisitPresenter mAddVisitPresenter;
 
     private String mCustomId, mContactId;
+    private AddVisitBean mAddVisitBean = new AddVisitBean();
 
     GalleryFinalUtils mGalleryFinalUtils;
+    public static final String ARG_CUSTOM_ID = "arg_custom_id";
 
     //选择的图片
-    private ArrayList<String> mImages = new ArrayList<>();
+    private ArrayList<File> mImages = new ArrayList<>();
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_visit, R.string.add_visit_title);
         setMenuText("保存", v -> {
+            if (mCustomId == null) {
+                T.showShort(this, "请选择客户");
+            } else if (mContactId == null) {
+                T.showShort(this, "请选择联系人");
+            }
+//            else if (mImages.size() == 0) {
+//                T.showShort(this, "请选择图片");
+//            }
+            else {
+                String mark = mEtContent.getText().toString();
+                if (!StringUtils.isNullOrEmpty(mark)) {
+                    mAddVisitBean.setVisitRemarks(mark);
+                }
 
+                //添加拜访
+                mAddVisitPresenter.addVisit(mAddVisitBean, mImages);
+            }
         });
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+        mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
+
+        if (mCustomId != null) {
+            mFlCustom.setVisibility(View.GONE);
+        }
+
         //定位获取当前位置
         mLocationTask = new LocationTask(getApplicationContext());
         mLocationTask.setOnLocationGetListener(this);
         mLocationTask.startSingleLocate();
-
-        mType = getIntent().getIntExtra("addVisitType", 0);
-        switch (mType) {
-            case 0:
-
-                break;
-            case 1:
-                mFlCustom.setVisibility(View.GONE);
-                break;
-        }
 
         mGalleryFinalUtils = new GalleryFinalUtils(this);
     }
 
     @Override
     protected void initDependencyInjector(MyApplication application) {
-
+        DaggerVisitComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(application.getAppComponent())
+                .build().inject(this);
     }
 
     @Override
     protected void initPresenter() {
-
+        mAddVisitPresenter.attachView(this);
+        mAddVisitPresenter.onCreate();
     }
 
     @Override
@@ -114,6 +142,14 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         if (aMapLocation != null) {
             mLatLng = new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
             setLocationString(aMapLocation.getAddress());
+
+            //保存地址信息
+            AddVisitBean.LocationJsonBean locationJsonBean =
+                    new AddVisitBean.LocationJsonBean();
+            locationJsonBean.setLatitude(mLatLng.latitude);
+            locationJsonBean.setLongitude(mLatLng.longitude);
+            mAddVisitBean.setLocationJson(locationJsonBean);
+            mAddVisitBean.setCustomerAddress(aMapLocation.getAddress());
         }
     }
 
@@ -132,38 +168,45 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
 
     @OnClick(R.id.fl_contact)
     void onContactClicked(View view) {
-
         if (mCustomId == null) {
             T.showShort(this, "请先选择客户");
             return;
         }
-
         Intent intent = new Intent(this, SelectListActivity.class);
         intent.putExtra(SelectListActivity.CUSTOM_ID, mCustomId);
         intent.putExtra(SelectListActivity.LIST_TYPE, SelectListActivity.CUSTOM_CONTACT);
         startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_ATTR);
-
     }
 
 
     @OnClick(R.id.iv_add_image)
     void onSelectImageClicked(View view) {
-        mGalleryFinalUtils.selectVisitImage(this);
+        if (mImages.size() < 3) {
+            mGalleryFinalUtils.selectVisitImage(this, mImages.size());
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-
         switch (requestCode) {
 
             case Constants.REQUEST_CODE_MARK_MAP: //选择地址
                 if (resultCode == Constants.RESULT_CODE_MARK_MAP) {
                     Bundle bundle = data.getExtras();
-                    mLatLng = bundle.getParcelable(MapLocationActivity.LOCATION_LATLOG);
+                    mLatLng = bundle.getParcelable(MapLocationActivity.RESULT_LATLNG);
+                    String locationDetail =
+                            bundle.getString(MapLocationActivity.RESULT_DETAIL);
+                    setLocationString(locationDetail);
 
-                    setLocationString(bundle.getString(MapLocationActivity.LOCATION_DETAIL));
+                    //保存地址信息
+                    AddVisitBean.LocationJsonBean locationJsonBean =
+                            new AddVisitBean.LocationJsonBean();
+                    locationJsonBean.setLatitude(mLatLng.latitude);
+                    locationJsonBean.setLongitude(mLatLng.longitude);
+                    mAddVisitBean.setLocationJson(locationJsonBean);
+                    mAddVisitBean.setCustomerAddress(locationDetail);
                 }
                 break;
 
@@ -172,6 +215,9 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                     Custom custom = data.getParcelableExtra(SearchCustomActivity.CUSTOM);
                     mCustomId = custom.getId();
                     mTvCustom.setText(custom.getCustomerName());
+
+                    mAddVisitBean.setCustomerNo(custom.getId());
+                    mAddVisitBean.setCustomerName(custom.getCustomerName());
                 }
 
                 break;
@@ -181,16 +227,17 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                     SelectContent content = data.getParcelableExtra(SelectListActivity.RESULT);
                     mContactId = content.getId();
                     mTvContact.setText(content.getName());
+
+                    mAddVisitBean.setContactNo(content.getId());
+                    mAddVisitBean.setContactName(content.getName());
+                    mAddVisitBean.setContactPhone(content.getOther());
                 }
                 break;
         }
-
-
     }
 
     private void setLocationString(String locationString) {
         mTvLocation.setText(locationString);
-        mTvLocation.setTextColor(Color.BLACK);
     }
 
     @Override
@@ -198,6 +245,9 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
 
             for (int i = 0; i < resultList.size(); i++) {
+
+                mImages.add(new File(resultList.get(i).getPhotoPath()));
+
                 ImageView imageView = new ImageView(this);
                 imageView.setLayoutParams(mIvAddImage.getLayoutParams());
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -222,6 +272,28 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
 
     @Override
     public void onHanlderFailure(int requestCode, String errorMsg) {
+
+    }
+
+    @Override
+    public void addVisitSuccess() {
+        T.showShort(this, "添加拜访成功");
+        setResult(Constants.RESULT_CODE_ADD_VISIT);
+        this.finish();
+    }
+
+    @Override
+    public void showLoadingView() {
+        mLoading.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoadingView() {
+        mLoading.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMsg) {
 
     }
 }

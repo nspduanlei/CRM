@@ -11,4 +11,5 @@ public interface CustomDetailView extends View {
 
     void getCustomDetailSuccess(CustomDetail customDetail);
 
+    void updateCustomSuccess();
 }

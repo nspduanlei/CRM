@@ -58,12 +58,11 @@ public class GalleryFinalUtils {
         GalleryFinal.openGallerySingle(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);
     }
 
-
-
     /**
      * 选择拜访图片
      */
-    public void selectVisitImage(GalleryFinal.OnHanlderResultCallback onHanlderResultCallback) {
+    public void selectVisitImage(GalleryFinal.OnHanlderResultCallback onHanlderResultCallback,
+                                 int size) {
 
         //配置功能
         FunctionConfig functionConfig = new FunctionConfig.Builder()
@@ -71,7 +70,7 @@ public class GalleryFinalUtils {
                 .setEnableEdit(true)
                 .setEnableCrop(true)
                 .setEnablePreview(true)
-                .setMutiSelectMaxSize(3)
+                .setMutiSelectMaxSize(3 - size)
                 .build();
 
         GalleryFinal.openGalleryMuti(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);

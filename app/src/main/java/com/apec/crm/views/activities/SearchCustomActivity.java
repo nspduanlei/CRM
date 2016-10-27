@@ -6,10 +6,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -55,8 +55,8 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @BindView(R.id.pb_loading)
     ProgressBar mLoading;
 
-    @BindView(R.id.tv_empty)
-    TextView mEmpty;
+    @BindView(R.id.fl_empty)
+    FrameLayout mEmpty;
 
     public static final int FROM_CUSTOM = 0;  //客户页面搜索
     public static final int SEARCH_CUSTOM = 1; //选择客户
@@ -102,6 +102,7 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
                 SearchCustomActivity.this.finish();
             } else {
                 Intent intent = new Intent(SearchCustomActivity.this, CustomActivity.class);
+                intent.putExtra(CustomActivity.ARG_CUSTOM, data);
                 startActivity(intent);
             }
 
@@ -130,6 +131,7 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @Override
     public void onSearchSuccess(ArrayList<Custom> customs) {
         if (customs.size() == 0) {
+            mCommonAdapter.clearData();
             mEmpty.setVisibility(View.VISIBLE);
         } else {
             mEmpty.setVisibility(View.GONE);

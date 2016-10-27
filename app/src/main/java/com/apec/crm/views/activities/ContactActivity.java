@@ -12,12 +12,18 @@ import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.injector.components.DaggerCustomComponent;
+import com.apec.crm.injector.modules.ActivityModule;
+import com.apec.crm.mvp.presenters.ContactPresenter;
+import com.apec.crm.mvp.views.ContactView;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.StringUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -26,15 +32,17 @@ import butterknife.OnClick;
  * Created by duanlei on 2016/10/14.
  */
 
-public class ContactActivity extends BaseActivity {
+public class ContactActivity extends BaseActivity implements ContactView {
 
-    public static final int TYPE_ADD_HAS_C = 0; //添加联系人，已知客户
-    public static final int TYPE_ADD_NO_C = 1; //添加联系人，未知客户
+    public static final int TYPE_ADD = 0; //添加联系人，数据返回
+    public static final int TYPE_ADD_SAVE = 1; //添加联系人，在本页保存
     public static final int TYPE_SHOW = 2;
     public static final int TYPE_EDIT = 3;
+    public static final int TYPE_EDIT_SAVE = 4;
 
     public static final String ARG_TYPE = "arg_type";
     public static final String ARG_CONTACT = "arg_contact";
+    public static final String ARG_CUSTOM_ID = "arg_custom_id";
 
     @BindView(R.id.et_contact_name)
     EditText mEtContactName;
@@ -56,12 +64,14 @@ public class ContactActivity extends BaseActivity {
     @BindView(R.id.custom_line)
     View mCustomLine;
 
-
     private int mType;
-
-    Contact mContact;
-
     String mSex, mAge;
+
+    @Inject
+    ContactPresenter mContactPresenter;
+
+    String mCustomId;
+    Contact mContact;
 
     @Override
     protected void setUpContentView() {
@@ -73,26 +83,47 @@ public class ContactActivity extends BaseActivity {
         mType = getIntent().getIntExtra(ARG_TYPE, 0);
 
         switch (mType) {
-            case TYPE_ADD_HAS_C:
-                setUpTitle("添加联系人");
+            case TYPE_ADD:
                 mFLCustom.setVisibility(View.GONE);
                 mCustomLine.setVisibility(View.GONE);
-                break;
-
-            case TYPE_ADD_NO_C:
+            case TYPE_ADD_SAVE:
                 setUpTitle("添加联系人");
                 break;
 
             case TYPE_EDIT:
-                setUpTitle("联系人详情");
-                setBtnImage(R.drawable.nav_delete_drawable, v -> {
+            case TYPE_EDIT_SAVE:
+                mFLCustom.setVisibility(View.GONE);
+                mCustomLine.setVisibility(View.GONE);
 
+                setUpTitle("联系人详情");
+                mContact = getIntent().getParcelableExtra(ARG_CONTACT);
+
+                showContact();
+
+                setBtnImage(R.drawable.nav_delete_drawable, v -> {
+                    mContactPresenter.delContact(mContact.getId());
                 });
                 break;
             case TYPE_SHOW:
                 setUpTitle("联系人详情");
                 break;
+
         }
+
+        mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
+        if (mCustomId != null) {
+            mFLCustom.setVisibility(View.GONE);
+            mCustomLine.setVisibility(View.GONE);
+        }
+    }
+
+    public void showContact() {
+        mEtContactName.setText(mContact.getContactName());
+        mEtPhone.setText(mContact.getContactPhone());
+        mEtPosition.setText(mContact.getContactPost());
+        mEtTel.setText(mContact.getContactTel());
+        mTvContactAge.setText(mContact.getContactAge());
+        mTvSex.setText(mContact.getContactSex());
     }
 
     public void saveData() {
@@ -109,7 +140,9 @@ public class ContactActivity extends BaseActivity {
         } else if (!msgPhone.equals("")) {
             T.showShort(this, msgPhone);
         } else {
-            mContact = new Contact();
+            if (mContact == null) {
+                mContact = new Contact();
+            }
 
             mContact.setContactName(name);
             mContact.setContactPhone(phone);
@@ -126,9 +159,22 @@ public class ContactActivity extends BaseActivity {
                 mContact.setContactTel(mAge);
             }
 
-            setResult(Constants.RESULT_CODE_ADD_CONTACT,
-                    getIntent().putExtra(ARG_CONTACT, mContact));
-            this.finish();
+            switch (mType) {
+                case TYPE_ADD:
+                case TYPE_EDIT:
+                    setResult(Constants.RESULT_CODE_ADD_CONTACT,
+                            getIntent().putExtra(ARG_CONTACT, mContact));
+                    this.finish();
+                    break;
+                case TYPE_ADD_SAVE:
+                    mContactPresenter.addContact(mContact);
+                    break;
+
+                case TYPE_EDIT_SAVE:
+                    mContactPresenter.updateContact(mContact);
+                    break;
+            }
+
         }
     }
 
@@ -140,12 +186,22 @@ public class ContactActivity extends BaseActivity {
 
     @Override
     protected void initDependencyInjector(MyApplication application) {
-
+        DaggerCustomComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(application.getAppComponent())
+                .build().inject(this);
     }
 
     @Override
     protected void initPresenter() {
+        mContactPresenter.attachView(this);
+        mContactPresenter.onCreate();
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mContactPresenter.onStop();
     }
 
     /**
@@ -155,18 +211,15 @@ public class ContactActivity extends BaseActivity {
      */
     @OnClick(R.id.fl_sex)
     void onSexClicked(View view) {
-
         ArrayList<MenuEntity> menuEntities = new ArrayList<>();
         menuEntities.add(new MenuEntity(0, "男"));
         menuEntities.add(new MenuEntity(1, "女"));
 
         MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
             mTvSex.setText(menuEntities.get(position).getName());
-            //mTvSex.setTextColor(Color.BLACK);
 
             dialog.dismiss();
         });
-
     }
 
     /**
@@ -185,7 +238,6 @@ public class ContactActivity extends BaseActivity {
 
         MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
             mTvContactAge.setText(menuEntities.get(position).getName());
-            //mTvSex.setTextColor(Color.BLACK);
 
             dialog.dismiss();
         });
@@ -204,4 +256,33 @@ public class ContactActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void addContactSuccess() {
+        T.showShort(this, "添加联系人成功");
+    }
+
+    @Override
+    public void delContactSuccess() {
+        T.showShort(this, "删除联系人成功");
+    }
+
+    @Override
+    public void updateContactSuccess() {
+        T.showShort(this, "更新联系人成功");
+    }
+
+    @Override
+    public void showLoadingView() {
+
+    }
+
+    @Override
+    public void hideLoadingView() {
+
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMsg) {
+
+    }
 }

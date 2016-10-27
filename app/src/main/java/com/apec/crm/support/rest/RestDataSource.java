@@ -22,6 +22,7 @@ import com.apec.crm.support.rest.interceptors.LoggingInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -82,11 +83,6 @@ public class RestDataSource implements GoodsRepository {
     }
 
     @Override
-    public Observable<Result<ListPage<VisitRecord>>> getVisitRecord(RequestBody jsonString) {
-        return mCrmApi.getVisitRecord(jsonString);
-    }
-
-    @Override
     public Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody) {
         return mCrmApi.getCustomList(requestBody);
     }
@@ -129,5 +125,49 @@ public class RestDataSource implements GoodsRepository {
     @Override
     public Observable<Result<CustomDetail>> getCustomDetail(RequestBody requestBody) {
         return mCrmApi.getCustomDetail(requestBody);
+    }
+
+    @Override
+    public Observable<Result> addContact(RequestBody requestBody) {
+        return mCrmApi.addContact(requestBody);
+    }
+
+    @Override
+    public Observable<Result> delContact(RequestBody requestBody) {
+        return mCrmApi.delContact(requestBody);
+    }
+
+    @Override
+    public Observable<Result> updateContact(RequestBody requestBody) {
+        return mCrmApi.updateContact(requestBody);
+    }
+
+    @Override
+    public Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images) {
+
+//        switch (images.size()) {
+//            case 1:
+//                return mCrmApi.addVisit(data, images.get(0));
+//            case 2:
+//                return mCrmApi.addVisit(data, images.get(0), images.get(1));
+//            case 3:
+//                return mCrmApi.addVisit(data, images.get(0), images.get(1), images.get(2));
+//        }
+        return mCrmApi.addVisit(data);
+    }
+
+    @Override
+    public Observable<Result<ListPage<VisitRecord>>> getVisitByU(RequestBody requestBody) {
+        return mCrmApi.getVisitByU(requestBody);
+    }
+
+    @Override
+    public Observable<Result<ListPage<VisitRecord>>> getVisitByC(RequestBody requestBody) {
+        return mCrmApi.getVisitByC(requestBody);
+    }
+
+    @Override
+    public Observable<Result> updateCustom(RequestBody requestBody) {
+        return mCrmApi.updateCustom(requestBody);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MenuEntity;
 import com.apec.crm.utils.MyUtils;
@@ -45,27 +46,22 @@ public class CustomActivity extends BaseActivity {
     @BindView(R.id.fl_body)
     FrameLayout mFlMenu;
 
+    VisitRecordFragment mVisitRecordFragment;
+
+    public static final String ARG_CUSTOM = "arg_custom";
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom, R.string.custom_home);
 
         setBtnImage(R.drawable.nav_more_drawable, v -> {
-            if (mFlMenu.getVisibility() == View.VISIBLE) {
-                mFlMenu.setVisibility(View.GONE);
-            } else {
-                mFlMenu.setVisibility(View.VISIBLE);
-            }
+            showDialog();
         });
-
-        VisitRecordFragment visitRecordFragment = new VisitRecordFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, visitRecordFragment, "visitList")
-                .commit();
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-        mCustom = getIntent().getParcelableExtra("custom");
+        mCustom = getIntent().getParcelableExtra(ARG_CUSTOM);
         mRoundTextView.setColor(MyUtils.getColor(mCustom.getIcon()));
 
         MyUtils.setHeadText(mTvHead, mCustom.getCustomerName());
@@ -73,7 +69,19 @@ public class CustomActivity extends BaseActivity {
         mTvCustomName.setText(mCustom.getCustomerName());
         mTvAddress.setText(mCustom.getCustomerAddress());
 
+        initFragment();
+
         initMenu();
+    }
+
+    private void initFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putString(VisitRecordFragment.ARG_CUSTOM_ID, mCustom.getId());
+        mVisitRecordFragment = VisitRecordFragment.newInstance(bundle);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mVisitRecordFragment, "visitList")
+                .commit();
     }
 
     private void initMenu() {
@@ -90,7 +98,20 @@ public class CustomActivity extends BaseActivity {
         });
 
         mLVDialogMenu.setOnItemClickListener((parent, view, position, id) -> {
+            switch (position) {
+                case 0:
+                    Intent intent = new Intent(this, AddVisitActivity.class);
+                    intent.putExtra(AddVisitActivity.ARG_CUSTOM_ID, mCustom.getId());
+                    startActivityForResult(intent, Constants.REQUEST_CODE_ADD_VISIT);
+                    break;
+                case 1:
 
+                    break;
+                case 2:
+
+                    break;
+            }
+            hideDialog();
         });
     }
 
@@ -104,9 +125,15 @@ public class CustomActivity extends BaseActivity {
 
     }
 
+    /**
+     * 跳转到客户详情
+     *
+     * @param view
+     */
     @OnClick(R.id.rl_custom)
     void OnPlateCustomClicked(View view) {
         Intent intent = new Intent(this, CustomDetailActivity.class);
+        intent.putExtra(CustomDetailActivity.ARG_CUSTOM_ID, mCustom.getId());
         startActivity(intent);
     }
 
@@ -118,8 +145,32 @@ public class CustomActivity extends BaseActivity {
 
     @OnClick(R.id.fl_body)
     void OnBodyClicked(View view) {
+        hideDialog();
+    }
+
+    private void showDialog() {
         if (mFlMenu.getVisibility() == View.VISIBLE) {
             mFlMenu.setVisibility(View.GONE);
+        } else {
+            mFlMenu.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideDialog() {
+        if (mFlMenu.getVisibility() == View.VISIBLE) {
+            mFlMenu.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == Constants.REQUEST_CODE_ADD_VISIT) {
+            if (resultCode == Constants.RESULT_CODE_ADD_VISIT) {
+
+                mVisitRecordFragment.refreshData();
+            }
         }
     }
 }

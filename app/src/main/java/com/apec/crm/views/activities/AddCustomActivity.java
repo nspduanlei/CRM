@@ -14,7 +14,6 @@ import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Address;
 import com.apec.crm.domin.entities.Contact;
 import com.apec.crm.domin.entities.CustomDetail;
-import com.apec.crm.domin.entities.MoreDataBean;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
@@ -67,6 +66,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
 
     private Address mSelectAddress;
     private String mAreaId;
+    private String mLocationDes;
 
     @Inject
     AddCustomPresenter mAddCustomPresenter;
@@ -78,43 +78,45 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
 
     List<Contact> mContacts = new ArrayList<>();
 
-    MoreDataBean mMoreDataBean;
-
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_custom, R.string.add_custom_title);
         setMenuText("保存", v -> {
-            String customName = mEtCustomName.getText().toString();
-            String rodeName = mEtRoad.getText().toString();
-
-            if (StringUtils.isNullOrEmpty(customName)) {
-                T.showShort(this, "客户名称不能为空");
-            } else if (StringUtils.isNullOrEmpty(mCustom.getCustomerType())) {
-                T.showShort(this, "客户类型不能为空");
-            } else if (mSelectAddress == null) {
-                T.showShort(this, "省市区不能为空");
-            } else if (StringUtils.isNullOrEmpty(rodeName)) {
-                T.showShort(this, "街道不能为空");
-            } else {
-                mCustom.setCustomerName(customName);
-
-                if (mLatLng != null) {
-                    mSelectAddress.setLatitude(mLatLng.latitude);
-                    mSelectAddress.setLongitude(mLatLng.longitude);
-                }
-
-                mSelectAddress.setRodeName(rodeName);
-
-                mCustom.setAddress(mSelectAddress);
-
-                if (mContacts.size() > 0) {
-                    mCustom.setContacts(mContacts);
-                }
-
-                mAddCustomPresenter.addCustom(mCustom);
-
-            }
+            saveData();
         });
+    }
+
+    public void saveData() {
+        String customName = mEtCustomName.getText().toString();
+        String rodeName = mEtRoad.getText().toString();
+
+        if (StringUtils.isNullOrEmpty(customName)) {
+            T.showShort(this, "客户名称不能为空");
+        } else if (StringUtils.isNullOrEmpty(mCustom.getCustomerType())) {
+            T.showShort(this, "客户类型不能为空");
+        } else if (mSelectAddress == null) {
+            T.showShort(this, "省市区不能为空");
+        } else if (StringUtils.isNullOrEmpty(rodeName)) {
+            T.showShort(this, "街道不能为空");
+        } else {
+            mCustom.setCustomerName(customName);
+
+            if (mLatLng != null) {
+                mSelectAddress.setLatitude(mLatLng.latitude);
+                mSelectAddress.setLongitude(mLatLng.longitude);
+                mSelectAddress.setLocationDes(mLocationDes);
+            }
+
+            mSelectAddress.setRodeName(rodeName);
+
+            mCustom.setAddress(mSelectAddress);
+
+            if (mContacts.size() > 0) {
+                mCustom.setContacts(mContacts);
+            }
+
+            mAddCustomPresenter.addCustom(mCustom);
+        }
     }
 
     @Override
@@ -155,31 +157,33 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @OnClick(R.id.tv_add_contact)
     void onAddContactClicked(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
-        intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD_HAS_C);
+        intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD);
         startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
     }
 
     /**
-     * 行政区域
+     * 定位
+     *
      * @param view
      */
     @OnClick(R.id.tv_location)
     void onSelectLocationClicked(View view) {
         Intent intent = new Intent(this, MapLocationActivity.class);
+        intent.putExtra(MapLocationActivity.ARG_LATLNG, mLatLng);
+        intent.putExtra(MapLocationActivity.ARG_LOCATION_DES, mLocationDes);
         startActivityForResult(intent, Constants.REQUEST_CODE_MARK_MAP);
     }
 
     /**
      * 更多资料
+     *
      * @param view
      */
     @OnClick(R.id.fl_more_data)
     void onMoreDataClicked(View view) {
         Intent intent = new Intent(this, CustomMoreDataActivity.class);
         intent.putExtra(CustomMoreDataActivity.ARG_AREA, mAreaId);
-        if (mMoreDataBean != null) {
-            intent.putExtra(CustomMoreDataActivity.ARG_MORE_DATA, mMoreDataBean);
-        }
+        intent.putExtra(CustomMoreDataActivity.ARG_CUSTOM, mCustom);
         startActivityForResult(intent, Constants.REQUEST_CODE_MORE_DATA);
     }
 
@@ -211,7 +215,6 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     public void selectCityFinish(Address address) {
         mSelectAddress = address;
         mAreaId = mSelectAddress.getAreaId();
-
         mTvAddressPca.setText(String.format("%s/%s/%s", address.getProvinceName(),
                 address.getCityName(), address.getAreaName()));
     }
@@ -219,6 +222,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     @Override
     public void onAddCustomSuccess() {
         T.showShort(this, "添加客户成功");
+        setResult(Constants.RESULT_CODE_ADD_CUSTOM);
         this.finish();
     }
 
@@ -244,9 +248,10 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
         if (requestCode == Constants.REQUEST_CODE_MARK_MAP) { //定位返回
             if (resultCode == Constants.RESULT_CODE_MARK_MAP) {
                 Bundle bundle = data.getExtras();
-                mLatLng = bundle.getParcelable(MapLocationActivity.LOCATION_LATLOG);
+                mLatLng = bundle.getParcelable(MapLocationActivity.RESULT_LATLNG);
 
-                mTvLocation.setText(bundle.getString(MapLocationActivity.LOCATION_DETAIL));
+                mLocationDes = bundle.getString(MapLocationActivity.RESULT_DETAIL);
+                mTvLocation.setText(mLocationDes);
             }
         } else if (requestCode == Constants.REQUEST_CODE_SELECT_ATTR) { //选择客户类型
             if (resultCode == Constants.RESULT_CODE_SELECT_CUSTOM_TYPE) {
@@ -258,11 +263,8 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
             }
         } else if (requestCode == Constants.REQUEST_CODE_MORE_DATA) { //更多资料返回
             if (resultCode == Constants.RESULT_CODE_MORE_DATA) {
-
-                mMoreDataBean =
+                mCustom =
                         data.getParcelableExtra(CustomMoreDataActivity.ARG_RESULT);
-
-                mCustom.setSelectContent(mMoreDataBean);
             }
         } else if (requestCode == Constants.REQUEST_CODE_ADD_CONTACT) { //添加联系人
             if (resultCode == Constants.RESULT_CODE_ADD_CONTACT) {
@@ -270,6 +272,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
                         data.getParcelableExtra(ContactActivity.ARG_CONTACT);
                 mContacts.add(contact);
 
+                mCommonAdapter.clear();
                 mCommonAdapter.addAll(mContacts);
             }
         }

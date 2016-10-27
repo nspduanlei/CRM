@@ -14,6 +14,8 @@ import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.ListResult;
 import com.apec.crm.domin.entities.func.Result;
 
+import java.util.ArrayList;
+
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -23,8 +25,6 @@ import rx.Observable;
 public interface GoodsRepository {
 
     Observable<Result<User>> login(RequestBody jsonString);
-
-    Observable<Result<ListPage<VisitRecord>>> getVisitRecord(RequestBody jsonString);
 
     Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody);
 
@@ -43,4 +43,18 @@ public interface GoodsRepository {
     Observable<ListResult<OpenSea>> getOpenSea(RequestBody requestBody);
 
     Observable<Result<CustomDetail>> getCustomDetail(RequestBody requestBody);
+
+    Observable<Result> addContact(RequestBody requestBody);
+
+    Observable<Result> delContact(RequestBody requestBody);
+
+    Observable<Result> updateContact(RequestBody requestBody);
+
+    Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images);
+
+    Observable<Result<ListPage<VisitRecord>>> getVisitByU(RequestBody requestBody);
+
+    Observable<Result<ListPage<VisitRecord>>> getVisitByC(RequestBody requestBody);
+
+    Observable<Result> updateCustom(RequestBody requestBody);
 }

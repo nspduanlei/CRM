@@ -15,6 +15,7 @@ import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.WorkPlacePresenter;
 import com.apec.crm.mvp.views.WorkPlaceView;
 import com.apec.crm.utils.DateUtil;
+import com.apec.crm.views.activities.OpenSeaActivity;
 import com.apec.crm.views.activities.VisitCustomActivity;
 import com.apec.crm.views.fragments.core.BaseFragment;
 import com.apec.crm.views.widget.listView.CommonAdapter;
@@ -66,15 +67,21 @@ public class WorkPlaceFragment extends BaseFragment implements WorkPlaceView {
         });
 
         mGVMenu.setOnItemClickListener((adapterView, view1, i, l) -> {
+            Intent intent = null;
+
             switch (i) {
                 case 0: //客户拜访
-                    Intent intent = new Intent(getActivity(), VisitCustomActivity.class);
-                    startActivity(intent);
+                    intent = new Intent(getActivity(), VisitCustomActivity.class);
                     break;
                 case 1: //公海池
+                    intent = new Intent(getActivity(), OpenSeaActivity.class);
                     break;
                 case 2: //统计
                     break;
+            }
+
+            if (intent != null) {
+                startActivity(intent);
             }
         });
     }

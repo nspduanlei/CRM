@@ -12,6 +12,25 @@ public class VisitRecordFilter extends BaseFilter {
     private String startDate;
     private String endDate;
 
+    private String customerNo; //客户NO
+    private String userNo; //用户NO
+
+    public String getCustomerNo() {
+        return customerNo;
+    }
+
+    public void setCustomerNo(String customerNo) {
+        this.customerNo = customerNo;
+    }
+
+    public String getUserNo() {
+        return userNo;
+    }
+
+    public void setUserNo(String userNo) {
+        this.userNo = userNo;
+    }
+
     public String getStartDate() {
         return startDate;
     }

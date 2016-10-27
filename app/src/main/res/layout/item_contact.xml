@@ -2,11 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingBottom="3dp"
-    android:paddingLeft="@dimen/margin_left"
-    android:paddingRight="@dimen/margin_left"
-    android:paddingTop="3dp">
+    android:layout_height="45dp"
+    android:paddingLeft="@dimen/margin_left">
 
     <TextView
         android:id="@+id/tv_nick"
@@ -31,6 +28,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/margin_left"
         android:src="@drawable/contact_phone_drawable"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/lineColor"/>
 
 </RelativeLayout>

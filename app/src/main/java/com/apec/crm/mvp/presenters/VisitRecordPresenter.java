@@ -5,7 +5,7 @@ import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
-import com.apec.crm.domin.useCase.visit.GetVisitRecordUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitByUUseCase;
 import com.apec.crm.mvp.presenters.core.ListPresenter;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.VisitRecordView;
@@ -20,10 +20,10 @@ import javax.inject.Inject;
 public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
     VisitRecordView mVisitRecordView;
-    GetVisitRecordUseCase mGetVisitRecordUseCase;
+    GetVisitByUUseCase mGetVisitRecordUseCase;
 
     @Inject
-    public VisitRecordPresenter(GetVisitRecordUseCase getVisitRecordUseCase) {
+    public VisitRecordPresenter(GetVisitByUUseCase getVisitRecordUseCase) {
         mGetVisitRecordUseCase = getVisitRecordUseCase;
     }
 

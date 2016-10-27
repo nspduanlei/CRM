@@ -7,6 +7,7 @@ import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.FilterCustomBean;
+import com.apec.crm.domin.entities.FilterCustomNameBean;
 import com.apec.crm.views.activities.AddCustomActivity;
 import com.apec.crm.views.activities.FilterCustomActivity;
 import com.apec.crm.views.activities.SearchCustomActivity;
@@ -20,6 +21,9 @@ import butterknife.OnClick;
 public class CustomFragment extends BaseFragment {
 
     CustomListFragment customListFragment;
+
+    FilterCustomBean mFilterCustomBean;
+    FilterCustomNameBean mFilterCustomNameBean;
 
     @Override
     protected void initUI(View view) {
@@ -61,6 +65,8 @@ public class CustomFragment extends BaseFragment {
     @OnClick(R.id.tv_filter)
     void onFilterClicked(View view) {
         Intent intent = new Intent(getActivity(), FilterCustomActivity.class);
+        intent.putExtra(FilterCustomActivity.ARG_FILTER_BEAN, mFilterCustomBean);
+        intent.putExtra(FilterCustomActivity.ARG_FILTER_BEAN_NAME, mFilterCustomNameBean);
         startActivityForResult(intent, Constants.REQUEST_CODE_FILTER_CUSTOM);
     }
 
@@ -76,7 +82,7 @@ public class CustomFragment extends BaseFragment {
     @OnClick(R.id.tv_add_custom)
     void onAddClicked() {
         Intent intent = new Intent(getActivity(), AddCustomActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CUSTOM);
     }
 
     @Override
@@ -86,10 +92,16 @@ public class CustomFragment extends BaseFragment {
         if (requestCode == Constants.REQUEST_CODE_FILTER_CUSTOM) {
             if (resultCode == Constants.RESULT_CODE_FILTER_CUSTOM) {
 
-                FilterCustomBean filterCustomBean =
+                mFilterCustomBean =
                         data.getParcelableExtra(FilterCustomActivity.ARG_RESULT);
+                mFilterCustomNameBean =
+                        data.getParcelableExtra(FilterCustomActivity.ARG_RESULT_NAME);
 
-                customListFragment.updateForFilter(filterCustomBean);
+                customListFragment.updateForFilter(mFilterCustomBean);
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_ADD_CUSTOM) {
+            if (resultCode == Constants.RESULT_CODE_ADD_CUSTOM) {
+                customListFragment.updateForFilter(null);
             }
         }
 

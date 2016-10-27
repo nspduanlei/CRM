@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite"
+             android:orientation="vertical">
     <include
         layout="@layout/top_bar_layout"/>
 
     <include
+        layout="@layout/layout_base_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/top_bar_height_e"
-        layout="@layout/layout_base_data"/>
+        android:layout_marginTop="@dimen/top_bar_height_e"/>
 
 </FrameLayout>

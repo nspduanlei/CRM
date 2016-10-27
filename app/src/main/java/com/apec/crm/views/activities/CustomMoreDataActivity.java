@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
+import com.apec.crm.domin.entities.CustomDetail;
 import com.apec.crm.domin.entities.MenuEntity;
-import com.apec.crm.domin.entities.MoreDataBean;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.StringUtils;
@@ -52,17 +52,17 @@ public class CustomMoreDataActivity extends BaseActivity {
 
     public static final String ARG_AREA = "arg_area";
     public static final String ARG_RESULT = "arg_result";
-    public static final String ARG_MORE_DATA = "arg_more_data";
+    public static final String ARG_CUSTOM = "arg_custom";
     private String mAreaId;
 
-    private MoreDataBean mMoreDataBean;
+    private CustomDetail mCustomDetail;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom_more_data, R.string.custom_more_data);
         setMenuText("保存", v -> {
             setResult(Constants.RESULT_CODE_MORE_DATA, getIntent().putExtra(ARG_RESULT,
-                    mMoreDataBean));
+                    mCustomDetail));
             this.finish();
         });
     }
@@ -75,33 +75,32 @@ public class CustomMoreDataActivity extends BaseActivity {
             mAreaLine.setVisibility(View.GONE);
         }
 
-        mMoreDataBean = getIntent().getParcelableExtra(ARG_MORE_DATA);
-        if (mMoreDataBean == null) {
-            mMoreDataBean = new MoreDataBean();
-        } else {
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getLevelName())) {
-                mTvCustomLevel.setText(mMoreDataBean.getCustomerLevel());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getStateName())) {
-                mTvCustomState.setText(mMoreDataBean.getCustomerState());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getSource())) {
-                mTvCustomSource.setText(mMoreDataBean.getSource());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getAreaName())) {
-                mTvArea.setText(mMoreDataBean.getAreaName());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getIsSpeedInto())) {
-                mTvCar.setText(mMoreDataBean.getIsSpeedInto());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getBusinessHours())) {
-                mTvBussTime.setText(mMoreDataBean.getBusinessHours());
-            }
-            if (!StringUtils.isNullOrEmpty(mMoreDataBean.getClassName())) {
-                mTvClass.setText(mMoreDataBean.getClassName());
-            }
+        mCustomDetail = getIntent().getParcelableExtra(ARG_CUSTOM);
 
+        if (mCustomDetail == null) {
+            this.finish();
+        }
 
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getCustomerLevelName())) {
+            mTvCustomLevel.setText(mCustomDetail.getCustomerLevel());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getCustomerStateName())) {
+            mTvCustomState.setText(mCustomDetail.getCustomerState());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getSource())) {
+            mTvCustomSource.setText(mCustomDetail.getSource());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getAreaName())) {
+            mTvArea.setText(mCustomDetail.getAreaName());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getIsSpeedInto())) {
+            mTvCar.setText(mCustomDetail.getIsSpeedInto());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getBusinessHours())) {
+            mTvBussTime.setText(mCustomDetail.getBusinessHours());
+        }
+        if (!StringUtils.isNullOrEmpty(mCustomDetail.getClassName())) {
+            mTvClass.setText(mCustomDetail.getClassName());
         }
     }
 
@@ -128,7 +127,7 @@ public class CustomMoreDataActivity extends BaseActivity {
 
         MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
 
-            mMoreDataBean.setIsSpeedInto(menuEntities.get(position).getName());
+            mCustomDetail.setIsSpeedInto(menuEntities.get(position).getName());
             mTvCar.setText(menuEntities.get(position).getName());
 
             dialog.dismiss();
@@ -150,7 +149,7 @@ public class CustomMoreDataActivity extends BaseActivity {
 
         MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
 
-            mMoreDataBean.setBusinessHours(menuEntities.get(position).getName());
+            mCustomDetail.setBusinessHours(menuEntities.get(position).getName());
             mTvBussTime.setText(menuEntities.get(position).getName());
 
             dialog.dismiss();
@@ -212,40 +211,40 @@ public class CustomMoreDataActivity extends BaseActivity {
             switch (resultCode) {
                 case Constants.RESULT_CODE_SELECT_CUSTOM_LEVEL:
 
-                    mMoreDataBean.setCustomerLevel(selectContent.getId());
-                    mMoreDataBean.setLevelName(selectContent.getName());
+                    mCustomDetail.setCustomerLevel(selectContent.getId());
+                    mCustomDetail.setCustomerLevelName(selectContent.getName());
                     mTvCustomLevel.setText(selectContent.getName());
 
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_STATE:
 
-                    mMoreDataBean.setCustomerState(selectContent.getId());
-                    mMoreDataBean.setStateName(selectContent.getName());
+                    mCustomDetail.setCustomerState(selectContent.getId());
+                    mCustomDetail.setCustomerStateName(selectContent.getName());
                     mTvCustomState.setText(selectContent.getName());
 
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_SOURCE:
 
-                    mMoreDataBean.setSource(selectContent.getId());
-                    mMoreDataBean.setSourceName(selectContent.getName());
+                    mCustomDetail.setSource(selectContent.getId());
+                    mCustomDetail.setSourceName(selectContent.getName());
                     mTvCustomSource.setText(selectContent.getName());
 
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_OPEN_SEA:
 
-                    mMoreDataBean.setAreaNo(selectContent.getId());
-                    mMoreDataBean.setAreaName(selectContent.getName());
+                    mCustomDetail.setAreaNo(selectContent.getId());
+                    mCustomDetail.setAreaName(selectContent.getName());
                     mTvArea.setText(selectContent.getName());
 
                     break;
 
                 case Constants.RESULT_CODE_SELECT_CUSTOM_CLASS:
 
-                    mMoreDataBean.setClassId(selectContent.getId());
-                    mMoreDataBean.setClassName(selectContent.getName());
+                    mCustomDetail.setClassId(selectContent.getId());
+                    mCustomDetail.setClassName(selectContent.getName());
                     mTvClass.setText(selectContent.getName());
 
                     break;
