@@ -58,6 +58,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     @Override
     protected void doRefresh() {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
+        mFilterCustomBean.setPageSize(LIST_ITEM_COUNT);
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
@@ -71,7 +72,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     private void onRefreshReceived(Result<ListPage<Custom>> listPageResult) {
         if (listPageResult.isSucceed()) {
-            totalPage = listPageResult.getData().getTotalPages();
+            totalPage = listPageResult.getData().getPageCount();
             totalNumber = listPageResult.getData().getTotalElements();
             mCustomListView.onRefreshSuccess(listPageResult.getData().getRows());
         } else {
@@ -83,10 +84,11 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     @Override
     protected void doLoadMore() {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
+        mFilterCustomBean.setPageSize(LIST_ITEM_COUNT);
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
-                .subscribe(this::onLoadMoreSuccess, this::manageError);
+                .subscribe(this::onLoadMoreReceived, this::manageError);
     }
 
     @Override
@@ -94,7 +96,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
         mCustomListView.onNoMore();
     }
 
-    private void onLoadMoreSuccess(Result<ListPage<Custom>> listPageResult) {
+    private void onLoadMoreReceived(Result<ListPage<Custom>> listPageResult) {
         if (listPageResult.isSucceed()) {
             mCustomListView.onLoadMoreSuccess(listPageResult.getData().getRows());
         } else {

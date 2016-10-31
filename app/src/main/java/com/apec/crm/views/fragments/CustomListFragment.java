@@ -120,9 +120,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
     @Override
     public void onError(String errorCode, String errorMsg) {
-
         onLoadError();
-
         if (errorCode.equals(ErrorCode.SESSION_OUT)) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
             getActivity().startActivity(intent);
@@ -130,10 +128,14 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
         }
     }
 
+    /**
+     * 根据过滤条件刷新页面
+     * @param filterCustomBean
+     */
     public void updateForFilter(FilterCustomBean filterCustomBean) {
         if (filterCustomBean != null) {
             mCustomListPresenter.setFilter(filterCustomBean);
         }
-        mCustomListPresenter.refresh();
+        initiateRefresh();
     }
 }

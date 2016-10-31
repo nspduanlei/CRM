@@ -1,11 +1,11 @@
 package com.apec.crm.mvp.presenters;
 
 
-import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.VisitRecord;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
-import com.apec.crm.domin.useCase.visit.GetVisitByUUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitsUseCase;
 import com.apec.crm.mvp.presenters.core.ListPresenter;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.VisitRecordView;
@@ -16,15 +16,16 @@ import javax.inject.Inject;
 /**
  * Created by duanlei on 16/9/28.
  */
-
 public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
+    private VisitRecordFilter mVisitRecordFilter;
+
     VisitRecordView mVisitRecordView;
-    GetVisitByUUseCase mGetVisitRecordUseCase;
+    GetVisitsUseCase mGetVisitsUseCase;
 
     @Inject
-    public VisitRecordPresenter(GetVisitByUUseCase getVisitRecordUseCase) {
-        mGetVisitRecordUseCase = getVisitRecordUseCase;
+    public VisitRecordPresenter(GetVisitsUseCase getVisitsUseCase) {
+        mGetVisitsUseCase = getVisitsUseCase;
     }
 
     @Override
@@ -49,17 +50,16 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
     @Override
     public void onCreate() {
-
+        mVisitRecordFilter = new VisitRecordFilter();
     }
 
     @Override
     protected void doRefresh() {
-        VisitRecordFilter visitRecordFilter = new VisitRecordFilter();
-        visitRecordFilter.setStartDate("2016-09-14");
-        visitRecordFilter.setEndDate("2016-09-27");
+        mVisitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
+        mVisitRecordFilter.setPageSize(LIST_ITEM_COUNT);
 
-        mGetVisitRecordUseCase.setData(visitRecordFilter);
-        mGetVisitRecordUseCase.execute()
+        mGetVisitsUseCase.setData(mVisitRecordFilter);
+        mGetVisitsUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
 
     }
@@ -76,13 +76,29 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
     @Override
     protected void doLoadMore() {
+        mVisitRecordFilter.setPageNumber(String.valueOf(mCurrentPage));
+        mVisitRecordFilter.setPageSize(LIST_ITEM_COUNT);
 
+        mGetVisitsUseCase.setData(mVisitRecordFilter);
+        mGetVisitsUseCase.execute()
+                .subscribe(this::onLoadMoreReceived, this::manageError);
+    }
+
+    private void onLoadMoreReceived(Result<ListPage<VisitRecord>> listPageResult) {
+        if (listPageResult.isSucceed()) {
+            mVisitRecordView.onLoadMoreSuccess(listPageResult.getData().getRows());
+        } else {
+            mVisitRecordView.onError(listPageResult.getErrorCode(),
+                    listPageResult.getErrorMsg());
+        }
     }
 
     @Override
     protected void onNoMore() {
-
+        mVisitRecordView.onNoMore();
     }
 
-
+    public void setVisitRecordFilter(VisitRecordFilter visitRecordFilter) {
+        mVisitRecordFilter = visitRecordFilter;
+    }
 }

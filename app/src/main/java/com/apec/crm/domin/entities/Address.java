@@ -21,6 +21,8 @@ public class Address implements Parcelable {
 
     private String locationDes; //定位描述
 
+    public Address() {}
+
     protected Address(Parcel in) {
         areaId = in.readString();
         areaName = in.readString();

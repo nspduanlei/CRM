@@ -38,7 +38,7 @@ public abstract class CommonRecyclerAdapter<T> extends
 
         if (viewType == VIEW_TYPE_ITEM) {
             View view = mLayoutInflater.inflate(mResId, parent, false);
-            return new MyViewHolder(view);
+            return new MyViewHolder(view, mContext);
         } else if (viewType == VIEW_TYPE_LOADING) {
             View view = mLayoutInflater.inflate(R.layout.layout_load_more, parent, false);
             return new LoadingViewHolder(view);

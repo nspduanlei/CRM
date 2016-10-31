@@ -91,7 +91,6 @@ public class ContactPresenter implements Presenter {
     }
 
     public void updateContact(Contact contact) {
-
         mContactView.showLoadingView();
 
         mUpdateContactUseCase.setData(contact);

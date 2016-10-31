@@ -4,6 +4,7 @@ import com.apec.crm.domin.entities.AddVisitBean;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.UseCase;
+import com.apec.crm.utils.L;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -45,20 +46,21 @@ public class AddVisitUseCase extends UseCase<Result> {
 
     public void setData(AddVisitBean addVisitBean, ArrayList<File> files) {
         mData = RequestBody.create(
-                MediaType.parse("application/x-www-form-urlencoded"),
+                MediaType.parse("application/json"),
                 mGson.toJson(addVisitBean));
+
+        L.e(mGson.toJson(addVisitBean));
 
         mImages = new ArrayList<>();
         for (int i = 0 ; i < files.size(); i++) {
             RequestBody requestBody =
-                    RequestBody.create(MediaType.parse("multipart/form-data"), files.get(i));
+                    RequestBody.create(MediaType.parse("image/*"), files.get(i));
             mImages.add(requestBody);
         }
     }
 
     @Override
     public Observable<Result> buildObservable() {
-
         return mRepository.addVisit(mData, mImages)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.config.Constants;
 import com.apec.crm.views.widget.recyclerView.CommonRecyclerAdapter;
 
 import java.util.List;
@@ -52,10 +53,11 @@ public abstract class BaseListFragment extends Fragment {
     //默认允许下拉刷新
     private boolean mIsRefresh = true;
 
+    //是否正在加载数据
     private boolean isLoading;
 
-//    private int visibleThreshold = 20;
-//    private int lastVisibleItem, totalItemCount;
+    //数据是否加载完
+    protected boolean isEnd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,7 +106,6 @@ public abstract class BaseListFragment extends Fragment {
         mListAdapter = getAdapter();
         mRecyclerView.setAdapter(mListAdapter);
 
-        mSwipeRefreshLayout.setRefreshing(true);
         initiateRefresh();
 
         if (mIsRefresh) {
@@ -115,8 +116,10 @@ public abstract class BaseListFragment extends Fragment {
         }
     }
 
-    private void initiateRefresh() {
+    public void initiateRefresh() {
+        mSwipeRefreshLayout.setRefreshing(true);
         Log.i(LOG_TAG, "initiateRefresh");
+        isEnd = false;
         loadFirstPage();
     }
 
@@ -125,6 +128,9 @@ public abstract class BaseListFragment extends Fragment {
         mListAdapter.addAll(result);
         mSwipeRefreshLayout.setRefreshing(false);
         isLoading = false;
+        if (result.size() < Constants.PAGE_SIZE) {
+            isEnd = true;
+        }
     }
 
     public void onLoadError() {
@@ -136,6 +142,9 @@ public abstract class BaseListFragment extends Fragment {
         mListAdapter.removeLoading();
         mListAdapter.addAll(result);
         isLoading = false;
+        if (result.size() < Constants.PAGE_SIZE) {
+            isEnd = true;
+        }
     }
 
     public void onDataEnd() {
@@ -151,27 +160,13 @@ public abstract class BaseListFragment extends Fragment {
             int totalItemsCount     = layoutManager.getItemCount();
             int firstVisibleItemPos = layoutManager.findFirstVisibleItemPosition();
 
-            if (!isLoading && visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
+            if (!isLoading && !isEnd &&
+                    visibleItemsCount + firstVisibleItemPos >= totalItemsCount) {
                 //加载更多
                 onListEndReached();
                 isLoading = true;
             }
         }
-
-//        @Override
-//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//            LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-//            totalItemCount = layoutManager.getItemCount();
-//            lastVisibleItem = layoutManager.findLastVisibleItemPosition();
-//
-//            L.e("totalItemCount：" + totalItemCount + "， lastVisibleItem：" + lastVisibleItem);
-//
-//            if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-//                onListEndReached();
-//                isLoading = true;
-//            }
-//        }
     };
 
     private void onListEndReached() {

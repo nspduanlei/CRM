@@ -63,7 +63,6 @@ public class LoginPresenter implements Presenter {
         mLoginUseCase.setData(userName, password);
         mLoginSubscription = mLoginUseCase.execute()
                 .subscribe(this::onLoginReceived, this::manageError);
-
     }
 
     private void manageError(Throwable throwable) {
@@ -76,7 +75,5 @@ public class LoginPresenter implements Presenter {
         if (result.isSucceed()) {
             mLoginView.onLoginSuccess(result.getData());
         }
-
-
     }
 }

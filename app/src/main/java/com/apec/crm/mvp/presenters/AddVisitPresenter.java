@@ -53,11 +53,9 @@ public class AddVisitPresenter implements Presenter {
     }
 
     public void addVisit(AddVisitBean addVisitBean, ArrayList<File> files) {
-
         mAddVisitView.showLoadingView();
         mAddVisitUseCase.setData(addVisitBean, files);
         mAddVisitUseCase.execute().subscribe(this::onAddVisitReceived, this::manageError);
-
     }
 
     private void manageError(Throwable throwable) {
@@ -67,7 +65,6 @@ public class AddVisitPresenter implements Presenter {
     private void onAddVisitReceived(Result result) {
         mAddVisitView.hideLoadingView();
         if (result.isSucceed()) {
-
             mAddVisitView.addVisitSuccess();
         }
     }

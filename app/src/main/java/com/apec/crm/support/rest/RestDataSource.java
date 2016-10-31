@@ -145,25 +145,25 @@ public class RestDataSource implements GoodsRepository {
     @Override
     public Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images) {
 
-//        switch (images.size()) {
-//            case 1:
-//                return mCrmApi.addVisit(data, images.get(0));
-//            case 2:
-//                return mCrmApi.addVisit(data, images.get(0), images.get(1));
-//            case 3:
-//                return mCrmApi.addVisit(data, images.get(0), images.get(1), images.get(2));
-//        }
-        return mCrmApi.addVisit(data);
+        switch (images.size()) {
+            case 1:
+                return mCrmApi.addVisit(data, images.get(0));
+            case 2:
+                return mCrmApi.addVisit(data, images.get(0), images.get(1));
+            case 3:
+                return mCrmApi.addVisit(data, images.get(0), images.get(1), images.get(2));
+            default:
+                return mCrmApi.addVisit(data);
+        }
     }
 
     @Override
-    public Observable<Result<ListPage<VisitRecord>>> getVisitByU(RequestBody requestBody) {
-        return mCrmApi.getVisitByU(requestBody);
-    }
-
-    @Override
-    public Observable<Result<ListPage<VisitRecord>>> getVisitByC(RequestBody requestBody) {
-        return mCrmApi.getVisitByC(requestBody);
+    public Observable<Result<ListPage<VisitRecord>>> getVisits(RequestBody requestBody, int type) {
+        if (type == 0) {
+            return mCrmApi.getVisitByU(requestBody);
+        } else {
+            return mCrmApi.getVisitByC(requestBody);
+        }
     }
 
     @Override

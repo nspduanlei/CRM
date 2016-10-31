@@ -115,21 +115,21 @@ public interface CrmApi {
      * 添加拜访
      */
     @Multipart
-    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    @POST("VISIT-RECORD-SERVICE/addVisitRecord/uploadPicture.apec")
     Observable<Result> addVisit(@Part("data") RequestBody data,
-                                @Part("file\"; filename=\"image1.png\"")RequestBody img1,
-                                @Part("file\"; filename=\"image2.png\"")RequestBody img2,
-                                @Part("file\"; filename=\"image3.png\"")RequestBody img3);
+                                @Part("img1\"; filename=\"image1.jpg\"") RequestBody img1,
+                                @Part("img2\"; filename=\"image2.jpg\"") RequestBody img2,
+                                @Part("img3\"; filename=\"image3.jpg\"") RequestBody img3);
     @Multipart
-    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    @POST("VISIT-RECORD-SERVICE/addVisitRecord/uploadPicture.apec")
     Observable<Result> addVisit(@Part("data") RequestBody data,
-                                @Part("file\"; filename=\"image1.png\"")RequestBody img1,
-                                @Part("file\"; filename=\"image2.png\"")RequestBody img2);
+                                @Part("file\"; filename=\"image1.jpg\"")RequestBody img1,
+                                @Part("file\"; filename=\"image2.jpg\"")RequestBody img2);
 
     @Multipart
-    @POST("VISIT-RECORD-SERVICE/add/uploadPicture.apec")
+    @POST("VISIT-RECORD-SERVICE/addVisitRecord/uploadPicture.apec")
     Observable<Result> addVisit(@Part("data") RequestBody data,
-                                @Part("file\"; filename=\"image3.png\"")RequestBody img1);
+                                @Part("file\"; filename=\"image3.jpg\"")RequestBody img1);
 
     @POST("VISIT-RECORD-SERVICE/addVisitRecord.apec")
     Observable<Result> addVisit(@Body RequestBody body);

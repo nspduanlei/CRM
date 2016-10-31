@@ -15,6 +15,7 @@ import cn.finalteam.galleryfinal.ThemeConfig;
 public class GalleryFinalUtils {
 
     public static final int REQUEST_SELECT_IMAGE = 0x1;
+    public static final int REQUEST_EDIT_IMAGE = 0x2;
 
     public GalleryFinalUtils(Context context) {
 
@@ -70,13 +71,30 @@ public class GalleryFinalUtils {
                 .setEnableEdit(true)
                 .setEnableCrop(true)
                 .setEnablePreview(true)
-                .setMutiSelectMaxSize(3 - size)
+                .setMutiSelectMaxSize(size)
                 .build();
 
         GalleryFinal.openGalleryMuti(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);
-
     }
 
+    /**
+     * 打开图片编辑
+     */
+    public void openImageEdit(String photoPath,
+                              GalleryFinal.OnHanlderResultCallback onHanlderResultCallback) {
+
+        //配置功能
+        FunctionConfig functionConfig = new FunctionConfig.Builder()
+                .setEnableCamera(true)
+                .setEnableEdit(true)
+                .setEnableCrop(true)
+                .setEnablePreview(true)
+                .build();
+        //带配置
+        GalleryFinal.openEdit(REQUEST_EDIT_IMAGE, functionConfig, photoPath,
+                onHanlderResultCallback);
+
+    }
 
 
 }

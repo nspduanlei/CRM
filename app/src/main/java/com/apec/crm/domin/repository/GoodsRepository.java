@@ -52,9 +52,7 @@ public interface GoodsRepository {
 
     Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images);
 
-    Observable<Result<ListPage<VisitRecord>>> getVisitByU(RequestBody requestBody);
-
-    Observable<Result<ListPage<VisitRecord>>> getVisitByC(RequestBody requestBody);
-
     Observable<Result> updateCustom(RequestBody requestBody);
+
+    Observable<Result<ListPage<VisitRecord>>> getVisits(RequestBody requestBody, int type);
 }

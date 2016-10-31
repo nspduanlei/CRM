@@ -17,6 +17,7 @@ import com.apec.crm.injector.modules.CustomModule;
 import com.apec.crm.views.activities.AddCustomActivity;
 import com.apec.crm.views.activities.ContactActivity;
 import com.apec.crm.views.activities.CustomDetailActivity;
+import com.apec.crm.views.activities.CustomEditActivity;
 import com.apec.crm.views.activities.FilterCustomActivity;
 import com.apec.crm.views.activities.SearchCustomActivity;
 import com.apec.crm.views.activities.SelectListActivity;
@@ -38,6 +39,7 @@ public interface CustomComponent extends ActivityComponent {
     void inject(FilterCustomActivity filterCustomActivity);
     void inject(CustomDetailActivity customDetailActivity);
     void inject(ContactActivity contactActivity);
+    void inject(CustomEditActivity customEditActivity);
 
     //获取客户列表
     GetCustomListUseCase getCustomListUseCase();

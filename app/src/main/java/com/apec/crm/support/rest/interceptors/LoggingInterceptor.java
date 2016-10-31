@@ -28,8 +28,11 @@ public class LoggingInterceptor implements Interceptor {
                 chain.connection(), request.headers()));
         Response response = chain.proceed(request);
         long t2 = System.nanoTime();
+
         Log.i("test001", String.format("Received response for %s in %.1fms%n%s",
                 response.request().url(), (t2 - t1) / 1e6d, response.headers()));
+
+        //L.e(response.body().string());
 
         return response;
     }

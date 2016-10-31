@@ -4,24 +4,19 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
-import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.domin.entities.VisitRecordFilter;
+import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.ScreenUtils;
-import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.VisitRecordFragment;
-import com.apec.crm.views.widget.listView.CommonAdapter;
-import com.apec.crm.views.widget.listView.MyViewHolder;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -35,16 +30,12 @@ public class VisitCustomActivity extends BaseActivity {
     @BindView(R.id.calendarView)
     MaterialCalendarView mCalendarView;
 
-    @BindView(R.id.lv_dialog_menu)
-    ListView mLVDialogMenu;
-
-    @BindView(R.id.fl_body)
-    FrameLayout mFlMenu;
-
     @BindView(R.id.iv_arrow_date)
     ImageView mIvArrowDate;
 
     VisitRecordFragment mVisitRecordFragment;
+
+    VisitRecordFilter mVisitRecordFilter = new VisitRecordFilter();
 
     @Override
     protected void setUpContentView() {
@@ -52,11 +43,8 @@ public class VisitCustomActivity extends BaseActivity {
 
         //搜索
         setBtnImage(R.drawable.nav_search_drawable, v -> {
-            if (mFlMenu.getVisibility() == View.VISIBLE) {
-                mFlMenu.setVisibility(View.GONE);
-            } else {
-                mFlMenu.setVisibility(View.VISIBLE);
-            }
+            Intent intent = new Intent(this, FilterVisitActivity.class);
+            startActivityForResult(intent, Constants.REQUEST_CODE_FILTER_VISIT);
         });
 
         //添加拜访
@@ -68,38 +56,37 @@ public class VisitCustomActivity extends BaseActivity {
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-
         mCalendarView.setTileWidth(ScreenUtils.getScreenWidth(this)/7);
         mCalendarView.state().edit().setMaximumDate(new Date()).commit();
-        mCalendarView.setSelectedDate(new Date());
+
+        setCurrentDate();
 
         mCalendarView.setOnDateChangedListener((widget, date, selected) -> {
-            T.showShort(this, date.toString());
+            //根据date获取 前一天和后一天的日期字符串
+            String datePre = DateUtil.getPreDate(date.getDate());
+            String dateNext = DateUtil.getNextDate(date.getDate());
+
+            mVisitRecordFilter.setStartDate(datePre);
+            mVisitRecordFilter.setEndDate(dateNext);
+
+            mVisitRecordFragment.updateForFilter(mVisitRecordFilter);
         });
 
-        mVisitRecordFragment = new VisitRecordFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, mVisitRecordFragment, "visitRecord")
-                .commit();
-
-        initMenu();
+        initFragment();
     }
 
-    private void initMenu() {
-        ArrayList<MenuEntity> menuEntities = new ArrayList<>();
-        menuEntities.add(new MenuEntity(1, "选择客户"));
-        menuEntities.add(new MenuEntity(2, "选择人员"));
-        mLVDialogMenu.setAdapter(new CommonAdapter<MenuEntity>(this, menuEntities,
-                R.layout.item_dialog_menu) {
-            @Override
-            public void convert(MyViewHolder holder, MenuEntity menuEntity) {
-                holder.setText(R.id.tv_menu_name, menuEntity.getName());
-            }
-        });
+    private void setCurrentDate() {
+        Date curDate = new Date();
+        mCalendarView.setSelectedDate(curDate);
+        mVisitRecordFilter.setStartDate(DateUtil.getPreDate(curDate));
+        mVisitRecordFilter.setEndDate(DateUtil.getNextDate(curDate));
+    }
 
-        mLVDialogMenu.setOnItemClickListener((parent, view, position, id) -> {
-
-        });
+    private void initFragment() {
+        mVisitRecordFragment = VisitRecordFragment.newInstance(mVisitRecordFilter);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, mVisitRecordFragment, "visitList")
+                .commit();
     }
 
     @Override
@@ -130,20 +117,13 @@ public class VisitCustomActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.fl_body)
-    void OnBodyClicked(View view) {
-        if (mFlMenu.getVisibility() == View.VISIBLE) {
-            mFlMenu.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == Constants.REQUEST_CODE_ADD_VISIT) {
             if (resultCode == Constants.RESULT_CODE_ADD_VISIT) {
-                mVisitRecordFragment.refreshData();
+                mVisitRecordFragment.updateForFilter(mVisitRecordFilter);
             }
         }
     }

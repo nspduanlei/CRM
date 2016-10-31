@@ -1,6 +1,7 @@
 package com.apec.crm.views.widget.listView;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -14,8 +15,12 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.apec.crm.utils.DensityUtils;
 import com.apec.crm.views.widget.RoundTextView;
+import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * Author: duanlei
@@ -187,5 +192,29 @@ public class MyViewHolder {
         RoundTextView tv = getView(viewId);
         tv.setColor(color);
         return this;
+    }
+
+    public MyViewHolder setPhoto(int viewId, String photoPath) {
+
+        ImageView imageView = getView(viewId);
+
+        Picasso.with(mContext)
+                .load(new File(photoPath))
+                .config(Bitmap.Config.RGB_565)
+                .resize(DensityUtils.dp2px(mContext, 59), DensityUtils.dp2px(mContext, 59))
+                .centerInside()
+                .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
+                .into(imageView);
+        return this;
+
+    }
+
+    public MyViewHolder setPhoto(int viewId, int photoPath) {
+        ImageView imageView = getView(viewId);
+        Picasso.with(mContext)
+                .load(photoPath)
+                .into(imageView);
+        return this;
+
     }
 }

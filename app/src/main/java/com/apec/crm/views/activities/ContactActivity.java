@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.apec.crm.R;
@@ -64,6 +65,9 @@ public class ContactActivity extends BaseActivity implements ContactView {
     @BindView(R.id.custom_line)
     View mCustomLine;
 
+    @BindView(R.id.pb_loading)
+    ProgressBar mLoading;
+
     private int mType;
     String mSex, mAge;
 
@@ -84,36 +88,41 @@ public class ContactActivity extends BaseActivity implements ContactView {
 
         switch (mType) {
             case TYPE_ADD:
-                mFLCustom.setVisibility(View.GONE);
-                mCustomLine.setVisibility(View.GONE);
             case TYPE_ADD_SAVE:
                 setUpTitle("添加联系人");
                 break;
 
             case TYPE_EDIT:
             case TYPE_EDIT_SAVE:
-                mFLCustom.setVisibility(View.GONE);
-                mCustomLine.setVisibility(View.GONE);
-
                 setUpTitle("联系人详情");
-                mContact = getIntent().getParcelableExtra(ARG_CONTACT);
-
-                showContact();
-
+                //删除联系人
                 setBtnImage(R.drawable.nav_delete_drawable, v -> {
-                    mContactPresenter.delContact(mContact.getId());
+                    if (mType == TYPE_EDIT) {
+                        setResult(Constants.RESULT_CODE_DELETE_CONTACT,
+                                getIntent().putExtra(ARG_CONTACT, mContact.getId()));
+                        this.finish();
+                    } else {
+                        mContactPresenter.delContact(mContact.getId());
+                    }
                 });
                 break;
             case TYPE_SHOW:
                 setUpTitle("联系人详情");
                 break;
+        }
 
+        mContact = getIntent().getParcelableExtra(ARG_CONTACT);
+        if (mContact == null) {
+            mContact = new Contact();
+        } else {
+            showContact();
         }
 
         mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
         if (mCustomId != null) {
             mFLCustom.setVisibility(View.GONE);
             mCustomLine.setVisibility(View.GONE);
+            mContact.setCustomerNo(mCustomId);
         }
     }
 
@@ -140,14 +149,9 @@ public class ContactActivity extends BaseActivity implements ContactView {
         } else if (!msgPhone.equals("")) {
             T.showShort(this, msgPhone);
         } else {
-            if (mContact == null) {
-                mContact = new Contact();
-            }
-
             mContact.setContactName(name);
             mContact.setContactPhone(phone);
             mContact.setContactPost(post);
-
 
             if (mEtTel.getText().length() != 0) {
                 mContact.setContactTel(mEtTel.getText().toString());
@@ -174,7 +178,6 @@ public class ContactActivity extends BaseActivity implements ContactView {
                     mContactPresenter.updateContact(mContact);
                     break;
             }
-
         }
     }
 
@@ -259,26 +262,35 @@ public class ContactActivity extends BaseActivity implements ContactView {
     @Override
     public void addContactSuccess() {
         T.showShort(this, "添加联系人成功");
+        setResult(Constants.RESULT_CODE_ADD_CONTACT,
+                getIntent().putExtra(ARG_CONTACT, mContact));
+        this.finish();
     }
 
     @Override
     public void delContactSuccess() {
         T.showShort(this, "删除联系人成功");
+        setResult(Constants.RESULT_CODE_DELETE_CONTACT,
+                getIntent().putExtra(ARG_CONTACT, mContact.getId()));
+        this.finish();
     }
 
     @Override
     public void updateContactSuccess() {
         T.showShort(this, "更新联系人成功");
+        setResult(Constants.RESULT_CODE_UPDATE_CONTACT,
+                getIntent().putExtra(ARG_CONTACT, mContact));
+        this.finish();
     }
 
     @Override
     public void showLoadingView() {
-
+        mLoading.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideLoadingView() {
-
+        mLoading.setVisibility(View.GONE);
     }
 
     @Override

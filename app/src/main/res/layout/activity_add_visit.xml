@@ -2,7 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:background="@color/colorWhite">
+             android:background="@color/colorWhite"
+             android:focusable="true"
+             android:focusableInTouchMode="true">
 
     <include
         layout="@layout/top_bar_layout"/>
@@ -27,18 +29,28 @@
                 android:hint="说点什么吧..."
                 android:textColorHint="@color/hintColor"/>
 
-            <LinearLayout
-                android:id="@+id/ll_pic"
+            <!--<LinearLayout-->
+            <!--android:id="@+id/ll_pic"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/et_content">-->
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_add_image"-->
+            <!--android:layout_width="59dp"-->
+            <!--android:layout_height="59dp"-->
+            <!--android:layout_marginRight="@dimen/common_margin"-->
+            <!--android:src="@drawable/compose_pic_add"/>-->
+            <!--</LinearLayout>-->
+
+
+            <GridView
+                android:id="@+id/gv_photos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/et_content">
-                <ImageView
-                    android:id="@+id/iv_add_image"
-                    android:layout_width="59dp"
-                    android:layout_height="59dp"
-                    android:layout_marginRight="@dimen/common_margin"
-                    android:src="@drawable/compose_pic_add"/>
-            </LinearLayout>
+                android:layout_height="59dp"
+                android:layout_below="@id/et_content"
+                android:columnWidth="59dp"
+                android:horizontalSpacing="@dimen/common_margin"
+                android:numColumns="auto_fit"/>
         </RelativeLayout>
 
         <View
@@ -100,6 +112,7 @@
         </FrameLayout>
 
         <include
+            android:id="@+id/custom_line"
             layout="@layout/layout_line"/>
 
         <FrameLayout

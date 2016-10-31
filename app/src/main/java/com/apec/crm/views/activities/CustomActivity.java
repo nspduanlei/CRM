@@ -12,6 +12,7 @@ import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.domin.entities.VisitRecordFilter;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.VisitRecordFragment;
@@ -50,6 +51,8 @@ public class CustomActivity extends BaseActivity {
 
     public static final String ARG_CUSTOM = "arg_custom";
 
+    private VisitRecordFilter mVisitRecordFilter = new VisitRecordFilter();
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom, R.string.custom_home);
@@ -62,6 +65,13 @@ public class CustomActivity extends BaseActivity {
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mCustom = getIntent().getParcelableExtra(ARG_CUSTOM);
+
+        if (mCustom == null) {
+            this.finish();
+        }
+
+        mVisitRecordFilter.setCustomerNo(mCustom.getId());
+
         mRoundTextView.setColor(MyUtils.getColor(mCustom.getIcon()));
 
         MyUtils.setHeadText(mTvHead, mCustom.getCustomerName());
@@ -75,10 +85,7 @@ public class CustomActivity extends BaseActivity {
     }
 
     private void initFragment() {
-        Bundle bundle = new Bundle();
-        bundle.putString(VisitRecordFragment.ARG_CUSTOM_ID, mCustom.getId());
-        mVisitRecordFragment = VisitRecordFragment.newInstance(bundle);
-
+        mVisitRecordFragment = VisitRecordFragment.newInstance(mVisitRecordFilter);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, mVisitRecordFragment, "visitList")
                 .commit();
@@ -168,8 +175,7 @@ public class CustomActivity extends BaseActivity {
 
         if (requestCode == Constants.REQUEST_CODE_ADD_VISIT) {
             if (resultCode == Constants.RESULT_CODE_ADD_VISIT) {
-
-                mVisitRecordFragment.refreshData();
+                mVisitRecordFragment.updateForFilter(mVisitRecordFilter);
             }
         }
     }

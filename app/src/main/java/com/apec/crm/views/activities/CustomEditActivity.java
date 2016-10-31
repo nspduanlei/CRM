@@ -13,6 +13,8 @@ import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Address;
 import com.apec.crm.domin.entities.CustomDetail;
 import com.apec.crm.domin.entities.SelectContent;
+import com.apec.crm.injector.components.DaggerCustomComponent;
+import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.utils.KeyBoardUtils;
 import com.apec.crm.utils.SelectCityUtil;
 import com.apec.crm.views.activities.core.BaseActivity;
@@ -87,7 +89,10 @@ public class CustomEditActivity extends BaseActivity implements SelectCityUtil.S
 
     @Override
     protected void initDependencyInjector(MyApplication application) {
-
+        DaggerCustomComponent.builder()
+                .activityModule(new ActivityModule(this))
+                .appComponent(application.getAppComponent())
+                .build().inject(this);
     }
 
     @Override

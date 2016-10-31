@@ -39,4 +39,5 @@
     <string name="custom_type">客户类型</string>
     <string name="custom_base">客户基本资料</string>
     <string name="title_open_sea">公海</string>
+    <string name="filter_visit_title">拜访筛选</string>
 </resources>

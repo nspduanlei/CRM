@@ -175,4 +175,7 @@
 
     </LinearLayout>
 
+    <include
+        layout="@layout/loading_layout"/>
+
 </FrameLayout>

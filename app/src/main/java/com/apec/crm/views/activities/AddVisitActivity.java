@@ -1,13 +1,11 @@
 package com.apec.crm.views.activities;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,6 +17,7 @@ import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.AddVisitBean;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.PhotoBean;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.injector.components.DaggerVisitComponent;
 import com.apec.crm.injector.modules.ActivityModule;
@@ -29,8 +28,8 @@ import com.apec.crm.utils.LocationTask;
 import com.apec.crm.utils.StringUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.Picasso;
+import com.apec.crm.views.widget.listView.CommonAdapter;
+import com.apec.crm.views.widget.listView.MyViewHolder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -55,17 +54,20 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     TextView mTvLocation;
     @BindView(R.id.tv_custom)
     TextView mTvCustom;
+
     @BindView(R.id.fl_custom)
     FrameLayout mFlCustom;
+    @BindView(R.id.custom_line)
+    View mCustomLine;
+
     @BindView(R.id.tv_contact)
     TextView mTvContact;
-    @BindView(R.id.iv_add_image)
-    ImageView mIvAddImage;
-    @BindView(R.id.ll_pic)
-    LinearLayout mLlPic;
 
     @BindView(R.id.pb_loading)
     ProgressBar mLoading;
+
+    @BindView(R.id.gv_photos)
+    GridView mGvPhotos;
 
     LocationTask mLocationTask;
     //当前选择经纬度
@@ -81,30 +83,42 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     public static final String ARG_CUSTOM_ID = "arg_custom_id";
 
     //选择的图片
-    private ArrayList<File> mImages = new ArrayList<>();
+    private ArrayList<PhotoBean> mPhotos = new ArrayList<>();
+
+    CommonAdapter<PhotoBean> mCommonAdapter;
+
+    private static final int PHOTO_COUNT = 3;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_add_visit, R.string.add_visit_title);
         setMenuText("保存", v -> {
-            if (mCustomId == null) {
-                T.showShort(this, "请选择客户");
-            } else if (mContactId == null) {
-                T.showShort(this, "请选择联系人");
-            }
-//            else if (mImages.size() == 0) {
-//                T.showShort(this, "请选择图片");
-//            }
-            else {
-                String mark = mEtContent.getText().toString();
-                if (!StringUtils.isNullOrEmpty(mark)) {
-                    mAddVisitBean.setVisitRemarks(mark);
-                }
-
-                //添加拜访
-                mAddVisitPresenter.addVisit(mAddVisitBean, mImages);
-            }
+            saveData();
         });
+    }
+
+    private void saveData() {
+        if (mCustomId == null) {
+            T.showShort(this, "请选择客户");
+        } else if (mContactId == null) {
+            T.showShort(this, "请选择联系人");
+        } else if (mPhotos.size() == 1) {
+                T.showShort(this, "请选择图片");
+        } else {
+            String mark = mEtContent.getText().toString();
+            if (!StringUtils.isNullOrEmpty(mark)) {
+                mAddVisitBean.setVisitRemarks(mark);
+            }
+
+            ArrayList<File> mImages = new ArrayList<>();
+            for (int i = 0; i < mPhotos.size(); i++) {
+                if (mPhotos.get(i).getPhotoPath() != null) {
+                    mImages.add(new File(mPhotos.get(i).getPhotoPath()));
+                }
+            }
+            //添加拜访
+            mAddVisitPresenter.addVisit(mAddVisitBean, mImages);
+        }
     }
 
     @Override
@@ -113,6 +127,7 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
 
         if (mCustomId != null) {
             mFlCustom.setVisibility(View.GONE);
+            mCustomLine.setVisibility(View.GONE);
         }
 
         //定位获取当前位置
@@ -121,6 +136,40 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         mLocationTask.startSingleLocate();
 
         mGalleryFinalUtils = new GalleryFinalUtils(this);
+
+        mPhotos.add(new PhotoBean(null));
+
+        //图片显示
+        mCommonAdapter = new CommonAdapter<PhotoBean>(this, mPhotos,
+                R.layout.item_photo) {
+            @Override
+            public void convert(MyViewHolder holder, PhotoBean photoBean) {
+
+                if (photoBean.getPhotoPath() != null) {
+                    holder.setPhoto(R.id.iv_photo, photoBean.getPhotoPath())
+                            .setVisibility(R.id.iv_delete, View.VISIBLE)
+                            .setOnClickLister(R.id.iv_delete, v -> {
+                                mPhotos.remove(holder.getMPosition());
+                                mCommonAdapter.notifyDataSetChanged();
+                            });
+                } else {
+                    holder.setPhoto(R.id.iv_photo, R.drawable.compose_pic_add)
+                            .setVisibility(R.id.iv_delete, View.GONE);
+                }
+            }
+        };
+
+        mGvPhotos.setAdapter(mCommonAdapter);
+
+        mGvPhotos.setOnItemClickListener((parent, view, position, id) -> {
+            if (mPhotos.get(position).getPhotoPath() == null) {
+                if (mPhotos.size() >= PHOTO_COUNT + 1) {
+                    T.showShort(AddVisitActivity.this, "最多只能上传3张图片");
+                    return;
+                }
+                mGalleryFinalUtils.selectVisitImage(this, PHOTO_COUNT + 1 - mPhotos.size());
+            }
+        });
     }
 
     @Override
@@ -176,14 +225,6 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         intent.putExtra(SelectListActivity.CUSTOM_ID, mCustomId);
         intent.putExtra(SelectListActivity.LIST_TYPE, SelectListActivity.CUSTOM_CONTACT);
         startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_ATTR);
-    }
-
-
-    @OnClick(R.id.iv_add_image)
-    void onSelectImageClicked(View view) {
-        if (mImages.size() < 3) {
-            mGalleryFinalUtils.selectVisitImage(this, mImages.size());
-        }
     }
 
     @Override
@@ -245,28 +286,11 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
 
             for (int i = 0; i < resultList.size(); i++) {
-
-                mImages.add(new File(resultList.get(i).getPhotoPath()));
-
-                ImageView imageView = new ImageView(this);
-                imageView.setLayoutParams(mIvAddImage.getLayoutParams());
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
-                Picasso.with(this)
-                        .load(new File(resultList.get(i).getPhotoPath()))
-                        .config(Bitmap.Config.RGB_565)
-                        .resize(mIvAddImage.getWidth(), mIvAddImage.getHeight())
-                        .centerInside()
-                        .memoryPolicy(MemoryPolicy.NO_CACHE, MemoryPolicy.NO_STORE)
-                        .into(imageView);
-
-                mLlPic.addView(imageView, i);
+                mPhotos.add(0,
+                        new PhotoBean(resultList.get(i).getPhotoPath()));
             }
 
-
-            if (mLlPic.getChildCount() >= 4) {
-                mIvAddImage.setVisibility(View.GONE);
-            }
+            mCommonAdapter.notifyDataSetChanged();
         }
     }
 

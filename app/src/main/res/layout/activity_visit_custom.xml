@@ -55,9 +55,4 @@
             android:layout_weight="1"/>
 
     </LinearLayout>
-
-    <include
-        layout="@layout/layout_dialog_menu_visit"/>
-
-
 </FrameLayout>

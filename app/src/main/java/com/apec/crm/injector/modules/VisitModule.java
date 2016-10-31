@@ -2,7 +2,7 @@ package com.apec.crm.injector.modules;
 
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.visit.AddVisitUseCase;
-import com.apec.crm.domin.useCase.visit.GetVisitByUUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitsUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
 
@@ -20,12 +20,12 @@ public class VisitModule {
 
     @Provides
     @Activity
-    GetVisitByUUseCase provideGetVisitRecordUseCase(
+    GetVisitsUseCase provideGetVisitsUseCase(
             GoodsRepository repository,
             @Named("ui_thread") Scheduler uiThread,
             @Named("executor_thread") Scheduler executorThread,
             @Named("gson") Gson gson) {
-        return new GetVisitByUUseCase(repository, uiThread, executorThread, gson);
+        return new GetVisitsUseCase(repository, uiThread, executorThread, gson);
     }
 
     @Provides

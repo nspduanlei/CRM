@@ -191,14 +191,13 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         mAMap.moveCamera(CameraUpdateFactory.zoomTo(17));
         initMap();
 
-        if (mLatLngFirst != null) {
+        if (mLatLngFirst != null && mLatLngFirst.latitude != 0) {
             mLatLngSelect = mLatLngFirst;
             addMarker();
             mTvAddressSelect.setText(mLocationDes);
 
             //地址选择完成,根据经纬度获取地址信息
             initGeocodeSearch();
-
         } else {
             initLocation();
         }

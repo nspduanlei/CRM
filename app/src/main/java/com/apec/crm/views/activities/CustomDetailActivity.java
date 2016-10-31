@@ -15,7 +15,6 @@ import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.CustomDetailPresenter;
 import com.apec.crm.mvp.views.CustomDetailView;
-import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.widget.NoScrollListView;
@@ -29,6 +28,8 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.apec.crm.config.Constants.REQUEST_CODE_ADD_CONTACT;
 
 /**
  * Created by duanlei on 16/9/20.
@@ -106,8 +107,9 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
         mContactAdapter.setOnItemClickListener(data -> {
             Intent intent = new Intent(CustomDetailActivity.this, ContactActivity.class);
             intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_EDIT_SAVE);
+            intent.putExtra(ContactActivity.ARG_CUSTOM_ID, mCustomDetail.getId());
             intent.putExtra(ContactActivity.ARG_CONTACT, data);
-            startActivity(intent);
+            startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
         });
 
         mCustomDetailPresenter.getCustomDetail(mCustomId);
@@ -163,7 +165,9 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
     @OnClick(R.id.tv_add_contact)
     void onAddContactClicked(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
-        startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
+        intent.putExtra(ContactActivity.ARG_CUSTOM_ID, mCustomDetail.getId());
+        intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD_SAVE);
+        startActivityForResult(intent, REQUEST_CODE_ADD_CONTACT);
     }
 
     @Override
@@ -193,11 +197,11 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
         mTvCustomArea.setText(mCustomDetail.getAreaName());
         mTvCustomCar.setText(mCustomDetail.getIsSpeedInto());
         mTvCustomTime.setText(mCustomDetail.getBusinessHours());
-        mTvCustomCreate.setText(DateUtil.getDateFormatStr(Long.valueOf(mCustomDetail.getCreateDate()),
-                "yyyy-MM-dd"));
+//        mTvCustomCreate.setText(DateUtil.getDateFormatStr(Long.valueOf(mCustomDetail.getCreateDate()),
+//                "yyyy-MM-dd"));
+        mTvCustomCreate.setText(mCustomDetail.getCreateDate());
         mTvCustomBelong.setText(mCustomDetail.getUserName());
         mTvCustomClass.setText(mCustomDetail.getCustomerLevelName());
-
     }
 
     public void setContacts() {
@@ -235,19 +239,25 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
                 mCustomDetail =
                         data.getParcelableExtra(CustomMoreDataActivity.ARG_RESULT);
                 setMoreInfo();
+                mCustomDetailPresenter.updateCustom(mCustomDetail);
             }
-        } else if (requestCode == Constants.REQUEST_CODE_ADD_CONTACT) { //添加联系人
-            if (resultCode == Constants.RESULT_CODE_ADD_CONTACT) {
-                Contact contact =
-                        data.getParcelableExtra(ContactActivity.ARG_CONTACT);
-                mContacts.add(contact);
-                setContacts();
+        } else if (requestCode == REQUEST_CODE_ADD_CONTACT) { //联系人
+
+            switch (resultCode) {
+                case Constants.RESULT_CODE_ADD_CONTACT: //添加联系人
+                case Constants.RESULT_CODE_UPDATE_CONTACT: //修改联系人
+                case Constants.RESULT_CODE_DELETE_CONTACT: //删除联系人
+
+                    mCustomDetailPresenter.getCustomDetail(mCustomId);
+
+                    break;
             }
-        } else if (requestCode == Constants.REQUEST_CODE_CUSTOM_BASE) { //更多资料返回
+        } else if (requestCode == Constants.REQUEST_CODE_CUSTOM_BASE) { //基本资料返回
             if (resultCode == Constants.RESULT_CODE_CUSTOM_BASE) {
                 mCustomDetail =
-                        data.getParcelableExtra(CustomMoreDataActivity.ARG_RESULT);
-                setMoreInfo();
+                        data.getParcelableExtra(CustomEditActivity.ARG_CUSTOM);
+                setBaseInfo();
+                mCustomDetailPresenter.updateCustom(mCustomDetail);
             }
         }
     }

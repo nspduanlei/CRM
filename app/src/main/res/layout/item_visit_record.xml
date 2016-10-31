@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:ellipsize="end"
+        android:gravity="right"
         android:maxLines="2"
         android:maxWidth="150dp"
         android:text="QQ蛋糕店affasfafafaaafafafafa"
@@ -23,13 +23,13 @@
 
     <TextView
         android:id="@+id/tv_visit_des"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:layout_toLeftOf="@id/tv_custom_name"
         android:ellipsize="end"
         android:lines="3"
-        android:text="嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的嘎斯嘎嘎嘎好噶哈哈哈哈发打发似的发射发生的"
+        android:text="嘎斯嘎嘎嘎好"
         android:textColor="@color/titleColor"/>
 
     <TextView
@@ -62,23 +62,32 @@
         android:layout_marginTop="10dp">
 
         <ImageView
+            android:id="@+id/iv_visit_1"
             android:layout_width="93dp"
             android:layout_height="60dp"
-            android:background="@color/colorMain"/>
+            android:background="@color/hintColor"
+            android:scaleType="fitXY"
+            android:visibility="gone"/>
 
         <ImageView
+            android:id="@+id/iv_visit_2"
             android:layout_width="50dp"
             android:layout_height="32dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="9dp"
-            android:background="@color/colorMain"/>
+            android:background="@color/hintColor"
+            android:visibility="gone"
+            android:scaleType="fitXY"/>
 
         <ImageView
+            android:id="@+id/iv_visit_3"
             android:layout_width="50dp"
             android:layout_height="32dp"
             android:layout_gravity="bottom"
             android:layout_marginLeft="9dp"
-            android:background="@color/colorMain"/>
+            android:background="@color/hintColor"
+            android:visibility="gone"
+            android:scaleType="fitXY"/>
 
     </LinearLayout>
 

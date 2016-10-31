@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import static com.apec.crm.R.string.today;
+import static com.apec.crm.R.string.yesterday;
+
 
 /**
  * 日期处理工具类
@@ -39,11 +42,11 @@ public class DateUtil {
             R.string.year);
 
     private static String YESTER_DAY = MyApplication.getInstance()
-            .getString(R.string.yesterday);
+            .getString(yesterday);
     private static String THE_DAY_BEFORE_YESTER_DAY = MyApplication
             .getInstance().getString(R.string.the_day_before_yesterday);
     private static String TODAY = MyApplication.getInstance().getString(
-            R.string.today);
+            today);
 
     private static String DATE_FORMAT = MyApplication.getInstance()
             .getString(R.string.date_format);
@@ -197,18 +200,13 @@ public class DateUtil {
     }
 
     /**
-     * 格式化时间
-     * @param time_g 秒
+     * 格式时间  今天  "yyyy-MM-dd HH:mm"
+     * @param time_g
      * @return
      */
-    public static String getNearTime(String time_g) {
+    public static String getNearTime(long time_g) {
 
-        Long ltime = Long.valueOf(time_g);
-        if (ltime == 0) {
-            return "";
-        }
-        ltime = ltime * 1000;
-        Date date = new Date(ltime);
+        Date date = new Date(time_g);
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String time = format.format(date);
@@ -230,8 +228,8 @@ public class DateUtil {
         yesterday.set(Calendar.YEAR, current.get(Calendar.YEAR));
         yesterday.set(Calendar.MONTH, current.get(Calendar.MONTH));
         yesterday.set(Calendar.DAY_OF_MONTH,current.get(Calendar.DAY_OF_MONTH)-1);
-        yesterday.set( Calendar.HOUR_OF_DAY, 0);
-        yesterday.set( Calendar.MINUTE, 0);
+        yesterday.set(Calendar.HOUR_OF_DAY, 0);
+        yesterday.set(Calendar.MINUTE, 0);
         yesterday.set(Calendar.SECOND, 0);
 
         current.setTime(date);
@@ -422,10 +420,52 @@ public class DateUtil {
      */
     @SuppressLint("SimpleDateFormat")
     public static String getDateFormatStr(long time, String formatStr) {
-
         Date d = new Date(time);
-        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
-
-        return sdf.format(d);
+        return getDateFormatStrWithDate(d, formatStr);
     }
+
+    public static String getDateFormatStrWithDate(Date date, String formatStr) {
+        SimpleDateFormat sdf = new SimpleDateFormat(formatStr);
+        return sdf.format(date);
+    }
+
+
+    /**
+     * 获取前一天的日期
+     * @return
+     */
+    public static String getPreDate(Date date) {
+
+        Calendar current = Calendar.getInstance();
+        current.setTime(date);
+
+        Calendar yesterday = Calendar.getInstance(); //昨天
+
+        yesterday.set(Calendar.YEAR, current.get(Calendar.YEAR));
+        yesterday.set(Calendar.MONTH, current.get(Calendar.MONTH));
+        yesterday.set(Calendar.DAY_OF_MONTH,current.get(Calendar.DAY_OF_MONTH)-1);
+
+        return getDateFormatStrWithDate(yesterday.getTime(), "yyyy-MM-dd");
+    }
+
+    /**
+     * 获取后一天的日期
+     * @return
+     */
+    public static String getNextDate(Date date) {
+
+        Calendar current = Calendar.getInstance();
+        current.setTime(date);
+
+        Calendar tomorrow = Calendar.getInstance();	//明天
+
+        tomorrow.set(Calendar.YEAR, current.get(Calendar.YEAR));
+        tomorrow.set(Calendar.MONTH, current.get(Calendar.MONTH));
+        tomorrow.set(Calendar.DAY_OF_MONTH, current.get(Calendar.DAY_OF_MONTH)+1);
+
+        return getDateFormatStrWithDate(tomorrow.getTime(), "yyyy-MM-dd");
+    }
+
+
+
 }

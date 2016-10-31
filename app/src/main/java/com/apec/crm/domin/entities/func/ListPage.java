@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class ListPage<T> {
     private ArrayList<T> rows;
     private int totalElements;
-    private int totalPages;
+    private int pageCount;
 
     public ArrayList<T> getRows() {
         return rows;
@@ -27,11 +27,14 @@ public class ListPage<T> {
         this.totalElements = totalElements;
     }
 
-    public int getTotalPages() {
-        return totalPages;
+
+    public int getPageCount() {
+        return pageCount;
     }
 
-    public void setTotalPages(int totalPages) {
-        this.totalPages = totalPages;
+    public void setPageCount(int pageCount) {
+        this.pageCount = pageCount;
     }
+
+
 }

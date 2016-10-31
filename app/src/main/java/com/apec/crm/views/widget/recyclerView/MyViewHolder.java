@@ -1,11 +1,14 @@
 package com.apec.crm.views.widget.recyclerView;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.apec.crm.views.widget.RoundTextView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 
@@ -17,6 +20,7 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> mViews;
     private View mConvertView;
+    private Context mContext;
 
 
     private OnItemClickListener mOnItemClickListener;
@@ -46,9 +50,10 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         return (T) view;
     }
 
-    public MyViewHolder(View view) {
+    public MyViewHolder(View view, Context context) {
         super(view);
         mConvertView = view;
+        mContext = context;
         mViews = new SparseArray<>();
         ButterKnife.bind(this, view);
         view.setOnClickListener(v -> {
@@ -76,6 +81,25 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
         tv.setColor(color);
         return this;
     }
+
+    public MyViewHolder setImageUrl(int viewId, String url) {
+        ImageView iv = getView(viewId);
+        Picasso.with(mContext).load(url).into(iv);
+        return this;
+    }
+
+    public MyViewHolder setVisibility(int viewId, int visibility) {
+        View view = getView(viewId);
+        view.setVisibility(visibility);
+        return this;
+    }
+
+    public MyViewHolder setOnClickLister(int viewId, View.OnClickListener listener) {
+        View view = getView(viewId);
+        view.setOnClickListener(listener);
+        return this;
+    }
+
 
 
 

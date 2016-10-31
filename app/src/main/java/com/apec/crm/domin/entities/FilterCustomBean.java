@@ -10,7 +10,7 @@ import com.apec.crm.domin.entities.func.BaseFilter;
  * 筛选客户列表
  */
 
-public class FilterCustomBean extends BaseFilter implements Parcelable{
+public class FilterCustomBean extends BaseFilter implements Parcelable {
 
     private String areaId; //行政区域
     private String areaNo; //片区编号

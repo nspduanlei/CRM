@@ -11,6 +11,11 @@ public class Constants {
     public static final String TEST_BASE_URL = "http://192.168.8.21:18001/";
 
     /**
+     * 列表每页显示数据
+     */
+    public static final int PAGE_SIZE = 20;
+
+    /**
      * result
      */
     public static final int RESULT_CODE_MARK_MAP= 100; //地区标记
@@ -37,6 +42,10 @@ public class Constants {
 
     public static final int RESULT_CODE_CUSTOM_BASE = 116; //编辑基本信息
 
+    public static final int RESULT_CODE_UPDATE_CONTACT = 117; //更新联系人
+
+    public static final int RESULT_CODE_DELETE_CONTACT = 118; //删除联系人
+    public static final int RESULT_CODE_FILTER_VISIT = 119; //筛选拜访记录
 
     /**
      * request
@@ -58,7 +67,7 @@ public class Constants {
     public static final int REQUEST_CODE_ADD_CUSTOM = 1010; //添加联系人
 
     public static final int REQUEST_CODE_CUSTOM_BASE = 1011; //编辑基本信息
-
+    public static final int REQUEST_CODE_FILTER_VISIT = 1012; //筛选拜访记录
     /**
      * 客户属性类型
      */
@@ -67,6 +76,7 @@ public class Constants {
     public static final String CUSTOMER_LEVEL = "level"; //客户分类
     public static final String CUSTOMER_STATE = "state"; //客户状态
     public static final String CUSTOMER_SOURCE = "source"; //客户来源
+
 
 }
 
