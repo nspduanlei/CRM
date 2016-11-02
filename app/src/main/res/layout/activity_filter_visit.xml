@@ -8,7 +8,7 @@
         layout="@layout/top_bar_layout"/>
 
     <FrameLayout
-        android:id="@+id/fl_area"
+        android:id="@+id/fl_custom"
         style="@style/FormFragmentStyle">
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
         layout="@layout/layout_line"/>
 
     <FrameLayout
-        android:id="@+id/fl_type"
+        android:id="@+id/fl_user"
         style="@style/FormFragmentStyle">
         <TextView
             android:layout_width="wrap_content"
@@ -67,7 +67,6 @@
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="@dimen/margin_left"
         android:layout_marginRight="@dimen/margin_left">
-
         <Button
             android:id="@+id/btn_reset"
             android:layout_width="0dp"
@@ -86,8 +85,5 @@
             android:background="@drawable/button_bg_1"
             android:text="确定"
             android:textColor="@color/colorWhite"/>
-
     </LinearLayout>
-
-
 </LinearLayout>

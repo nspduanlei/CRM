@@ -82,13 +82,13 @@ public class CustomMoreDataActivity extends BaseActivity {
         }
 
         if (!StringUtils.isNullOrEmpty(mCustomDetail.getCustomerLevelName())) {
-            mTvCustomLevel.setText(mCustomDetail.getCustomerLevel());
+            mTvCustomLevel.setText(mCustomDetail.getCustomerLevelName());
         }
         if (!StringUtils.isNullOrEmpty(mCustomDetail.getCustomerStateName())) {
-            mTvCustomState.setText(mCustomDetail.getCustomerState());
+            mTvCustomState.setText(mCustomDetail.getCustomerStateName());
         }
         if (!StringUtils.isNullOrEmpty(mCustomDetail.getSource())) {
-            mTvCustomSource.setText(mCustomDetail.getSource());
+            mTvCustomSource.setText(mCustomDetail.getSourceName());
         }
         if (!StringUtils.isNullOrEmpty(mCustomDetail.getAreaName())) {
             mTvArea.setText(mCustomDetail.getAreaName());
@@ -126,7 +126,6 @@ public class CustomMoreDataActivity extends BaseActivity {
         menuEntities.add(new MenuEntity(1, "否"));
 
         MyUtils.showListDialog(this, menuEntities, (dialog, item, view1, position) -> {
-
             mCustomDetail.setIsSpeedInto(menuEntities.get(position).getName());
             mTvCar.setText(menuEntities.get(position).getName());
 

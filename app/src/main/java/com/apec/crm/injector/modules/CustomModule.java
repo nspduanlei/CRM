@@ -4,11 +4,13 @@ import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.custom.AddContactUseCase;
 import com.apec.crm.domin.useCase.custom.AddCustomUseCase;
 import com.apec.crm.domin.useCase.custom.DelContactUseCase;
+import com.apec.crm.domin.useCase.custom.DeleteCustomUseCase;
 import com.apec.crm.domin.useCase.custom.GetContactUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomDetailUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
+import com.apec.crm.domin.useCase.custom.ReturnPoolUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateContactUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateCustomUseCase;
 import com.apec.crm.domin.useCase.sys.GetAreaUseCase;
@@ -135,6 +137,26 @@ public class CustomModule {
             @Named("executor_thread") Scheduler executorThread,
             @Named("gson") Gson gson) {
         return new UpdateCustomUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    ReturnPoolUseCase provideReturnPoolUseCase(
+                    GoodsRepository repository,
+                    @Named("ui_thread") Scheduler uiThread,
+                    @Named("executor_thread") Scheduler executorThread,
+                    @Named("gson") Gson gson) {
+        return new ReturnPoolUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    DeleteCustomUseCase provideDeleteCustomUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new DeleteCustomUseCase(repository, uiThread, executorThread, gson);
     }
 
 }

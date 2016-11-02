@@ -87,6 +87,9 @@
         <include
             layout="@layout/layout_dialog_menu"/>
 
+        <include
+            layout="@layout/loading_layout"/>
+
     </FrameLayout>
 
 </LinearLayout>

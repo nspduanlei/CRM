@@ -19,12 +19,20 @@ import java.util.List;
 public class ImageSideAdapter extends PagerAdapter {
 
     private List<String> mPaths;
-
     private Context mContext;
+    private OnImageClickListener mOnImageClickListener;
 
     public ImageSideAdapter(Context context, List<String> paths) {
         mContext = context.getApplicationContext();
         mPaths = paths;
+    }
+
+    public interface OnImageClickListener {
+        void onImageClick();
+    }
+
+    public void setOnImageClickListener(OnImageClickListener onImageClickListener) {
+        mOnImageClickListener = onImageClickListener;
     }
 
     @Override
@@ -41,6 +49,10 @@ public class ImageSideAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView iv = new ImageView(mContext);
+
+        iv.setOnClickListener(v -> {
+            mOnImageClickListener.onImageClick();
+        });
 
         Picasso.with(mContext)
                 .load(mPaths.get(position))

@@ -167,6 +167,21 @@ public class RestDataSource implements GoodsRepository {
     }
 
     @Override
+    public Observable<Result> modifyPassword(RequestBody requestBody) {
+        return mCrmApi.modifyPassword(requestBody);
+    }
+
+    @Override
+    public Observable<Result> returnPool(RequestBody requestBody) {
+        return mCrmApi.returnPool(requestBody);
+    }
+
+    @Override
+    public Observable<Result> deleteCustom(RequestBody requestBody) {
+        return mCrmApi.deleteCustom(requestBody);
+    }
+
+    @Override
     public Observable<Result> updateCustom(RequestBody requestBody) {
         return mCrmApi.updateCustom(requestBody);
     }

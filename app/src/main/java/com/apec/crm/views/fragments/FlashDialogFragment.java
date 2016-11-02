@@ -2,27 +2,25 @@ package com.apec.crm.views.fragments;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.apec.crm.R;
 import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.views.activities.AddCustomActivity;
+import com.apec.crm.views.activities.AddVisitActivity;
+import com.apec.crm.views.activities.ContactActivity;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,20 +76,24 @@ public class FlashDialogFragment extends DialogFragment {
         });
 
         mGvMenu.setOnItemClickListener((adapterView, view, i, l) -> {
+
+            Intent intent = null;
+
             switch (i) {
                 case 0: //添加拜访
-
+                    intent = new Intent(getActivity(), AddVisitActivity.class);
                     break;
 
                 case 1: //添加客户
-
+                    intent = new Intent(getActivity(), AddCustomActivity.class);
                     break;
 
                 case 2: //添加联系人
-
+                    intent = new Intent(getActivity(), ContactActivity.class);
+                    intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD);
                     break;
-
             }
+            startActivity(intent);
         });
     }
 

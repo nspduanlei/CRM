@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,11 +54,6 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @BindView(R.id.tv_custom)
     TextView mTvCustom;
 
-    @BindView(R.id.fl_custom)
-    FrameLayout mFlCustom;
-    @BindView(R.id.custom_line)
-    View mCustomLine;
-
     @BindView(R.id.tv_contact)
     TextView mTvContact;
 
@@ -80,7 +74,9 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     private AddVisitBean mAddVisitBean = new AddVisitBean();
 
     GalleryFinalUtils mGalleryFinalUtils;
+
     public static final String ARG_CUSTOM_ID = "arg_custom_id";
+    public static final String ARG_CUSTOM_NAME = "arg_custom_name";
 
     //选择的图片
     private ArrayList<PhotoBean> mPhotos = new ArrayList<>();
@@ -124,10 +120,10 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
+        String customName = getIntent().getStringExtra(ARG_CUSTOM_NAME);
 
         if (mCustomId != null) {
-            mFlCustom.setVisibility(View.GONE);
-            mCustomLine.setVisibility(View.GONE);
+            mTvCustom.setText(customName);
         }
 
         //定位获取当前位置
@@ -170,6 +166,12 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                 mGalleryFinalUtils.selectVisitImage(this, PHOTO_COUNT + 1 - mPhotos.size());
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mGalleryFinalUtils = null;
     }
 
     @Override
@@ -260,7 +262,6 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                     mAddVisitBean.setCustomerNo(custom.getId());
                     mAddVisitBean.setCustomerName(custom.getCustomerName());
                 }
-
                 break;
 
             case Constants.REQUEST_CODE_SELECT_ATTR: //选择联系人

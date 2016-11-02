@@ -55,4 +55,10 @@ public interface GoodsRepository {
     Observable<Result> updateCustom(RequestBody requestBody);
 
     Observable<Result<ListPage<VisitRecord>>> getVisits(RequestBody requestBody, int type);
+
+    Observable<Result> modifyPassword(RequestBody requestBody);
+
+    Observable<Result> returnPool(RequestBody requestBody);
+
+    Observable<Result> deleteCustom(RequestBody requestBody);
 }

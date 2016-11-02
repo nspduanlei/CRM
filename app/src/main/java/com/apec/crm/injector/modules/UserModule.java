@@ -4,6 +4,7 @@ import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
+import com.apec.crm.domin.useCase.user.ModifyPasswordUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
 
@@ -28,7 +29,6 @@ public class UserModule {
         return new LoginUseCase(repository, uiThread, executorThread, gson);
     }
 
-
     @Provides
     @Activity
     GetMyCountUseCase provideGetMyCountUseCase(
@@ -47,5 +47,14 @@ public class UserModule {
         return new GetUserInfoUseCase(repository, uiThread, executorThread);
     }
 
+    @Provides
+    @Activity
+    ModifyPasswordUseCase provideModifyPasswordUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new ModifyPasswordUseCase(repository, uiThread, executorThread, gson);
+    }
 
 }

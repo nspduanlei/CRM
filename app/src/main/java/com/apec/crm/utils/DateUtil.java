@@ -436,16 +436,16 @@ public class DateUtil {
      */
     public static String getPreDate(Date date) {
 
-        Calendar current = Calendar.getInstance();
-        current.setTime(date);
+//        Calendar current = Calendar.getInstance();
+//        current.setTime(date);
+//
+//        Calendar yesterday = Calendar.getInstance(); //昨天
+//
+//        yesterday.set(Calendar.YEAR, current.get(Calendar.YEAR));
+//        yesterday.set(Calendar.MONTH, current.get(Calendar.MONTH));
+//        yesterday.set(Calendar.DAY_OF_MONTH,current.get(Calendar.DAY_OF_MONTH)-1);
 
-        Calendar yesterday = Calendar.getInstance(); //昨天
-
-        yesterday.set(Calendar.YEAR, current.get(Calendar.YEAR));
-        yesterday.set(Calendar.MONTH, current.get(Calendar.MONTH));
-        yesterday.set(Calendar.DAY_OF_MONTH,current.get(Calendar.DAY_OF_MONTH)-1);
-
-        return getDateFormatStrWithDate(yesterday.getTime(), "yyyy-MM-dd");
+        return getDateFormatStrWithDate(date, "yyyy-MM-dd");
     }
 
     /**

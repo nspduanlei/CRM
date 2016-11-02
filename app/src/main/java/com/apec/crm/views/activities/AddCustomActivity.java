@@ -102,8 +102,8 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
             mCustom.setCustomerName(customName);
 
             if (mLatLng != null) {
-                mSelectAddress.setLatitude(mLatLng.latitude);
-                mSelectAddress.setLongitude(mLatLng.longitude);
+                mSelectAddress.setLatitude(String.valueOf(mLatLng.latitude));
+                mSelectAddress.setLongitude(String.valueOf(mLatLng.longitude));
                 mSelectAddress.setLocationDes(mLocationDes);
             }
 

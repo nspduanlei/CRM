@@ -6,9 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -21,13 +19,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 /**
  * Created by duanlei on 16/9/13.
  */
-public class ImageDialogFragment extends DialogFragment {
+public class ImageDialogFragment extends DialogFragment implements ImageSideAdapter.OnImageClickListener {
 
     @BindView(R.id.vp_photo)
     ViewPager mVpPhoto;
@@ -35,7 +32,7 @@ public class ImageDialogFragment extends DialogFragment {
     @BindView(R.id.tv_index)
     TextView mTvIndex;
 
-    PagerAdapter mPagerAdapter;
+    ImageSideAdapter mPagerAdapter;
 
     List<String> mPaths;
 
@@ -64,7 +61,6 @@ public class ImageDialogFragment extends DialogFragment {
         window.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#ee000000")));
 
         initUI(dialog);
-
         return dialog;
     }
 
@@ -82,15 +78,13 @@ public class ImageDialogFragment extends DialogFragment {
 
         mPaths = getArguments().getStringArrayList(ARG_PATHS);
         mIndex = getArguments().getInt(ARG_INDEX);
-
         mTvIndex.setText(String.format("%d/%d", mIndex + 1, mPaths.size()));
-
         mVpPhoto.setCurrentItem(mIndex);
-
         mPagerAdapter = new ImageSideAdapter(getActivity(), mPaths);
 
-        mVpPhoto.setAdapter(mPagerAdapter);
+        mPagerAdapter.setOnImageClickListener(this);
 
+        mVpPhoto.setAdapter(mPagerAdapter);
         mVpPhoto.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -109,8 +103,8 @@ public class ImageDialogFragment extends DialogFragment {
         });
     }
 
-//    @OnClick(R.id.tv_index)
-//    void onCloseClicked(View view) {
-//        dismiss();
-//    }
+    @Override
+    public void onImageClick() {
+        dismiss();
+    }
 }

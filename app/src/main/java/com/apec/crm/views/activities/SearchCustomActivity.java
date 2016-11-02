@@ -38,7 +38,6 @@ import butterknife.OnClick;
  */
 public class SearchCustomActivity extends BaseActivity implements SearchCustomView {
 
-
     @BindView(R.id.et_content)
     EditText mEtContent;
     @BindView(R.id.iv_clear_text)
@@ -69,14 +68,12 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_search_custom, -1, MODE_NONE);
-
         mType = getIntent().getIntExtra(FROM_TYPE, 0);
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mEtContent.addTextChangedListener(new EditChangeListener());
-
         mCommonAdapter = new CommonAdapter<Custom>(this, new ArrayList<>(),
                 R.layout.item_custom_list, mLvSearch) {
             @Override
@@ -88,14 +85,12 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
                                 getString(R.string.date_format_custom)));
 
                 MyUtils.setHeadText(holder.getView(R.id.tv_head), custom.getCustomerName());
-
             }
         };
 
         mLvSearch.setAdapter(mCommonAdapter);
 
         mCommonAdapter.setOnItemClickListener(data -> {
-
             if (mType == SEARCH_CUSTOM) {
                 setResult(Constants.RESULT_CODE_SELECT_CUSTOM,
                         getIntent().putExtra(CUSTOM, data));

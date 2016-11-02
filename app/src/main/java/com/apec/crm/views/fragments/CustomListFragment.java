@@ -1,6 +1,9 @@
 package com.apec.crm.views.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -32,6 +35,35 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
     @Inject
     CustomListPresenter mCustomListPresenter;
+
+    public static final String ACTION_UPDATE = "更新列表";
+
+    //定义广播
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            switch (action) {
+                case ACTION_UPDATE:
+                    initiateRefresh();
+                    break;
+            }
+        }
+    };
+
+    //注册广播
+    public void registerBroadcastReceiver() {
+        IntentFilter myIntentFilter = new IntentFilter();
+        myIntentFilter.addAction(ACTION_UPDATE);
+        // 注册广播
+        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter) ;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(mBroadcastReceiver);
+    }
 
     @Override
     protected CommonRecyclerAdapter getAdapter() {
@@ -72,6 +104,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     protected void initPresenter() {
         mCustomListPresenter.attachView(this);
         mCustomListPresenter.onCreate();
+        registerBroadcastReceiver();
     }
 
     @Override

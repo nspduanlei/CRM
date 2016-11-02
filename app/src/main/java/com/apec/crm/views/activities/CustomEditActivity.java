@@ -139,8 +139,8 @@ public class CustomEditActivity extends BaseActivity implements SelectCityUtil.S
     @OnClick(R.id.tv_location)
     void onSelectLocationClicked(View view) {
         Intent intent = new Intent(this, MapLocationActivity.class);
-        intent.putExtra(MapLocationActivity.ARG_LATLNG, new LatLng(mAddress.getLatitude(),
-                mAddress.getLongitude()));
+        intent.putExtra(MapLocationActivity.ARG_LATLNG, new LatLng(Double.valueOf(mAddress.getLatitude()),
+                Double.valueOf(mAddress.getLongitude())));
         intent.putExtra(MapLocationActivity.ARG_LOCATION_DES, mAddress.getLocationDes());
         startActivityForResult(intent, Constants.REQUEST_CODE_MARK_MAP);
     }
@@ -163,8 +163,8 @@ public class CustomEditActivity extends BaseActivity implements SelectCityUtil.S
                 mLatLng = bundle.getParcelable(MapLocationActivity.RESULT_LATLNG);
                 String locationStr = bundle.getString(MapLocationActivity.RESULT_DETAIL);
 
-                mAddress.setLongitude(mLatLng.longitude);
-                mAddress.setLatitude(mLatLng.latitude);
+                mAddress.setLongitude(String.valueOf(mLatLng.longitude));
+                mAddress.setLatitude(String.valueOf(mLatLng.latitude));
                 mAddress.setLocationDes(locationStr);
 
                 mTvLocation.setText(locationStr);

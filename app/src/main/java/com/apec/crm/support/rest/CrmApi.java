@@ -42,6 +42,12 @@ public interface CrmApi {
     Observable<Result<User>> getUserInfo();
 
     /**
+     * 修改密码
+     */
+    @POST("userAppInterface-service/updateUserPassword.apec")
+    Observable<Result> modifyPassword(@Body RequestBody body);
+
+    /**
      * 获取客户列表
      */
     @POST("CUSTOMER-SERVICE/searchCustomer.apec")
@@ -110,6 +116,18 @@ public interface CrmApi {
      */
     @POST("CUSTOMER-SERVICE/updateContact.apec")
     Observable<Result> updateContact(@Body RequestBody body);
+
+    /**
+     * 退回公海
+     */
+    @POST("CUSTOMER-SERVICE/returnOpenCustomer.apec")
+    Observable<Result> returnPool(@Body RequestBody body);
+
+    /**
+     * 删除客户
+     */
+    @POST("CUSTOMER-SERVICE/deleteCustomer.apec")
+    Observable<Result> deleteCustom(@Body RequestBody body);
 
     /**
      * 添加拜访
