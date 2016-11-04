@@ -77,6 +77,7 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
     CustomDetail mCustom = new CustomDetail();
 
     List<Contact> mContacts = new ArrayList<>();
+    private int mEditPosition;
 
     @Override
     protected void setUpContentView() {
@@ -98,6 +99,8 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
             T.showShort(this, "省市区不能为空");
         } else if (StringUtils.isNullOrEmpty(rodeName)) {
             T.showShort(this, "街道不能为空");
+        } else if (mContacts.size() == 0) {
+            T.showShort(this, "请至少添加一个联系人");
         } else {
             mCustom.setCustomerName(customName);
 
@@ -108,13 +111,8 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
             }
 
             mSelectAddress.setRodeName(rodeName);
-
             mCustom.setAddress(mSelectAddress);
-
-            if (mContacts.size() > 0) {
-                mCustom.setContacts(mContacts);
-            }
-
+            mCustom.setContacts(mContacts);
             mAddCustomPresenter.addCustom(mCustom);
         }
     }
@@ -133,6 +131,14 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
         };
 
         mLvContactList.setAdapter(mCommonAdapter);
+
+        mLvContactList.setOnItemClickListener((parent, view, position, id) -> {
+            mEditPosition = position;
+            Intent intent = new Intent(this, ContactActivity.class);
+            intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_EDIT);
+            intent.putExtra(ContactActivity.ARG_CONTACT, mContacts.get(position));
+            startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
+        });
     }
 
     @Override
@@ -267,11 +273,15 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
                         data.getParcelableExtra(CustomMoreDataActivity.ARG_RESULT);
             }
         } else if (requestCode == Constants.REQUEST_CODE_ADD_CONTACT) { //添加联系人
-            if (resultCode == Constants.RESULT_CODE_ADD_CONTACT) {
+
+            if (resultCode != RESULT_CANCELED) {
                 Contact contact =
                         data.getParcelableExtra(ContactActivity.ARG_CONTACT);
-                mContacts.add(contact);
-
+                if (resultCode == Constants.RESULT_CODE_ADD_CONTACT) {
+                    mContacts.add(contact);
+                } else if (resultCode == Constants.RESULT_CODE_EDIT_CONTACT) { //编辑联系人
+                    mContacts.set(mEditPosition, contact);
+                }
                 mCommonAdapter.clear();
                 mCommonAdapter.addAll(mContacts);
             }

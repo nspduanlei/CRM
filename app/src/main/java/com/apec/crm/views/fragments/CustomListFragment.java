@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
+import android.view.View;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -18,6 +20,7 @@ import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.CustomActivity;
+import com.apec.crm.views.activities.CustomDetailActivity;
 import com.apec.crm.views.activities.LoginActivity;
 import com.apec.crm.views.fragments.core.BaseListFragment;
 import com.apec.crm.views.widget.recyclerView.CommonRecyclerAdapter;
@@ -26,6 +29,8 @@ import com.apec.crm.views.widget.recyclerView.MyViewHolder;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import static com.apec.crm.views.fragments.CustomFragment.TYPE_PRIVATE;
 
 /**
  * Created by duanlei on 16/9/28.
@@ -37,6 +42,9 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     CustomListPresenter mCustomListPresenter;
 
     public static final String ACTION_UPDATE = "更新列表";
+
+    public static final String ARG_TYPE = "arg_type";
+    private int mType;
 
     //定义广播
     private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
@@ -51,12 +59,20 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
         }
     };
 
+    public static CustomListFragment newInstance(int type) {
+        CustomListFragment newFragment = new CustomListFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ARG_TYPE, type);
+        newFragment.setArguments(bundle);
+        return newFragment;
+    }
+
     //注册广播
     public void registerBroadcastReceiver() {
         IntentFilter myIntentFilter = new IntentFilter();
         myIntentFilter.addAction(ACTION_UPDATE);
         // 注册广播
-        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter) ;
+        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
     }
 
     @Override
@@ -75,16 +91,36 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
                 holder.setTextRound(R.id.roundTextView, MyUtils.getColor(custom.getIcon()))
                         .setText(R.id.tv_custom_name, custom.getCustomerName())
-                        .setText(R.id.tv_address, custom.getCustomerAddress())
-                        .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
-                                getString(R.string.date_format_custom)));
+                        .setText(R.id.tv_address, custom.getCustomerAddress());
+
+                if (mType == CustomFragment.TYPE_PUBLIC) {
+                    holder.setVisibility(R.id.tv_time, View.GONE)
+                            .setVisibility(R.id.iv_pick, View.VISIBLE)
+                            .setOnClickLister(R.id.iv_pick, v -> {
+                                //TODO 拾取客户
+
+                            });
+                } else {
+                    holder.setVisibility(R.id.tv_time, View.VISIBLE)
+                            .setVisibility(R.id.iv_pick, View.GONE)
+                            .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
+                                    getString(R.string.date_format_custom)));
+                }
+
 
                 MyUtils.setHeadText(holder.getView(R.id.tv_head), custom.getCustomerName());
 
                 holder.setOnItemClickListener(v -> {
-                    Intent intent = new Intent(getActivity(), CustomActivity.class);
-                    intent.putExtra(CustomActivity.ARG_CUSTOM, custom);
-                    getActivity().startActivity(intent);
+                    if (mType == CustomFragment.TYPE_PRIVATE) {
+                        Intent intent = new Intent(getActivity(), CustomActivity.class);
+                        intent.putExtra(CustomActivity.ARG_CUSTOM, custom);
+                        getActivity().startActivity(intent);
+                    } else if (mType == CustomFragment.TYPE_PUBLIC) {
+                        Intent intentDetail = new Intent(getActivity(), CustomDetailActivity.class);
+                        intentDetail.putExtra(CustomDetailActivity.ARG_CUSTOM_ID, custom.getId());
+                        intentDetail.putExtra(CustomDetailActivity.ARG_TYPE, mType);
+                        startActivity(intentDetail);
+                    }
                 });
             }
         };
@@ -105,6 +141,9 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
         mCustomListPresenter.attachView(this);
         mCustomListPresenter.onCreate();
         registerBroadcastReceiver();
+
+        mType = getArguments().getInt(ARG_TYPE, TYPE_PRIVATE);
+        mCustomListPresenter.setType(mType);
     }
 
     @Override
@@ -163,6 +202,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
     /**
      * 根据过滤条件刷新页面
+     *
      * @param filterCustomBean
      */
     public void updateForFilter(FilterCustomBean filterCustomBean) {

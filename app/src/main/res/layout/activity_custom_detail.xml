@@ -27,6 +27,7 @@
                     android:textSize="@dimen/common_font_size"/>
 
                 <ImageView
+                    android:id="@+id/iv_edit_base"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"
@@ -100,6 +101,7 @@
                     android:textColor="@color/colorMain"
                     android:textSize="@dimen/common_font_size"/>
                 <ImageView
+                    android:id="@+id/iv_edit_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|center_vertical"

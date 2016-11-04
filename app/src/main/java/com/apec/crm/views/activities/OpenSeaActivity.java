@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.views.activities.core.BaseActivity;
-import com.apec.crm.views.fragments.CustomListFragment;
+import com.apec.crm.views.fragments.CustomFragment;
 
 /**
  * Created by duanlei on 2016/10/27.
@@ -13,7 +13,7 @@ import com.apec.crm.views.fragments.CustomListFragment;
  */
 public class OpenSeaActivity extends BaseActivity {
 
-    CustomListFragment customListFragment;
+    CustomFragment mCustomFragment;
 
     @Override
     protected void setUpContentView() {
@@ -22,9 +22,9 @@ public class OpenSeaActivity extends BaseActivity {
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-        customListFragment = new CustomListFragment();
+        mCustomFragment = CustomFragment.newInstance(CustomFragment.TYPE_PUBLIC);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, customListFragment, "customList")
+                .replace(R.id.fragment_container, mCustomFragment, "custom")
                 .commit();
     }
 

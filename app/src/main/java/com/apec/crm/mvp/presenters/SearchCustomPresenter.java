@@ -11,8 +11,6 @@ import com.apec.crm.mvp.views.core.View;
 
 import javax.inject.Inject;
 
-import static android.R.attr.filter;
-
 /**
  * Created by duanlei on 2016/10/18.
  */
@@ -24,6 +22,10 @@ public class SearchCustomPresenter implements Presenter {
     SearchCustomView mSearchCustomView;
 
     FilterCustomBean mFilter;
+
+    public void setType(int type) {
+        mFilter.setType(type);
+    }
 
     @Inject
     public SearchCustomPresenter(GetCustomListUseCase getCustomListUseCase) {

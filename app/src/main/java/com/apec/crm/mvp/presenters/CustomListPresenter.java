@@ -20,10 +20,12 @@ import javax.inject.Inject;
 public class CustomListPresenter extends ListPresenter implements Presenter {
 
     CustomListView mCustomListView;
-
     GetCustomListUseCase mGetCustomListUseCase;
-
     FilterCustomBean mFilterCustomBean;
+
+    public void setType(int type) {
+        mFilterCustomBean.setType(type);
+    }
 
     @Inject
     public CustomListPresenter(GetCustomListUseCase getCustomListUseCase) {
@@ -53,12 +55,12 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     @Override
     public void onCreate() {
         mFilterCustomBean = new FilterCustomBean();
+        mFilterCustomBean.setPageSize(LIST_ITEM_COUNT);
     }
 
     @Override
     protected void doRefresh() {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
-        mFilterCustomBean.setPageSize(LIST_ITEM_COUNT);
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
@@ -84,7 +86,6 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
     @Override
     protected void doLoadMore() {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
-        mFilterCustomBean.setPageSize(LIST_ITEM_COUNT);
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
         mGetCustomListUseCase.execute()
@@ -109,8 +110,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
         return totalNumber;
     }
 
-
     public void setFilter(FilterCustomBean filterCustomBean) {
-        mFilterCustomBean = filterCustomBean;
+        mFilterCustomBean.setFilterData(filterCustomBean);
     }
 }

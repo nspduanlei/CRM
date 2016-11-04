@@ -17,6 +17,7 @@ import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.utils.SelectCityUtil;
 import com.apec.crm.views.activities.core.BaseActivity;
+import com.apec.crm.views.fragments.CustomFragment;
 
 import javax.inject.Inject;
 
@@ -60,13 +61,25 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
     public static final String ARG_FILTER_BEAN = "arg_filter_bean";
     public static final String ARG_FILTER_BEAN_NAME = "arg_filter_bean_name";
 
+    //公海或私海
+    public static final String ARG_TYPE = "arg_type";
+    private int mType;
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_filter_custom, R.string.filter_custom_title);
+        mType = getIntent().getIntExtra(ARG_TYPE, CustomFragment.TYPE_PRIVATE);
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+
+        //如果是公海列表，没有所属人选择
+        if (mType == CustomFragment.TYPE_PUBLIC) {
+            mFlUser.setVisibility(View.GONE);
+            mUserLine.setVisibility(View.GONE);
+        }
+
         mSelectCityUtil.init(this);
         mFilterCustomNameBean = getIntent().getParcelableExtra(ARG_FILTER_BEAN_NAME);
         mFilterCustomBean = getIntent().getParcelableExtra(ARG_FILTER_BEAN);

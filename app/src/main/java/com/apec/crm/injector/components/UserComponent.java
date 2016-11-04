@@ -4,12 +4,14 @@ import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
 import com.apec.crm.domin.useCase.user.ModifyPasswordUseCase;
+import com.apec.crm.domin.useCase.visit.GetVisitsUseCase;
 import com.apec.crm.injector.Activity;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.injector.modules.UserModule;
 import com.apec.crm.views.activities.LoginActivity;
 import com.apec.crm.views.activities.ModifyPasswordActivity;
 import com.apec.crm.views.activities.UserInfoActivity;
+import com.apec.crm.views.fragments.ProfileFragment;
 import com.apec.crm.views.fragments.WorkPlaceFragment;
 
 import dagger.Component;
@@ -25,6 +27,7 @@ public interface UserComponent extends ActivityComponent {
     void inject(WorkPlaceFragment workPlaceFragment);
     void inject(UserInfoActivity userInfoActivity);
     void inject(ModifyPasswordActivity modifyPasswordActivity);
+    void inject(ProfileFragment profileFragment);
 
     //登录
     LoginUseCase loginUseCase();
@@ -33,6 +36,8 @@ public interface UserComponent extends ActivityComponent {
     //获取用户数据
     GetUserInfoUseCase getUserInfoUserCase();
     //修改密码
-    ModifyPasswordUseCase modifyPasswordUseCase();
+    ModifyPasswordUseCase modifyPasswordUeCase();
+    //获取版本信息
+    GetVisitsUseCase getVisitsUseCase();
 
 }

@@ -113,6 +113,8 @@
             android:name="com.amap.api.v2.apikey"
             android:value="7b501a548121e63a2c3f10db5373549a"/>
 
+        <service android:name=".support.downloadmanager.DownLoadService"/>
+
     </application>
 
 </manifest>

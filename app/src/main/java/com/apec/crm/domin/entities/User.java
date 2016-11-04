@@ -3,7 +3,6 @@ package com.apec.crm.domin.entities;
 /**
  * Created by duanlei on 16/9/27.
  */
-
 public class User {
     private String userNo;
     private String userName;

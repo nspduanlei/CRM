@@ -33,39 +33,28 @@ public class Constants {
     public static final int RESULT_CODE_SELECT_CUSTOM_CLASS = 110; //销售品类
     public static final int RESULT_CODE_SELECT_CUSTOM_OPEN_SEA = 111; //片区
     public static final int RESULT_CODE_SELECT_USER = 112; //选择用户
-
     public static final int RESULT_CODE_FILTER_CUSTOM = 113; //筛选客户
-
     public static final int RESULT_CODE_ADD_CUSTOM = 114; //添加联系人
-
     public static final int RESULT_CODE_ADD_VISIT = 115; //添加拜访
-
     public static final int RESULT_CODE_CUSTOM_BASE = 116; //编辑基本信息
-
     public static final int RESULT_CODE_UPDATE_CONTACT = 117; //更新联系人
-
     public static final int RESULT_CODE_DELETE_CONTACT = 118; //删除联系人
     public static final int RESULT_CODE_FILTER_VISIT = 119; //筛选拜访记录
+    public static final int RESULT_CODE_EDIT_CONTACT = 120; //编辑联系人
 
     /**
      * request
      */
     public static final int REQUEST_CODE_MARK_MAP = 1001; //地图标记
     public static final int REQUEST_CODE_ADD_VISIT = 1002; //添加拜访
-
     public static final int REQUEST_CODE_SEARCH_MAP = 1003; //搜索地址
-
     public static final int REQUEST_CODE_ADD_CONTACT = 1004; //添加联系人
-
     public static final int REQUEST_CODE_MORE_DATA = 1005; //更多资料
     public static final int REQUEST_CODE_SELECT_CUSTOM = 1006; //选择客户
     public static final int REQUEST_CODE_SELECT_ATTR = 1007; //选择联系人
     public static final int REQUEST_CODE_SELECT_USER = 1008; //选择用户
-
     public static final int REQUEST_CODE_FILTER_CUSTOM = 1009; //筛选客户
-
     public static final int REQUEST_CODE_ADD_CUSTOM = 1010; //添加联系人
-
     public static final int REQUEST_CODE_CUSTOM_BASE = 1011; //编辑基本信息
     public static final int REQUEST_CODE_FILTER_VISIT = 1012; //筛选拜访记录
     /**

@@ -79,11 +79,9 @@ public class ImageDialogFragment extends DialogFragment implements ImageSideAdap
         mPaths = getArguments().getStringArrayList(ARG_PATHS);
         mIndex = getArguments().getInt(ARG_INDEX);
         mTvIndex.setText(String.format("%d/%d", mIndex + 1, mPaths.size()));
-        mVpPhoto.setCurrentItem(mIndex);
+
         mPagerAdapter = new ImageSideAdapter(getActivity(), mPaths);
-
         mPagerAdapter.setOnImageClickListener(this);
-
         mVpPhoto.setAdapter(mPagerAdapter);
         mVpPhoto.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -101,6 +99,8 @@ public class ImageDialogFragment extends DialogFragment implements ImageSideAdap
 
             }
         });
+
+        mVpPhoto.setCurrentItem(mIndex);
     }
 
     @Override

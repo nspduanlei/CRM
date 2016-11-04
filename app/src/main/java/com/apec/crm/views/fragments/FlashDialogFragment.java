@@ -90,7 +90,7 @@ public class FlashDialogFragment extends DialogFragment {
 
                 case 2: //添加联系人
                     intent = new Intent(getActivity(), ContactActivity.class);
-                    intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD);
+                    intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_ADD_SAVE);
                     break;
             }
             startActivity(intent);

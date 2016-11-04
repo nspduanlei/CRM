@@ -30,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/margin_left"
-        android:src="@drawable/contact_phone_drawable"/>
+        android:src="@drawable/icon_contact_phone"/>
 
     <View
         android:layout_width="match_parent"

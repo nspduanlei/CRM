@@ -20,6 +20,8 @@ public class FilterCustomBean extends BaseFilter implements Parcelable {
     private String customerState; //客户状态
     private String userNo; //用户编号
 
+    private int type;
+
     public FilterCustomBean() {}
 
     protected FilterCustomBean(Parcel in) {
@@ -43,6 +45,15 @@ public class FilterCustomBean extends BaseFilter implements Parcelable {
             return new FilterCustomBean[size];
         }
     };
+
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getAreaId() {
         return areaId;
@@ -114,5 +125,15 @@ public class FilterCustomBean extends BaseFilter implements Parcelable {
         dest.writeString(customerLevel);
         dest.writeString(customerState);
         dest.writeString(userNo);
+    }
+
+    public void setFilterData(FilterCustomBean filterCustomBean) {
+        this.areaId = filterCustomBean.getAreaId();
+        this.areaNo = filterCustomBean.getAreaNo();
+        this.classId = filterCustomBean.getClassId();
+        this.customerType = filterCustomBean.getCustomerType();
+        this.customerLevel = filterCustomBean.getCustomerLevel();
+        this.customerState = filterCustomBean.getCustomerState();
+        this.userNo = filterCustomBean.getUserNo();
     }
 }

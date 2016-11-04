@@ -50,7 +50,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTabBar() {
-        mCustomFragment = new CustomFragment();
+        mCustomFragment = CustomFragment.newInstance(CustomFragment.TYPE_PRIVATE);
         mWorkPlaceFragment = new WorkPlaceFragment();
         mProfileFragment = new ProfileFragment();
 

@@ -1,6 +1,7 @@
 package com.apec.crm.injector.modules;
 
 import com.apec.crm.domin.repository.GoodsRepository;
+import com.apec.crm.domin.useCase.sys.GetNewVersionUseCase;
 import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
@@ -55,6 +56,15 @@ public class UserModule {
             @Named("executor_thread") Scheduler executorThread,
             @Named("gson") Gson gson) {
         return new ModifyPasswordUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    GetNewVersionUseCase provideGetNewVersionUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread) {
+        return new GetNewVersionUseCase(repository, uiThread, executorThread);
     }
 
 }

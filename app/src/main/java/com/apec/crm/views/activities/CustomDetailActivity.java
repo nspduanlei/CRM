@@ -3,6 +3,7 @@ package com.apec.crm.views.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.apec.crm.mvp.presenters.CustomDetailPresenter;
 import com.apec.crm.mvp.views.CustomDetailView;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
+import com.apec.crm.views.fragments.CustomFragment;
 import com.apec.crm.views.widget.NoScrollListView;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
@@ -72,6 +74,13 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
     @BindView(R.id.tv_custom_create)
     TextView mTvCustomCreate;
 
+    @BindView(R.id.iv_edit_base)
+    ImageView mIvEditBase;
+    @BindView(R.id.iv_edit_more)
+    ImageView mIvEditMore;
+    @BindView(R.id.tv_add_contact)
+    TextView mTvAddContact;
+
     private String mCustomId;
 
     @BindView(R.id.pb_loading)
@@ -83,15 +92,26 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
 
     List<Contact> mContacts = new ArrayList<>();
 
+    //公海或私海
+    public static final String ARG_TYPE = "arg_type";
+    private int mType;
+
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_custom_detail, R.string.custom_detail_title);
+
+        mType = getIntent().getIntExtra(ARG_TYPE, CustomFragment.TYPE_PRIVATE);
+        mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
     }
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
-
-        mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
+        //公海客户不能修改
+        if (mType == CustomFragment.TYPE_PUBLIC) {
+            mIvEditBase.setVisibility(View.GONE);
+            mIvEditMore.setVisibility(View.GONE);
+            mTvAddContact.setVisibility(View.GONE);
+        }
 
         mContactAdapter = new CommonAdapter<Contact>(this, new ArrayList<>(),
                 R.layout.item_contact, mLVContactList) {
@@ -105,11 +125,13 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
         mLVContactList.setAdapter(mContactAdapter);
 
         mContactAdapter.setOnItemClickListener(data -> {
-            Intent intent = new Intent(CustomDetailActivity.this, ContactActivity.class);
-            intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_EDIT_SAVE);
-            intent.putExtra(ContactActivity.ARG_CUSTOM_ID, mCustomDetail.getId());
-            intent.putExtra(ContactActivity.ARG_CONTACT, data);
-            startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
+            if (mType == CustomFragment.TYPE_PRIVATE) {
+                Intent intent = new Intent(CustomDetailActivity.this, ContactActivity.class);
+                intent.putExtra(ContactActivity.ARG_TYPE, ContactActivity.TYPE_EDIT_SAVE);
+                intent.putExtra(ContactActivity.ARG_CUSTOM_ID, mCustomDetail.getId());
+                intent.putExtra(ContactActivity.ARG_CONTACT, data);
+                startActivityForResult(intent, Constants.REQUEST_CODE_ADD_CONTACT);
+            }
         });
 
         mCustomDetailPresenter.getCustomDetail(mCustomId);
@@ -136,7 +158,7 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
      */
     @OnClick(R.id.fl_more_data)
     void onMoreDataClicked(View view) {
-        if (mCustomDetail != null) {
+        if (mCustomDetail != null && mType == CustomFragment.TYPE_PRIVATE) {
             Intent intent = new Intent(this, CustomMoreDataActivity.class);
             intent.putExtra(CustomMoreDataActivity.ARG_CUSTOM, mCustomDetail);
             startActivityForResult(intent, Constants.REQUEST_CODE_MORE_DATA);
@@ -150,7 +172,7 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
      */
     @OnClick(R.id.fl_base_data)
     void onBaseDataClicked(View view) {
-        if (mCustomDetail != null) {
+        if (mCustomDetail != null && mType == CustomFragment.TYPE_PRIVATE) {
             Intent intent = new Intent(this, CustomEditActivity.class);
             intent.putExtra(CustomEditActivity.ARG_CUSTOM, mCustomDetail);
             startActivityForResult(intent, Constants.REQUEST_CODE_CUSTOM_BASE);

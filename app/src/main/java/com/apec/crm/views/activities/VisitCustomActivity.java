@@ -40,7 +40,6 @@ public class VisitCustomActivity extends BaseActivity {
      * 用户和客户筛选条件
      */
     private VisitsFilter mVisitsFilter;
-
     VisitRecordFilter mVisitRecordFilter = new VisitRecordFilter();
 
     @Override

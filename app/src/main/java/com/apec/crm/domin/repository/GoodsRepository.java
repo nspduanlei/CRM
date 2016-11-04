@@ -9,6 +9,7 @@ import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.OpenSea;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
+import com.apec.crm.domin.entities.Version;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.ListResult;
@@ -61,4 +62,6 @@ public interface GoodsRepository {
     Observable<Result> returnPool(RequestBody requestBody);
 
     Observable<Result> deleteCustom(RequestBody requestBody);
+
+    Observable<Result<Version>> getVersionInfo();
 }

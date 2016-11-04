@@ -97,7 +97,7 @@ public class FilterVisitActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constants.REQUEST_CODE_SELECT_CUSTOM) {
             if (resultCode == Constants.RESULT_CODE_SELECT_CUSTOM) {
-                Custom custom = data.getParcelableExtra(SearchCustomActivity.CUSTOM);
+                Custom custom = data.getParcelableExtra(SearchCustomActivity.ARG_CUSTOM);
                 mTvCustom.setText(custom.getCustomerName());
                 mVisitsFilter.setCustomNo(custom.getId());
                 mVisitsFilter.setCustomName(custom.getCustomerName());

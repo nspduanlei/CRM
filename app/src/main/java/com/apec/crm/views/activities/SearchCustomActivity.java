@@ -22,6 +22,7 @@ import com.apec.crm.mvp.views.SearchCustomView;
 import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.views.activities.core.BaseActivity;
+import com.apec.crm.views.fragments.CustomFragment;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
 
@@ -57,18 +58,21 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @BindView(R.id.fl_empty)
     FrameLayout mEmpty;
 
+    public static final String ARG_CUSTOM = "arg_custom";
+
+    public static final String FROM_TYPE = "fromType";
     public static final int FROM_CUSTOM = 0;  //客户页面搜索
     public static final int SEARCH_CUSTOM = 1; //选择客户
-
-    public static final String CUSTOM = "custom";
-    public static final String FROM_TYPE = "fromType";
-
     private int mType;
+
+    public static final String ARG_TYPE = "arg_type";
+    private int mListType;
 
     @Override
     protected void setUpContentView() {
         setContentView(R.layout.activity_search_custom, -1, MODE_NONE);
         mType = getIntent().getIntExtra(FROM_TYPE, 0);
+        mListType = getIntent().getIntExtra(ARG_TYPE, CustomFragment.TYPE_PRIVATE);
     }
 
     @Override
@@ -93,14 +97,20 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
         mCommonAdapter.setOnItemClickListener(data -> {
             if (mType == SEARCH_CUSTOM) {
                 setResult(Constants.RESULT_CODE_SELECT_CUSTOM,
-                        getIntent().putExtra(CUSTOM, data));
+                        getIntent().putExtra(ARG_CUSTOM, data));
                 SearchCustomActivity.this.finish();
             } else {
-                Intent intent = new Intent(SearchCustomActivity.this, CustomActivity.class);
-                intent.putExtra(CustomActivity.ARG_CUSTOM, data);
-                startActivity(intent);
+                if (mListType == CustomFragment.TYPE_PRIVATE) {
+                    Intent intent = new Intent(SearchCustomActivity.this, CustomActivity.class);
+                    intent.putExtra(CustomActivity.ARG_CUSTOM, data);
+                    startActivity(intent);
+                } else if (mListType == CustomFragment.TYPE_PUBLIC) {
+                    Intent intentDetail = new Intent(SearchCustomActivity.this, CustomDetailActivity.class);
+                    intentDetail.putExtra(CustomDetailActivity.ARG_CUSTOM_ID, data.getId());
+                    intentDetail.putExtra(CustomDetailActivity.ARG_TYPE, mType);
+                    startActivity(intentDetail);
+                }
             }
-
         });
     }
 
@@ -116,6 +126,7 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     protected void initPresenter() {
         mSearchCustomPresenter.attachView(this);
         mSearchCustomPresenter.onCreate();
+        mSearchCustomPresenter.setType(mListType);
     }
 
     @OnClick(R.id.tv_exit_search)

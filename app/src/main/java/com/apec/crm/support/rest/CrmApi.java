@@ -9,6 +9,7 @@ import com.apec.crm.domin.entities.MyCount;
 import com.apec.crm.domin.entities.OpenSea;
 import com.apec.crm.domin.entities.SelectContent;
 import com.apec.crm.domin.entities.User;
+import com.apec.crm.domin.entities.Version;
 import com.apec.crm.domin.entities.VisitRecord;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.ListResult;
@@ -34,6 +35,12 @@ public interface CrmApi {
      */
     @POST("sysparam-service/getMyCount.apec")
     Observable<Result<MyCount>> getMyCount();
+
+    /**
+     * 获取我本月的统计数据
+     */
+    @POST("sysparam-service/getNowVersionInfo.apec")
+    Observable<Result<Version>> getVersion();
 
     /**
      * 获取用户信息

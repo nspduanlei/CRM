@@ -255,7 +255,7 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
 
             case Constants.REQUEST_CODE_SELECT_CUSTOM: //选择客户
                 if (resultCode == Constants.RESULT_CODE_SELECT_CUSTOM) {
-                    Custom custom = data.getParcelableExtra(SearchCustomActivity.CUSTOM);
+                    Custom custom = data.getParcelableExtra(SearchCustomActivity.ARG_CUSTOM);
                     mCustomId = custom.getId();
                     mTvCustom.setText(custom.getCustomerName());
 

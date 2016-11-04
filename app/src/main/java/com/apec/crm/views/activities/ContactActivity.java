@@ -76,6 +76,7 @@ public class ContactActivity extends BaseActivity implements ContactView {
 
     String mCustomId;
     Contact mContact;
+    int mEditPosition;
 
     @Override
     protected void setUpContentView() {
@@ -88,11 +89,15 @@ public class ContactActivity extends BaseActivity implements ContactView {
 
         switch (mType) {
             case TYPE_ADD:
+                mFLCustom.setVisibility(View.GONE);
+                mCustomLine.setVisibility(View.GONE);
             case TYPE_ADD_SAVE:
                 setUpTitle("添加联系人");
                 break;
 
             case TYPE_EDIT:
+                mFLCustom.setVisibility(View.GONE);
+                mCustomLine.setVisibility(View.GONE);
             case TYPE_EDIT_SAVE:
                 setUpTitle("联系人详情");
                 //删除联系人
@@ -165,8 +170,12 @@ public class ContactActivity extends BaseActivity implements ContactView {
 
             switch (mType) {
                 case TYPE_ADD:
-                case TYPE_EDIT:
                     setResult(Constants.RESULT_CODE_ADD_CONTACT,
+                            getIntent().putExtra(ARG_CONTACT, mContact));
+                    this.finish();
+                    break;
+                case TYPE_EDIT:
+                    setResult(Constants.RESULT_CODE_EDIT_CONTACT,
                             getIntent().putExtra(ARG_CONTACT, mContact));
                     this.finish();
                     break;
