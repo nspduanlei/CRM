@@ -7,6 +7,7 @@ import com.apec.crm.domin.useCase.user.LoginUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.LoginView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
 
@@ -19,9 +20,10 @@ import rx.Subscription;
 public class LoginPresenter implements Presenter {
 
     LoginUseCase mLoginUseCase;
-    Subscription mLoginSubscription;
 
     LoginView mLoginView;
+
+    Subscription mLoginSubscription;
 
     @Inject
     public LoginPresenter(LoginUseCase loginUseCase) {
@@ -36,10 +38,7 @@ public class LoginPresenter implements Presenter {
 
     @Override
     public void onStop() {
-        if (mLoginSubscription != null) {
-            mLoginSubscription.unsubscribe();
-        }
-
+        MyUtils.cancelSubscribe(mLoginSubscription);
     }
 
     @Override
@@ -74,6 +73,8 @@ public class LoginPresenter implements Presenter {
 
         if (result.isSucceed()) {
             mLoginView.onLoginSuccess(result.getData());
+        } else {
+            mLoginView.onError(result.getErrorCode(), result.getErrorMsg());
         }
     }
 }

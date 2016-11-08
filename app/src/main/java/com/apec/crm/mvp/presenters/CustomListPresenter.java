@@ -6,12 +6,16 @@ import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
+import com.apec.crm.domin.useCase.custom.PickCustomUseCase;
 import com.apec.crm.mvp.presenters.core.ListPresenter;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.CustomListView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 16/9/28.
@@ -19,17 +23,24 @@ import javax.inject.Inject;
 
 public class CustomListPresenter extends ListPresenter implements Presenter {
 
-    CustomListView mCustomListView;
     GetCustomListUseCase mGetCustomListUseCase;
+    PickCustomUseCase mPickCustomUseCase;
+
+    CustomListView mCustomListView;
     FilterCustomBean mFilterCustomBean;
+
+    Subscription mRefreshSubscription, mMoreSubscription, mPickSubscription;
+
 
     public void setType(int type) {
         mFilterCustomBean.setType(type);
     }
 
     @Inject
-    public CustomListPresenter(GetCustomListUseCase getCustomListUseCase) {
+    public CustomListPresenter(GetCustomListUseCase getCustomListUseCase,
+                               PickCustomUseCase pickCustomUseCase) {
         mGetCustomListUseCase = getCustomListUseCase;
+        mPickCustomUseCase = pickCustomUseCase;
     }
 
     @Override
@@ -39,7 +50,8 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mRefreshSubscription, mMoreSubscription,
+                mPickSubscription);
     }
 
     @Override
@@ -63,11 +75,13 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
-        mGetCustomListUseCase.execute()
+        mRefreshSubscription = mGetCustomListUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {
+        mCustomListView.hideLoadingView();
+
         throwable.printStackTrace();
         mCustomListView.onError("0", "");
     }
@@ -88,7 +102,7 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
         mFilterCustomBean.setPageNumber(String.valueOf(mCurrentPage));
 
         mGetCustomListUseCase.setData(mFilterCustomBean);
-        mGetCustomListUseCase.execute()
+        mMoreSubscription = mGetCustomListUseCase.execute()
                 .subscribe(this::onLoadMoreReceived, this::manageError);
     }
 
@@ -112,5 +126,25 @@ public class CustomListPresenter extends ListPresenter implements Presenter {
 
     public void setFilter(FilterCustomBean filterCustomBean) {
         mFilterCustomBean.setFilterData(filterCustomBean);
+    }
+
+    /**
+     * 拾取客户
+     * @param id
+     */
+    public void pickCustom(String id) {
+        mCustomListView.showLoadingView();
+
+        mPickCustomUseCase.setData(id);
+        mPickSubscription = mPickCustomUseCase.execute().
+                subscribe(this::onPickReceived, this::manageError);
+    }
+
+    private void onPickReceived(Result result) {
+        mCustomListView.hideLoadingView();
+
+        if (result.isSucceed()) {
+            mCustomListView.onPickSuccess();
+        }
     }
 }

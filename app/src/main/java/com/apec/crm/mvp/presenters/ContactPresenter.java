@@ -8,8 +8,11 @@ import com.apec.crm.domin.useCase.custom.UpdateContactUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.ContactView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/10/26.
@@ -22,6 +25,8 @@ public class ContactPresenter implements Presenter {
     UpdateContactUseCase mUpdateContactUseCase;
 
     ContactView mContactView;
+
+    Subscription mAddSubscription, mDelSubscription, mUpdateSubscription;
 
     @Inject
     public ContactPresenter(AddContactUseCase addContactUseCase,
@@ -39,7 +44,8 @@ public class ContactPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mAddSubscription, mDelSubscription,
+                mUpdateSubscription);
     }
 
     @Override
@@ -57,11 +63,16 @@ public class ContactPresenter implements Presenter {
 
     }
 
+    /**
+     * 添加联系人
+     * @param contact
+     */
     public void addContact(Contact contact) {
         mContactView.showLoadingView();
 
         mAddContactUseCase.setData(contact);
-        mAddContactUseCase.execute().subscribe(this::onAddReceived, this::manageError);
+        mAddSubscription = mAddContactUseCase.execute()
+                .subscribe(this::onAddReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {
@@ -75,11 +86,16 @@ public class ContactPresenter implements Presenter {
         }
     }
 
+    /**
+     * 删除联系人
+     * @param id
+     */
     public void delContact(String id) {
         mContactView.showLoadingView();
 
         mDelContactUseCase.setData(id);
-        mDelContactUseCase.execute().subscribe(this::onDelReceived, this::manageError);
+        mDelSubscription = mDelContactUseCase.execute()
+                .subscribe(this::onDelReceived, this::manageError);
     }
 
     private void onDelReceived(Result result) {
@@ -90,11 +106,16 @@ public class ContactPresenter implements Presenter {
         }
     }
 
+    /**
+     * 更新联系人
+     * @param contact
+     */
     public void updateContact(Contact contact) {
         mContactView.showLoadingView();
 
         mUpdateContactUseCase.setData(contact);
-        mUpdateContactUseCase.execute().subscribe(this::onUpdateReceived, this::manageError);
+        mUpdateSubscription = mUpdateContactUseCase.execute()
+                .subscribe(this::onUpdateReceived, this::manageError);
 
     }
 

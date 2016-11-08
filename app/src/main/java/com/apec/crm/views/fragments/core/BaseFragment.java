@@ -21,10 +21,10 @@ public abstract class BaseFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(getFragmentLayout(), container, false);
         ButterKnife.bind(this, view);
-        initUI(view);
         MyApplication myApplication = (MyApplication) getActivity().getApplication();
         initDependencyInjector(myApplication);
         initPresenter();
+        initUI(view);
         return view;
     }
 

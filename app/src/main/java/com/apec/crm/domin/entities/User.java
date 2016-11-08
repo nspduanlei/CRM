@@ -1,9 +1,12 @@
 package com.apec.crm.domin.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by duanlei on 16/9/27.
  */
-public class User {
+public class User implements Parcelable {
     private String userNo;
     private String userName;
     private String password;
@@ -19,6 +22,8 @@ public class User {
     //职位名称
     private String positionName;
 
+    private String positionLevel;
+
     //手机号码
     private String phoneNumber;
 
@@ -31,6 +36,42 @@ public class User {
     //用户头像
     private String img;
 
+    public User() {}
+
+    protected User(Parcel in) {
+        userNo = in.readString();
+        userName = in.readString();
+        password = in.readString();
+        token = in.readString();
+        realName = in.readString();
+        depName = in.readString();
+        positionName = in.readString();
+        positionLevel = in.readString();
+        phoneNumber = in.readString();
+        sex = in.readString();
+        email = in.readString();
+        img = in.readString();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    public String getPositionLevel() {
+        return positionLevel;
+    }
+
+    public void setPositionLevel(String positionLevel) {
+        this.positionLevel = positionLevel;
+    }
 
     public String getImg() {
         return img;
@@ -118,5 +159,27 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userNo);
+        dest.writeString(userName);
+        dest.writeString(password);
+        dest.writeString(token);
+        dest.writeString(realName);
+        dest.writeString(depName);
+        dest.writeString(positionName);
+        dest.writeString(positionLevel);
+        dest.writeString(phoneNumber);
+        dest.writeString(sex);
+        dest.writeString(email);
+        dest.writeString(img);
     }
 }

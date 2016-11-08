@@ -24,7 +24,7 @@ import butterknife.OnClick;
  */
 public class CustomFragment extends BaseFragment {
 
-    CustomListFragment customListFragment;
+    CustomListFragment mCustomListFragment;
 
     FilterCustomBean mFilterCustomBean;
     FilterCustomNameBean mFilterCustomNameBean;
@@ -48,9 +48,9 @@ public class CustomFragment extends BaseFragment {
             mBtnFlash.setVisibility(View.GONE);
         }
 
-        customListFragment = CustomListFragment.newInstance(mType);
+        mCustomListFragment = CustomListFragment.newInstance(mType);
         getChildFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, customListFragment, "customList")
+                .replace(R.id.fragment_container, mCustomListFragment, "customList")
                 .commit();
     }
 
@@ -131,12 +131,16 @@ public class CustomFragment extends BaseFragment {
                 mFilterCustomNameBean =
                         data.getParcelableExtra(FilterCustomActivity.ARG_RESULT_NAME);
 
-                customListFragment.updateForFilter(mFilterCustomBean);
+                mCustomListFragment.updateForFilter(mFilterCustomBean);
             }
         } else if (requestCode == Constants.REQUEST_CODE_ADD_CUSTOM) {
             if (resultCode == Constants.RESULT_CODE_ADD_CUSTOM) {
-                customListFragment.updateForFilter(null);
+                mCustomListFragment.updateForFilter(null);
             }
         }
+    }
+
+    public void updateCustomList() {
+        mCustomListFragment.updateForFilter(mFilterCustomBean);
     }
 }

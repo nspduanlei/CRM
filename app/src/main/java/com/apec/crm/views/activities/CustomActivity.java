@@ -18,10 +18,10 @@ import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.CustomPresenter;
 import com.apec.crm.mvp.views.CustomView;
+import com.apec.crm.support.eventBus.RxBus;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
-import com.apec.crm.views.fragments.CustomListFragment;
 import com.apec.crm.views.fragments.VisitRecordFragment;
 import com.apec.crm.views.widget.RoundTextView;
 import com.apec.crm.views.widget.listView.CommonAdapter;
@@ -206,18 +206,18 @@ public class CustomActivity extends BaseActivity implements CustomView {
     @Override
     public void onRetPoolSuccess() {
         T.showShort(this, "退回公海成功");
-        //发送广播
-        Intent mIntent = new Intent(CustomListFragment.ACTION_UPDATE);
-        sendBroadcast(mIntent);
+
+        RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
+
         this.finish();
     }
 
     @Override
     public void onDelCustomSuccess() {
-        T.showShort(this, "删除用户成功");
-        //发送广播
-        Intent mIntent = new Intent(CustomListFragment.ACTION_UPDATE);
-        sendBroadcast(mIntent);
+        T.showShort(this, "删除客户成功");
+
+        RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
+
         this.finish();
     }
 
@@ -234,5 +234,11 @@ public class CustomActivity extends BaseActivity implements CustomView {
     @Override
     public void onError(String errorCode, String errorMsg) {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCustomPresenter.onStop();
     }
 }

@@ -1,6 +1,8 @@
 package com.apec.crm.support.downloadmanager.manager.fileload;
 
 
+import com.apec.crm.support.eventBus.RxBus;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;

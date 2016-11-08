@@ -76,7 +76,6 @@ public class ContactActivity extends BaseActivity implements ContactView {
 
     String mCustomId;
     Contact mContact;
-    int mEditPosition;
 
     @Override
     protected void setUpContentView() {

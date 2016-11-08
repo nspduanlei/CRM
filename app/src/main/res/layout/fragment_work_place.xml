@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/iv_icon_custom"
-                    android:text="30"
+                    android:text="0"
                     android:textColor="@color/color_3"
                     android:textSize="24sp"/>
 
@@ -104,7 +104,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/iv_icon_order"
-                    android:text="30"
+                    android:text="0"
                     android:textColor="@color/color_3"
                     android:textSize="24sp"/>
 
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_num_order"
                     android:layout_toRightOf="@id/iv_icon_order"
-                    android:text="新增客户"
+                    android:text="订单数量"
                     android:textColor="@color/commonColor"
                     android:textSize="10sp"/>
 
@@ -148,7 +148,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/iv_icon_visit"
-                    android:text="30"
+                    android:text="0"
                     android:textColor="@color/color_3"
                     android:textSize="24sp"/>
 
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_num_visit"
                     android:layout_toRightOf="@id/iv_icon_visit"
-                    android:text="新增客户"
+                    android:text="拜访次数"
                     android:textColor="@color/commonColor"
                     android:textSize="10sp"/>
 

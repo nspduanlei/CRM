@@ -10,5 +10,6 @@ import com.apec.crm.mvp.views.core.View;
 public interface UserInfoView extends View {
 
     void getUserInfoSuccess(User user);
+    void onUploadHeadSuccess(String imgUrl);
 
 }

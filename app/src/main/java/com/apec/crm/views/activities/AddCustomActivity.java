@@ -277,14 +277,27 @@ public class AddCustomActivity extends BaseActivity implements SelectCityUtil.Se
             if (resultCode != RESULT_CANCELED) {
                 Contact contact =
                         data.getParcelableExtra(ContactActivity.ARG_CONTACT);
+
                 if (resultCode == Constants.RESULT_CODE_ADD_CONTACT) {
                     mContacts.add(contact);
+
                 } else if (resultCode == Constants.RESULT_CODE_EDIT_CONTACT) { //编辑联系人
                     mContacts.set(mEditPosition, contact);
+                } else if (resultCode == Constants.RESULT_CODE_DELETE_CONTACT) { //删除联系人
+                    mContacts.remove(mEditPosition);
+
                 }
+
                 mCommonAdapter.clear();
                 mCommonAdapter.addAll(mContacts);
+
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAddCustomPresenter.onStop();
     }
 }

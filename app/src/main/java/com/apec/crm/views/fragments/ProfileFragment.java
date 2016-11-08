@@ -14,6 +14,7 @@ import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.ProfilePresenter;
 import com.apec.crm.mvp.views.ProfileView;
 import com.apec.crm.support.downloadmanager.manager.UpdateManager;
+import com.apec.crm.support.picasso.ImageLoad;
 import com.apec.crm.utils.AppUtils;
 import com.apec.crm.utils.FileUtils;
 import com.apec.crm.utils.SPUtils;
@@ -52,15 +53,11 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @Inject
     ProfilePresenter mProfilePresenter;
 
+    User mUser;
+
     @Override
     protected void initUI(View view) {
-        User user = SPUtils.getUserInfo(getContext());
-
-        mTvPosition.setText(String.format("%s-%s", user.getDepName(), user.getPositionName()));
-        mTvUsername.setText(user.getUserName());
-
         mTvVersion.setText(String.format("v%s", AppUtils.getVersionName(getContext())));
-
         mTvCache.setText(FileUtils.getAutoFileOrFilesSize(getActivity().getCacheDir()));
     }
 
@@ -81,8 +78,6 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     protected void initPresenter() {
         mProfilePresenter.attachView(this);
         mProfilePresenter.onCreate();
-        //检查版本
-        mProfilePresenter.getVersion();
     }
 
     /**
@@ -115,6 +110,9 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @OnClick({R.id.iv_head, R.id.tv_username, R.id.tv_position})
     void onUserInfo(View view) {
         Intent intent = new Intent(getActivity(), UserInfoActivity.class);
+        if (mUser != null) {
+            intent.putExtra(UserInfoActivity.ARG_USER, mUser);
+        }
         startActivity(intent);
     }
 
@@ -148,12 +146,15 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
             mHasNewVersion = true;
             mTvFindVersion.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
     public void getUserInfoSuccess(User user) {
-
+        mUser = user;
+        SPUtils.setUserInfo(getContext(), user);
+        mTvPosition.setText(String.format("%s-%s", user.getDepName(), user.getPositionName()));
+        mTvUsername.setText(user.getRealName());
+        ImageLoad.loadUrlRound(getContext(), user.getImg(), mIvHead);
     }
 
     @Override
@@ -169,5 +170,15 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @Override
     public void onError(String errorCode, String errorMsg) {
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mProfilePresenter.onStop();
+    }
+
+    public void updateUser() {
+        mProfilePresenter.getUserInfo();
     }
 }

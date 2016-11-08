@@ -171,4 +171,5 @@ public class CustomEditActivity extends BaseActivity implements SelectCityUtil.S
             }
         }
     }
+
 }

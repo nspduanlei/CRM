@@ -6,8 +6,11 @@ import com.apec.crm.domin.useCase.custom.ReturnPoolUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.CustomView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/11/1.
@@ -15,9 +18,12 @@ import javax.inject.Inject;
 
 public class CustomPresenter implements Presenter {
 
-    CustomView mCustomView;
     ReturnPoolUseCase mReturnPoolUseCase;
     DeleteCustomUseCase mDeleteCustomUseCase;
+
+    CustomView mCustomView;
+
+    Subscription mReturnSubscription, mDeleteSubscription;
 
     @Inject
     public CustomPresenter(ReturnPoolUseCase returnPoolUseCase,
@@ -33,7 +39,7 @@ public class CustomPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mReturnSubscription, mDeleteSubscription);
     }
 
     @Override
@@ -59,7 +65,8 @@ public class CustomPresenter implements Presenter {
         mCustomView.showLoadingView();
 
         mReturnPoolUseCase.setData(id);
-        mReturnPoolUseCase.execute().subscribe(this::onReturnReceived, this::manageError);
+        mReturnSubscription = mReturnPoolUseCase.execute().
+                subscribe(this::onReturnReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {
@@ -82,7 +89,8 @@ public class CustomPresenter implements Presenter {
         mCustomView.showLoadingView();
 
         mDeleteCustomUseCase.setData(id);
-        mDeleteCustomUseCase.execute().subscribe(this::onDelReceived, this::manageError);
+        mDeleteSubscription = mDeleteCustomUseCase.execute().
+                subscribe(this::onDelReceived, this::manageError);
     }
 
     private void onDelReceived(Result result) {

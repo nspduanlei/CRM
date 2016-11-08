@@ -9,6 +9,8 @@ public class Constants {
      * 测试服地址
      */
     public static final String TEST_BASE_URL = "http://192.168.8.21:18001/";
+    public static final String TEST_BASE_URL_DOWNLOAD = "http://192.168.8.21/";
+
 
     /**
      * 列表每页显示数据
@@ -57,6 +59,7 @@ public class Constants {
     public static final int REQUEST_CODE_ADD_CUSTOM = 1010; //添加联系人
     public static final int REQUEST_CODE_CUSTOM_BASE = 1011; //编辑基本信息
     public static final int REQUEST_CODE_FILTER_VISIT = 1012; //筛选拜访记录
+
     /**
      * 客户属性类型
      */

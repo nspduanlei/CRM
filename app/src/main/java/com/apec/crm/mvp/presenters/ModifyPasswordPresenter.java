@@ -5,8 +5,11 @@ import com.apec.crm.domin.useCase.user.ModifyPasswordUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.ModifyPasswordView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/11/1.
@@ -14,9 +17,11 @@ import javax.inject.Inject;
 
 public class ModifyPasswordPresenter implements Presenter {
 
-    ModifyPasswordView mModifyPasswordView;
     ModifyPasswordUseCase mModifyPasswordUseCase;
 
+    ModifyPasswordView mModifyPasswordView;
+
+    Subscription mSubscription;
     @Inject
     public ModifyPasswordPresenter(ModifyPasswordUseCase modifyPasswordUseCase) {
         mModifyPasswordUseCase = modifyPasswordUseCase;
@@ -29,7 +34,7 @@ public class ModifyPasswordPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mSubscription);
     }
 
     @Override
@@ -51,7 +56,8 @@ public class ModifyPasswordPresenter implements Presenter {
         mModifyPasswordView.showLoadingView();
 
         mModifyPasswordUseCase.setData(currPassword, newPassword);
-        mModifyPasswordUseCase.execute().subscribe(this::onModifyReceived, this::manageError);
+        mSubscription = mModifyPasswordUseCase.execute().
+                subscribe(this::onModifyReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {

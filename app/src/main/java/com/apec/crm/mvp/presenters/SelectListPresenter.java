@@ -10,11 +10,14 @@ import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.SelectListView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/10/17.
@@ -27,6 +30,8 @@ public class SelectListPresenter implements Presenter {
     GetOpenSeaUseCase mGetOpenSeaUseCase;
 
     SelectListView mSelectListView;
+
+    Subscription mCustomAttrSubscription, mContactSubscription, mSeaSubscription;
 
     @Inject
     public SelectListPresenter(GetCustomAttributeUseCase getCustomAttributeUseCase,
@@ -44,7 +49,8 @@ public class SelectListPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mCustomAttrSubscription, mContactSubscription,
+                mSeaSubscription);
     }
 
     @Override
@@ -69,7 +75,7 @@ public class SelectListPresenter implements Presenter {
         mSelectListView.showLoadingView();
 
         mGetCustomAttributeUseCase.setData(type);
-        mGetCustomAttributeUseCase.execute()
+        mCustomAttrSubscription = mGetCustomAttributeUseCase.execute()
                 .subscribe(this::onGetDataReceived, this::manageError);
     }
 
@@ -86,29 +92,28 @@ public class SelectListPresenter implements Presenter {
         }
     }
 
+    /**
+     * 获取客户联系人列表
+     * @param customId
+     */
     public void getContacts(String customId) {
-        mSelectListView.hideLoadingView();
+        mSelectListView.showLoadingView();
 
         mGetContactUseCase.setData(customId);
-        mGetContactUseCase.execute().subscribe(this::onGetContactReceived, this::manageError);
+        mContactSubscription = mGetContactUseCase.execute().
+                subscribe(this::onGetContactReceived, this::manageError);
 
     }
 
     private void onGetContactReceived(ListResult<Contact> contactListResult) {
         mSelectListView.hideLoadingView();
-
         if (contactListResult.isSucceed()) {
-
             List<Contact> contacts = contactListResult.getData();
-
             ArrayList<SelectContent> selectContents = new ArrayList<>();
-
             for (int i = 0; i < contacts.size(); i++) {
                 selectContents.add(new SelectContent(contacts.get(i).getId(),
                         contacts.get(i).getContactName(), contacts.get(i).getContactPhone()));
             }
-
-
             mSelectListView.onGetListSuccess(selectContents);
         }
     }
@@ -120,24 +125,19 @@ public class SelectListPresenter implements Presenter {
         mSelectListView.showLoadingView();
 
         mGetOpenSeaUseCase.setData(id);
-        mGetOpenSeaUseCase.execute().subscribe(this::onGetOpenSeaReceived, this::manageError);
+        mSeaSubscription = mGetOpenSeaUseCase.execute().
+                subscribe(this::onGetOpenSeaReceived, this::manageError);
     }
 
     private void onGetOpenSeaReceived(ListResult<OpenSea> openSeaListResult) {
         mSelectListView.hideLoadingView();
-
         if (openSeaListResult.isSucceed()) {
-
             List<OpenSea> openSeas = openSeaListResult.getData();
-
             ArrayList<SelectContent> selectContents = new ArrayList<>();
-
             for (int i = 0; i < openSeas.size(); i++) {
                 selectContents.add(new SelectContent(openSeas.get(i).getOpenSeaNo(),
                         openSeas.get(i).getOpenSeaName(), null));
             }
-
-
             mSelectListView.onGetListSuccess(selectContents);
         }
     }

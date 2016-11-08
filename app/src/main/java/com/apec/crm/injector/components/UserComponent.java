@@ -2,8 +2,10 @@ package com.apec.crm.injector.components;
 
 import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
+import com.apec.crm.domin.useCase.user.GetUserListUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
 import com.apec.crm.domin.useCase.user.ModifyPasswordUseCase;
+import com.apec.crm.domin.useCase.user.UploadHeaderUseCase;
 import com.apec.crm.domin.useCase.visit.GetVisitsUseCase;
 import com.apec.crm.injector.Activity;
 import com.apec.crm.injector.modules.ActivityModule;
@@ -39,5 +41,11 @@ public interface UserComponent extends ActivityComponent {
     ModifyPasswordUseCase modifyPasswordUeCase();
     //获取版本信息
     GetVisitsUseCase getVisitsUseCase();
+
+    //获取用户下属
+    GetUserListUseCase getUserListUseCase();
+
+    //上传用户头像
+    UploadHeaderUseCase uploadHeaderUseCase();
 
 }

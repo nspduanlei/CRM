@@ -69,7 +69,7 @@ public class DownLoadService extends Service {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder();
         }
-        retrofit.baseUrl(Constants.TEST_BASE_URL)
+        retrofit.baseUrl(Constants.TEST_BASE_URL_DOWNLOAD)
                 .client(initOkHttpClient())
                 .build()
                 .create(IFileLoad.class)
@@ -99,7 +99,7 @@ public class DownLoadService extends Service {
     }
 
     public interface IFileLoad {
-        @GET("apk/app-develop-release101.apk")
+        @GET("apk/app-develop-release.apk")
         Call<ResponseBody> loadFile();
     }
 

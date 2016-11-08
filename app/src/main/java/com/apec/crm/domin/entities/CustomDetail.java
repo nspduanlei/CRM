@@ -33,6 +33,16 @@ public class CustomDetail implements Parcelable{
     private String customerStateName; //客户状态名
     private String customerTypeName; //客户类型名
 
+    private int type = 1;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
     private List<Contact> contacts;
 
     public CustomDetail() {

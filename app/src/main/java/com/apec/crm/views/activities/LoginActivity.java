@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.apec.crm.config.ErrorCode;
 import com.apec.crm.domin.entities.User;
 import com.apec.crm.injector.components.DaggerUserComponent;
 import com.apec.crm.injector.modules.ActivityModule;
@@ -90,14 +91,10 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void onLoginSuccess(User user) {
-
         SPUtils.setUserInfo(this, user);
-
         T.showShort(this, "登录成功");
-
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-
         this.finish();
     }
 
@@ -113,7 +110,15 @@ public class LoginActivity extends BaseActivity implements LoginView {
 
     @Override
     public void onError(String errorCode, String errorMsg) {
+        if (errorCode.equals(ErrorCode.ACOUNT_PASSWORD_ERROR)) {
+            T.showShort(this, "账号密码错误");
+        }
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mLoginPresenter.onStop();
     }
 
 }

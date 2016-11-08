@@ -258,11 +258,11 @@ public class FilterCustomActivity extends BaseActivity implements SelectCityUtil
                     isSelect = true;
                     break;
             }
-
-
         } else if (requestCode == Constants.REQUEST_CODE_SELECT_USER) { //选择所属人
+            if (resultCode == Constants.RESULT_CODE_SELECT_USER) {
+
+
+            }
         }
     }
-
-
 }

@@ -70,7 +70,7 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @Inject
     AddVisitPresenter mAddVisitPresenter;
 
-    private String mCustomId, mContactId;
+    private String mCustomId, mContactId, mCustomName;
     private AddVisitBean mAddVisitBean = new AddVisitBean();
 
     GalleryFinalUtils mGalleryFinalUtils;
@@ -120,10 +120,12 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mCustomId = getIntent().getStringExtra(ARG_CUSTOM_ID);
-        String customName = getIntent().getStringExtra(ARG_CUSTOM_NAME);
+        mCustomName = getIntent().getStringExtra(ARG_CUSTOM_NAME);
 
         if (mCustomId != null) {
-            mTvCustom.setText(customName);
+            mTvCustom.setText(mCustomName);
+            mAddVisitBean.setCustomerNo(mCustomId);
+            mAddVisitBean.setCustomerName(mCustomName);
         }
 
         //定位获取当前位置
@@ -285,12 +287,10 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @Override
     public void onHanlderSuccess(int request, List<PhotoInfo> resultList) {
         if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
-
             for (int i = 0; i < resultList.size(); i++) {
                 mPhotos.add(0,
                         new PhotoBean(resultList.get(i).getPhotoPath()));
             }
-
             mCommonAdapter.notifyDataSetChanged();
         }
     }
@@ -320,5 +320,11 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
     @Override
     public void onError(String errorCode, String errorMsg) {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAddVisitPresenter.onStop();
     }
 }

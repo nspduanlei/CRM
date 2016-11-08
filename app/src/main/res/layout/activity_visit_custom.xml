@@ -34,6 +34,7 @@
             android:background="@drawable/plate_click_selector"
             android:padding="@dimen/common_margin">
             <TextView
+                android:id="@+id/tv_record_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"

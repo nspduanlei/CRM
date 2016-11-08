@@ -1,18 +1,27 @@
 package com.apec.crm.utils;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.view.Gravity;
 import android.widget.TextView;
 
 import com.apec.crm.R;
+import com.apec.crm.config.ErrorCode;
 import com.apec.crm.domin.entities.MenuEntity;
+import com.apec.crm.views.activities.LoginActivity;
 import com.apec.crm.views.widget.listView.CommonAdapter;
 import com.apec.crm.views.widget.listView.MyViewHolder;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.OnItemClickListener;
 
 import java.util.ArrayList;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/10/13.
@@ -75,6 +84,43 @@ public class MyUtils {
     }
 
 
+    /**
+     * 拨打电话
+     * @param mobile
+     */
+    public static void callPhone(Context context, String mobile) {
+        // 使用系统的电话拨号服务，必须去声明权限，在AndroidManifest.xml中进行声明
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
+                + mobile));
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            return;
+        }
+        context.startActivity(intent);
+    }
 
 
+    /**
+     * 取消订阅，防止内存泄漏
+     */
+    public static void cancelSubscribe(Subscription... subscriptions) {
+        for (int i = 0; i < subscriptions.length; i++) {
+            if (subscriptions[i] != null && !subscriptions[i].isUnsubscribed()) {
+                subscriptions[i].unsubscribe();
+            }
+        }
+    }
+
+    /**
+     * 登录token 过期
+     */
+    public static void tokenTimeOut(String errorCode, android.app.Activity activity) {
+        if (errorCode.equals(ErrorCode.SESSION_OUT)) {
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
+            activity.finish();
+        }
+    }
 }

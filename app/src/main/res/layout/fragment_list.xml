@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="11dp"
         android:layout_marginLeft="@dimen/margin_left"
-        android:text="共100个客户"
+        android:text="共0个客户"
         android:textColor="@color/colorBlack"/>
 
     <include
@@ -57,7 +57,6 @@
                 android:text="列表为空"
                 android:textColor="@color/colorBlack"
                 android:textSize="16sp"/>
-
         </LinearLayout>
     </FrameLayout>
 

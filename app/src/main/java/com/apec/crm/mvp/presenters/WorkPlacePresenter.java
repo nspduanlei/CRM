@@ -6,6 +6,7 @@ import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.WorkPlaceView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
 
@@ -33,9 +34,7 @@ public class WorkPlacePresenter implements Presenter {
 
     @Override
     public void onStop() {
-        if (mGetMyCountSub != null) {
-            mGetMyCountSub.unsubscribe();
-        }
+        MyUtils.cancelSubscribe(mGetMyCountSub);
     }
 
     @Override
@@ -58,7 +57,8 @@ public class WorkPlacePresenter implements Presenter {
      */
     public void getMyMonthCount() {
         mWorkPlaceView.showLoadingView();
-        mGetMyCountUseCase.execute().subscribe(this::onMyCountReceived, this::manageError);
+        mGetMyCountSub = mGetMyCountUseCase.execute().
+                subscribe(this::onMyCountReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {

@@ -1,27 +1,24 @@
 package com.apec.crm.views.fragments;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
-import com.apec.crm.config.ErrorCode;
 import com.apec.crm.domin.entities.Custom;
 import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.CustomListPresenter;
 import com.apec.crm.mvp.views.CustomListView;
+import com.apec.crm.support.eventBus.RxBus;
 import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.CustomActivity;
 import com.apec.crm.views.activities.CustomDetailActivity;
-import com.apec.crm.views.activities.LoginActivity;
+import com.apec.crm.views.activities.MainActivity;
 import com.apec.crm.views.fragments.core.BaseListFragment;
 import com.apec.crm.views.widget.recyclerView.CommonRecyclerAdapter;
 import com.apec.crm.views.widget.recyclerView.MyViewHolder;
@@ -41,23 +38,8 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     @Inject
     CustomListPresenter mCustomListPresenter;
 
-    public static final String ACTION_UPDATE = "更新列表";
-
     public static final String ARG_TYPE = "arg_type";
     private int mType;
-
-    //定义广播
-    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-            switch (action) {
-                case ACTION_UPDATE:
-                    initiateRefresh();
-                    break;
-            }
-        }
-    };
 
     public static CustomListFragment newInstance(int type) {
         CustomListFragment newFragment = new CustomListFragment();
@@ -67,18 +49,9 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
         return newFragment;
     }
 
-    //注册广播
-    public void registerBroadcastReceiver() {
-        IntentFilter myIntentFilter = new IntentFilter();
-        myIntentFilter.addAction(ACTION_UPDATE);
-        // 注册广播
-        getActivity().registerReceiver(mBroadcastReceiver, myIntentFilter);
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(mBroadcastReceiver);
     }
 
     @Override
@@ -95,14 +68,15 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
 
                 if (mType == CustomFragment.TYPE_PUBLIC) {
                     holder.setVisibility(R.id.tv_time, View.GONE)
-                            .setVisibility(R.id.iv_pick, View.VISIBLE)
-                            .setOnClickLister(R.id.iv_pick, v -> {
-                                //TODO 拾取客户
-
+                            .setVisibility(R.id.tv_pick, View.VISIBLE)
+                            .setOnClickLister(R.id.tv_pick, v -> {
+                                //拾取客户
+                                mCustomListPresenter.pickCustom(custom.getId());
+                                RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
                             });
                 } else {
                     holder.setVisibility(R.id.tv_time, View.VISIBLE)
-                            .setVisibility(R.id.iv_pick, View.GONE)
+                            .setVisibility(R.id.tv_pick, View.GONE)
                             .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
                                     getString(R.string.date_format_custom)));
                 }
@@ -140,7 +114,6 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     protected void initPresenter() {
         mCustomListPresenter.attachView(this);
         mCustomListPresenter.onCreate();
-        registerBroadcastReceiver();
 
         mType = getArguments().getInt(ARG_TYPE, TYPE_PRIVATE);
         mCustomListPresenter.setType(mType);
@@ -193,11 +166,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     @Override
     public void onError(String errorCode, String errorMsg) {
         onLoadError();
-        if (errorCode.equals(ErrorCode.SESSION_OUT)) {
-            Intent intent = new Intent(getActivity(), LoginActivity.class);
-            getActivity().startActivity(intent);
-            getActivity().finish();
-        }
+        MyUtils.tokenTimeOut(errorCode, getActivity());
     }
 
     /**
@@ -210,5 +179,17 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
             mCustomListPresenter.setFilter(filterCustomBean);
         }
         initiateRefresh();
+    }
+
+    @Override
+    public void onPickSuccess() {
+        T.showShort(getContext(), "拾取客户成功");
+        initiateRefresh();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mCustomListPresenter.onStop();
     }
 }

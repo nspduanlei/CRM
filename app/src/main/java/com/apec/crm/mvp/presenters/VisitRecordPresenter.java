@@ -10,18 +10,26 @@ import com.apec.crm.mvp.presenters.core.ListPresenter;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.VisitRecordView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 16/9/28.
  */
 public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
-    private VisitRecordFilter mVisitRecordFilter;
+    VisitRecordFilter mVisitRecordFilter;
 
     VisitRecordView mVisitRecordView;
+
     GetVisitsUseCase mGetVisitsUseCase;
+
+    Subscription mRefreshSubscription, mMoreSubscription;
 
     @Inject
     public VisitRecordPresenter(GetVisitsUseCase getVisitsUseCase) {
@@ -35,7 +43,7 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mRefreshSubscription, mMoreSubscription);
     }
 
     @Override
@@ -59,13 +67,12 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
         mVisitRecordFilter.setPageSize(LIST_ITEM_COUNT);
 
         mGetVisitsUseCase.setData(mVisitRecordFilter);
-        mGetVisitsUseCase.execute()
+        mRefreshSubscription = mGetVisitsUseCase.execute()
                 .subscribe(this::onRefreshReceived, this::manageError);
-
     }
 
     private void manageError(Throwable throwable) {
-
+        mVisitRecordView.onRefreshSuccess(new ArrayList());
     }
 
     private void onRefreshReceived(Result<ListPage<VisitRecord>> listPageResult) {
@@ -80,7 +87,7 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
         mVisitRecordFilter.setPageSize(LIST_ITEM_COUNT);
 
         mGetVisitsUseCase.setData(mVisitRecordFilter);
-        mGetVisitsUseCase.execute()
+        mMoreSubscription = mGetVisitsUseCase.execute()
                 .subscribe(this::onLoadMoreReceived, this::manageError);
     }
 
@@ -91,6 +98,10 @@ public class VisitRecordPresenter extends ListPresenter implements Presenter {
             mVisitRecordView.onError(listPageResult.getErrorCode(),
                     listPageResult.getErrorMsg());
         }
+    }
+
+    public int getTotalNumber() {
+        return totalNumber;
     }
 
     @Override

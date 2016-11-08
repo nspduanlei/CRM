@@ -8,8 +8,11 @@ import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.SearchCustomView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/10/18.
@@ -22,6 +25,8 @@ public class SearchCustomPresenter implements Presenter {
     SearchCustomView mSearchCustomView;
 
     FilterCustomBean mFilter;
+
+    Subscription mSubscription;
 
     public void setType(int type) {
         mFilter.setType(type);
@@ -39,7 +44,7 @@ public class SearchCustomPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mSubscription);
     }
 
     @Override
@@ -57,14 +62,18 @@ public class SearchCustomPresenter implements Presenter {
         mFilter = new FilterCustomBean();
     }
 
+    /**
+     * 搜索客户
+     * @param searchKey
+     */
     public void searchCustom(String searchKey) {
         mFilter.setKeywords(searchKey);
         mGetCustomListUseCase.setData(mFilter);
 
         mSearchCustomView.showLoadingView();
-        mGetCustomListUseCase.execute().subscribe(this::onSearchReceived,
+        mSubscription = mGetCustomListUseCase.execute().
+                subscribe(this::onSearchReceived,
                 this::manageError);
-
     }
 
     private void manageError(Throwable throwable) {

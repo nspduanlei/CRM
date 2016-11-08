@@ -16,6 +16,7 @@ import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.CustomDetailPresenter;
 import com.apec.crm.mvp.views.CustomDetailView;
+import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.CustomFragment;
@@ -119,6 +120,10 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
             public void convert(MyViewHolder holder, Contact contact) {
                 holder.setText(R.id.tv_id, contact.getContactPost())
                         .setText(R.id.tv_nick, contact.getContactName());
+
+                holder.setOnClickLister(R.id.iv_phone, v -> {
+                    MyUtils.callPhone(CustomDetailActivity.this, contact.getContactPhone());
+                });
             }
         };
 
@@ -282,5 +287,11 @@ public class CustomDetailActivity extends BaseActivity implements CustomDetailVi
                 mCustomDetailPresenter.updateCustom(mCustomDetail);
             }
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mCustomDetailPresenter.onStop();
     }
 }

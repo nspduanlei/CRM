@@ -16,8 +16,10 @@ public class GalleryFinalUtils {
 
     public static final int REQUEST_SELECT_IMAGE = 0x1;
     public static final int REQUEST_EDIT_IMAGE = 0x2;
+    private Context mContext;
 
     public GalleryFinalUtils(Context context) {
+        mContext = context;
 
         //设置主题
         ThemeConfig themeConfig = new ThemeConfig.Builder()
@@ -53,7 +55,11 @@ public class GalleryFinalUtils {
                 .setEnableEdit(true)
                 .setEnableCrop(true)
                 .setCropSquare(true)
+                .setCropHeight(DensityUtils.dp2px(mContext, 67))
+                .setCropWidth(DensityUtils.dp2px(mContext, 67))
+                .setForceCrop(true)
                 .setEnablePreview(true)
+                .setForceCropEdit(false)
                 .build();
 
         GalleryFinal.openGallerySingle(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);

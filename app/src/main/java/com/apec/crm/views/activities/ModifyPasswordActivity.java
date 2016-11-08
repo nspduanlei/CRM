@@ -1,5 +1,6 @@
 package com.apec.crm.views.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -85,7 +86,10 @@ public class ModifyPasswordActivity extends BaseActivity implements ModifyPasswo
 
     @Override
     public void onModifySuccess() {
-        T.showShort(this, "修改密码成功");
+        T.showShort(this, "修改密码成功,请重新登录");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 
     @Override
@@ -101,5 +105,11 @@ public class ModifyPasswordActivity extends BaseActivity implements ModifyPasswo
     @Override
     public void onError(String errorCode, String errorMsg) {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mPresenter.onStop();
     }
 }

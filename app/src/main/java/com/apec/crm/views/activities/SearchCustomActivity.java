@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -21,6 +22,7 @@ import com.apec.crm.mvp.presenters.SearchCustomPresenter;
 import com.apec.crm.mvp.views.SearchCustomView;
 import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
+import com.apec.crm.utils.StringUtils;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.CustomFragment;
 import com.apec.crm.views.widget.listView.CommonAdapter;
@@ -78,6 +80,15 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @Override
     protected void initUi(Bundle savedInstanceState) {
         mEtContent.addTextChangedListener(new EditChangeListener());
+
+        mEtContent.setOnEditorActionListener((v, actionId, event) -> {
+            String text = mEtContent.getText().toString();
+            if (actionId == EditorInfo.IME_ACTION_SEARCH && !StringUtils.isNullOrEmpty(text)) {
+                mSearchCustomPresenter.searchCustom(text);
+            }
+            return false;
+        });
+
         mCommonAdapter = new CommonAdapter<Custom>(this, new ArrayList<>(),
                 R.layout.item_custom_list, mLvSearch) {
             @Override
@@ -181,7 +192,7 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
             } else {
                 mIvClearText.setVisibility(View.VISIBLE);
                 //搜索客户
-                mSearchCustomPresenter.searchCustom(s.toString());
+                //mSearchCustomPresenter.searchCustom(s.toString());
             }
         }
     }
@@ -189,5 +200,11 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
     @OnClick(R.id.iv_clear_text)
     void onClearTextClicked(View view) {
         mEtContent.setText("");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSearchCustomPresenter.onStop();
     }
 }

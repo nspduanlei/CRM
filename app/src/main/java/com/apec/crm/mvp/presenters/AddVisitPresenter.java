@@ -6,11 +6,14 @@ import com.apec.crm.domin.useCase.visit.AddVisitUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.AddVisitView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/10/26.
@@ -21,6 +24,7 @@ public class AddVisitPresenter implements Presenter {
     AddVisitUseCase mAddVisitUseCase;
     AddVisitView mAddVisitView;
 
+    Subscription mSubscription;
 
     @Inject
     public AddVisitPresenter(AddVisitUseCase addVisitUseCase) {
@@ -34,7 +38,7 @@ public class AddVisitPresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mSubscription);
     }
 
     @Override
@@ -55,7 +59,8 @@ public class AddVisitPresenter implements Presenter {
     public void addVisit(AddVisitBean addVisitBean, ArrayList<File> files) {
         mAddVisitView.showLoadingView();
         mAddVisitUseCase.setData(addVisitBean, files);
-        mAddVisitUseCase.execute().subscribe(this::onAddVisitReceived, this::manageError);
+        mSubscription = mAddVisitUseCase.execute()
+                .subscribe(this::onAddVisitReceived, this::manageError);
     }
 
     private void manageError(Throwable throwable) {

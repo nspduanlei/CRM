@@ -8,8 +8,11 @@ import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.ProfileView;
 import com.apec.crm.mvp.views.core.View;
+import com.apec.crm.utils.MyUtils;
 
 import javax.inject.Inject;
+
+import rx.Subscription;
 
 /**
  * Created by duanlei on 2016/11/4.
@@ -19,7 +22,10 @@ public class ProfilePresenter implements Presenter {
 
     GetNewVersionUseCase mGetNewVersionUseCase;
     GetUserInfoUseCase mGetUserInfoUseCase;
+
     ProfileView mProfileView;
+
+    Subscription mVersionSubscription, mUserInfoSubscription;
 
     @Inject
     public ProfilePresenter(GetNewVersionUseCase getNewVersionUseCase,
@@ -35,7 +41,7 @@ public class ProfilePresenter implements Presenter {
 
     @Override
     public void onStop() {
-
+        MyUtils.cancelSubscribe(mVersionSubscription, mUserInfoSubscription);
     }
 
     @Override
@@ -50,7 +56,8 @@ public class ProfilePresenter implements Presenter {
 
     @Override
     public void onCreate() {
-
+        getUserInfo();
+        getVersion();
     }
 
     /**
@@ -58,7 +65,8 @@ public class ProfilePresenter implements Presenter {
      */
     public void getVersion() {
         mProfileView.showLoadingView();
-        mGetNewVersionUseCase.execute().subscribe(this::onVersionReceived, this::manageError);
+        mVersionSubscription = mGetNewVersionUseCase.execute().
+                subscribe(this::onVersionReceived, this::manageError);
     }
 
     /**
@@ -66,7 +74,8 @@ public class ProfilePresenter implements Presenter {
      */
     public void getUserInfo() {
         mProfileView.showLoadingView();
-        mGetUserInfoUseCase.execute().subscribe(this::onUserInfoReceived, this::manageError);
+        mUserInfoSubscription = mGetUserInfoUseCase.execute().
+                subscribe(this::onUserInfoReceived, this::manageError);
     }
 
     private void onUserInfoReceived(Result<User> userResult) {

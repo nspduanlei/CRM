@@ -42,6 +42,9 @@ public class SPUtils {
     //职位名称
     public static final String POSITION_NAME = "position_name";
 
+    //职位等级
+    public static final String POSITION_LEVEL = "position_level";
+
     //部门名称
     public static final String DEP_NAME = "dep_name";
 
@@ -70,6 +73,9 @@ public class SPUtils {
      * @param object
      */
     public static void put(Context context, String key, Object object) {
+        if (object == null) {
+            return;
+        }
 
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME,
                 Context.MODE_PRIVATE);
@@ -178,18 +184,8 @@ public class SPUtils {
         SPUtils.put(context, SPUtils.POSITION_NAME, user.getPositionName());
         SPUtils.put(context, SPUtils.DEP_NAME, user.getDepName());
         SPUtils.put(context, SPUtils.USER_IMG, user.getImg());
+        SPUtils.put(context, SPUtils.POSITION_LEVEL, user.getPositionLevel());
     }
-
-    public static User getUserInfo(Context context) {
-        User user = new User();
-        user.setUserName((String) SPUtils.get(context, SPUtils.USER_NAME, ""));
-        user.setPositionName((String) SPUtils.get(context, SPUtils.POSITION_NAME, ""));
-        user.setDepName((String) SPUtils.get(context, SPUtils.DEP_NAME, ""));
-        user.setImg((String) SPUtils.get(context, SPUtils.USER_IMG, ""));
-
-        return user;
-    }
-
 
     /**
      * 创建一个解决SharedPreferencesCompat.apply方法的一个兼容类

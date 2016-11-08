@@ -23,12 +23,13 @@ import com.apec.crm.support.rest.interceptors.LoggingInterceptor;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import okhttp3.Cache;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Retrofit;
@@ -84,8 +85,12 @@ public class RestDataSource implements GoodsRepository {
     }
 
     @Override
-    public Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody) {
-        return mCrmApi.getCustomList(requestBody);
+    public Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody, int type) {
+        if (type == 1) {
+            return mCrmApi.getCustomList(requestBody);
+        } else {
+            return mCrmApi.getPublicCustomList(requestBody);
+        }
     }
 
     @Override
@@ -144,18 +149,8 @@ public class RestDataSource implements GoodsRepository {
     }
 
     @Override
-    public Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images) {
-
-        switch (images.size()) {
-            case 1:
-                return mCrmApi.addVisit(data, images.get(0));
-            case 2:
-                return mCrmApi.addVisit(data, images.get(0), images.get(1));
-            case 3:
-                return mCrmApi.addVisit(data, images.get(0), images.get(1), images.get(2));
-            default:
-                return mCrmApi.addVisit(data);
-        }
+    public Observable<Result> addVisit(RequestBody data, List<MultipartBody.Part> images) {
+        return mCrmApi.addVisit(data, images);
     }
 
     @Override
@@ -185,6 +180,21 @@ public class RestDataSource implements GoodsRepository {
     @Override
     public Observable<Result<Version>> getVersionInfo() {
         return mCrmApi.getVersion();
+    }
+
+    @Override
+    public Observable<Result> pickCustom(RequestBody requestBody) {
+        return mCrmApi.pickCustom(requestBody);
+    }
+
+    @Override
+    public Observable<Result> getUserList(RequestBody requestBody) {
+        return mCrmApi.getUserList(requestBody);
+    }
+
+    @Override
+    public Observable<Result<String>> uploadHeader(MultipartBody.Part image) {
+        return mCrmApi.uploadUserHead(image);
     }
 
     @Override

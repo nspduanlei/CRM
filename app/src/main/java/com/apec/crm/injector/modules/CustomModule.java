@@ -10,6 +10,7 @@ import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomDetailUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
+import com.apec.crm.domin.useCase.custom.PickCustomUseCase;
 import com.apec.crm.domin.useCase.custom.ReturnPoolUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateContactUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateCustomUseCase;
@@ -158,5 +159,17 @@ public class CustomModule {
             @Named("gson") Gson gson) {
         return new DeleteCustomUseCase(repository, uiThread, executorThread, gson);
     }
+
+    @Provides
+    @Activity
+    PickCustomUseCase providePickCustomUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new PickCustomUseCase(repository, uiThread, executorThread, gson);
+    }
+
+
 
 }

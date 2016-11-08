@@ -7,6 +7,7 @@ import com.apec.crm.mvp.views.core.ListView;
  */
 
 public interface CustomListView extends ListView {
-    
+
+    void onPickSuccess();
 
 }

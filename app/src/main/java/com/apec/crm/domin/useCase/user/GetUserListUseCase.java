@@ -40,16 +40,16 @@ public class GetUserListUseCase extends UseCase<Result> {
         mGson = gson;
     }
 
-    public void setData(String id) {
+    public void setData(String keywords) {
         Map param =  new HashMap<String, Object>();
-        param.put("id", id);
+        param.put("keywords", keywords);
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),mGson.toJson(param));
     }
 
     @Override
     public Observable<Result> buildObservable() {
-        return mRepository.modifyPassword(mRequestBody)
+        return mRepository.getUserList(mRequestBody)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);
     }

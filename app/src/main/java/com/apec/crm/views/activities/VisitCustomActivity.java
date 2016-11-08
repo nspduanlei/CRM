@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
@@ -26,13 +27,16 @@ import butterknife.OnClick;
 /**
  * Created by duanlei on 16/9/19.
  */
-public class VisitCustomActivity extends BaseActivity {
+public class VisitCustomActivity extends BaseActivity implements VisitRecordFragment.CountListener {
 
     @BindView(R.id.calendarView)
     MaterialCalendarView mCalendarView;
 
     @BindView(R.id.iv_arrow_date)
     ImageView mIvArrowDate;
+
+    @BindView(R.id.tv_record_count)
+    TextView mTvRecordCount;
 
     VisitRecordFragment mVisitRecordFragment;
 
@@ -95,6 +99,7 @@ public class VisitCustomActivity extends BaseActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, mVisitRecordFragment, "visitList")
                 .commit();
+        mVisitRecordFragment.setCountListener(this);
     }
 
     @Override
@@ -143,6 +148,11 @@ public class VisitCustomActivity extends BaseActivity {
 
                 mVisitRecordFragment.updateForFilter(mVisitRecordFilter);
             }
-        }
+       }
+    }
+
+    @Override
+    public void handleCount(int count) {
+        mTvRecordCount.setText(String.format("共%s条拜访记录", count));
     }
 }

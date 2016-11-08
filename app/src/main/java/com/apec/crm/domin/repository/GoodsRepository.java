@@ -15,8 +15,9 @@ import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.ListResult;
 import com.apec.crm.domin.entities.func.Result;
 
-import java.util.ArrayList;
+import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 
@@ -27,7 +28,7 @@ public interface GoodsRepository {
 
     Observable<Result<User>> login(RequestBody jsonString);
 
-    Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody);
+    Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody, int type);
 
     Observable<Result<MyCount>> getMyCount();
 
@@ -51,7 +52,7 @@ public interface GoodsRepository {
 
     Observable<Result> updateContact(RequestBody requestBody);
 
-    Observable<Result> addVisit(RequestBody data, ArrayList<RequestBody> images);
+    Observable<Result> addVisit(RequestBody data, List<MultipartBody.Part> images);
 
     Observable<Result> updateCustom(RequestBody requestBody);
 
@@ -64,4 +65,10 @@ public interface GoodsRepository {
     Observable<Result> deleteCustom(RequestBody requestBody);
 
     Observable<Result<Version>> getVersionInfo();
+
+    Observable<Result> pickCustom(RequestBody requestBody);
+
+    Observable<Result> getUserList(RequestBody requestBody);
+
+    Observable<Result<String>> uploadHeader(MultipartBody.Part image);
 }

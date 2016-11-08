@@ -67,9 +67,10 @@ public class FilterVisitActivity extends BaseActivity {
      * 选择用户
      * @param view
      */
-    @OnClick(R.id.fl_custom)
+    @OnClick(R.id.fl_user)
     void onUserClicked(View view) {
-
+        Intent intent = new Intent(this, SearchUserActivity.class);
+        startActivityForResult(intent, Constants.REQUEST_CODE_SELECT_USER);
     }
 
     /**

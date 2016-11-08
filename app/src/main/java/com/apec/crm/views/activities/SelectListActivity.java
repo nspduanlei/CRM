@@ -198,4 +198,10 @@ public class SelectListActivity extends BaseActivity implements SelectListView {
     public void onError(String errorCode, String errorMsg) {
 
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mSelectListPresenter.onStop();
+    }
 }

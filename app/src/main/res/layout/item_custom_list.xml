@@ -58,15 +58,18 @@
         android:textColor="@color/hintColor"
         android:textSize="@dimen/tip_font_size"/>
 
-    <ImageView
-        android:id="@+id/iv_pick"
-        android:visibility="gone"
+    <TextView
+        android:id="@+id/tv_pick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/margin_left"
-        android:src="@drawable/btn_pick_drawable"/>
+        android:drawableTop="@drawable/btn_pick_drawable"
+        android:text="拾取"
+        android:textColor="@color/colorMain"
+        android:textSize="12sp"
+        android:visibility="gone"/>
 
     <View
         android:layout_width="match_parent"

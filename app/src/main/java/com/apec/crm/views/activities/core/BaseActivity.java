@@ -38,7 +38,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         MyApplication myApplication = (MyApplication) getApplication();
         initDependencyInjector(myApplication);
         setUpContentView();
-
         initPresenter();
         initUi(savedInstanceState);
     }

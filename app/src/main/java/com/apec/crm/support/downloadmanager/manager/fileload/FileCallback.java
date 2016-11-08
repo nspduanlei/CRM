@@ -1,5 +1,7 @@
 package com.apec.crm.support.downloadmanager.manager.fileload;
 
+import com.apec.crm.support.eventBus.RxBus;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;

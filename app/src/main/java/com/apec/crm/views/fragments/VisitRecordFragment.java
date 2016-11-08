@@ -31,6 +31,16 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     private static final String ARG_FILTER = "arg_filter";
 
+    private CountListener mCountListener;
+
+    public interface CountListener {
+        void handleCount(int count);
+    }
+
+    public void setCountListener(CountListener countListener) {
+        mCountListener = countListener;
+    }
+
     @Override
     protected CommonRecyclerAdapter getAdapter() {
         //隐藏头部
@@ -108,10 +118,8 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     public static VisitRecordFragment newInstance(VisitRecordFilter visitRecordFilter) {
         VisitRecordFragment newFragment = new VisitRecordFragment();
-
         Bundle bundle = new Bundle();
         bundle.putParcelable(ARG_FILTER, visitRecordFilter);
-
         newFragment.setArguments(bundle);
         return newFragment;
     }
@@ -147,6 +155,9 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
 
     @Override
     public void onRefreshSuccess(ArrayList data) {
+        if (mCountListener != null) {
+            mCountListener.handleCount(data.size());
+        }
         onRefreshComplete(data);
     }
 
@@ -184,5 +195,11 @@ public class VisitRecordFragment extends BaseListFragment implements VisitRecord
             mVisitRecordPresenter.setVisitRecordFilter(visitFilter);
         }
         initiateRefresh();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mVisitRecordPresenter.onStop();
     }
 }

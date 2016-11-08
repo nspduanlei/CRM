@@ -9,6 +9,7 @@ import com.apec.crm.domin.useCase.custom.GetCustomAttributeUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomDetailUseCase;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
 import com.apec.crm.domin.useCase.custom.GetOpenSeaUseCase;
+import com.apec.crm.domin.useCase.custom.PickCustomUseCase;
 import com.apec.crm.domin.useCase.custom.ReturnPoolUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateContactUseCase;
 import com.apec.crm.domin.useCase.custom.UpdateCustomUseCase;
@@ -44,6 +45,9 @@ public interface CustomComponent extends ActivityComponent {
     void inject(ContactActivity contactActivity);
     void inject(CustomEditActivity customEditActivity);
     void inject(CustomActivity customActivity);
+
+    //拾取客户
+    PickCustomUseCase pickCustomUseCase();
 
     //获取客户列表
     GetCustomListUseCase getCustomListUseCase();

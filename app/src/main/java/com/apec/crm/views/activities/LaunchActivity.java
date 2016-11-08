@@ -12,6 +12,7 @@ import com.apec.crm.views.activities.core.BaseActivity;
 
 /**
  * Created by duanlei on 16/9/27.
+ * 启动页
  */
 public class LaunchActivity extends BaseActivity {
     @Override

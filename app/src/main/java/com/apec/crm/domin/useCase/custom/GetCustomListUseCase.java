@@ -26,6 +26,7 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
     private final Gson mGson;
 
     RequestBody mRequestBody;
+    int mType;
 
     @Inject
     public GetCustomListUseCase(GoodsRepository repository,
@@ -39,6 +40,9 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
     }
 
     public void setData(FilterCustomBean filter) {
+
+        mType = filter.getType();
+
         mRequestBody = RequestBody.create(
                 MediaType.parse("application/x-www-form-urlencoded"),
                 mGson.toJson(filter));
@@ -46,7 +50,7 @@ public class GetCustomListUseCase extends UseCase<Result<ListPage<Custom>>> {
 
     @Override
     public Observable<Result<ListPage<Custom>>> buildObservable() {
-        return mRepository.getCustomerList(mRequestBody)
+        return mRepository.getCustomerList(mRequestBody, mType)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);
     }

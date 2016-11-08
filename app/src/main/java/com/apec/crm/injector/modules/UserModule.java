@@ -4,8 +4,10 @@ import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.sys.GetNewVersionUseCase;
 import com.apec.crm.domin.useCase.user.GetMyCountUseCase;
 import com.apec.crm.domin.useCase.user.GetUserInfoUseCase;
+import com.apec.crm.domin.useCase.user.GetUserListUseCase;
 import com.apec.crm.domin.useCase.user.LoginUseCase;
 import com.apec.crm.domin.useCase.user.ModifyPasswordUseCase;
+import com.apec.crm.domin.useCase.user.UploadHeaderUseCase;
 import com.apec.crm.injector.Activity;
 import com.google.gson.Gson;
 
@@ -66,5 +68,25 @@ public class UserModule {
             @Named("executor_thread") Scheduler executorThread) {
         return new GetNewVersionUseCase(repository, uiThread, executorThread);
     }
+
+    @Provides
+    @Activity
+    GetUserListUseCase provideGetUserListUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread,
+            @Named("gson") Gson gson) {
+        return new GetUserListUseCase(repository, uiThread, executorThread, gson);
+    }
+
+    @Provides
+    @Activity
+    UploadHeaderUseCase provideUploadHeaderUseCase(
+            GoodsRepository repository,
+            @Named("ui_thread") Scheduler uiThread,
+            @Named("executor_thread") Scheduler executorThread) {
+        return new UploadHeaderUseCase(repository, uiThread, executorThread);
+    }
+
 
 }

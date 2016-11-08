@@ -20,7 +20,7 @@ public class FilterCustomBean extends BaseFilter implements Parcelable {
     private String customerState; //客户状态
     private String userNo; //用户编号
 
-    private int type;
+    private int type; //1 私海， 2 公海
 
     public FilterCustomBean() {}
 
