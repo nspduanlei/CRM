@@ -20,9 +20,11 @@ import com.apec.crm.injector.components.DaggerCustomComponent;
 import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.mvp.presenters.SearchCustomPresenter;
 import com.apec.crm.mvp.views.SearchCustomView;
+import com.apec.crm.support.eventBus.RxBus;
 import com.apec.crm.utils.DateUtil;
 import com.apec.crm.utils.MyUtils;
 import com.apec.crm.utils.StringUtils;
+import com.apec.crm.utils.T;
 import com.apec.crm.views.activities.core.BaseActivity;
 import com.apec.crm.views.fragments.CustomFragment;
 import com.apec.crm.views.widget.listView.CommonAdapter;
@@ -93,11 +95,20 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
                 R.layout.item_custom_list, mLvSearch) {
             @Override
             public void convert(MyViewHolder holder, Custom custom) {
-                holder.setTextRound(R.id.roundTextView, MyUtils.getColor(custom.getIcon()))
-                        .setText(R.id.tv_custom_name, custom.getCustomerName())
-                        .setText(R.id.tv_address, custom.getCustomerAddress())
-                        .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
-                                getString(R.string.date_format_custom)));
+
+                if (mListType == CustomFragment.TYPE_PUBLIC) {
+                    holder.setVisibility(R.id.tv_time, View.GONE)
+                            .setVisibility(R.id.tv_pick, View.VISIBLE)
+                            .setOnClickLister(R.id.tv_pick, v -> {
+                                //拾取客户
+                                mSearchCustomPresenter.pickCustom(custom.getId());
+                            });
+                } else {
+                    holder.setVisibility(R.id.tv_time, View.VISIBLE)
+                            .setVisibility(R.id.tv_pick, View.GONE)
+                            .setText(R.id.tv_time, DateUtil.getDateFormatStr(Long.valueOf(custom.getTime()),
+                                    getString(R.string.date_format_custom)));
+                }
 
                 MyUtils.setHeadText(holder.getView(R.id.tv_head), custom.getCustomerName());
             }
@@ -156,6 +167,20 @@ public class SearchCustomActivity extends BaseActivity implements SearchCustomVi
             mCommonAdapter.clear();
             mCommonAdapter.addAll(customs);
         }
+    }
+
+    @Override
+    public void onPickSuccess() {
+        T.showShort(this, "拾取客户成功");
+
+        setResult(Constants.RESULT_CODE_PICK_CUSTOM);
+
+        String text = mEtContent.getText().toString();
+        if (!StringUtils.isNullOrEmpty(text)) {
+            mSearchCustomPresenter.searchCustom(text);
+        }
+
+        RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
     }
 
     @Override

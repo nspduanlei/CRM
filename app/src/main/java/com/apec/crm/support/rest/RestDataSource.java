@@ -86,10 +86,10 @@ public class RestDataSource implements GoodsRepository {
 
     @Override
     public Observable<Result<ListPage<Custom>>> getCustomerList(RequestBody requestBody, int type) {
-        if (type == 1) {
-            return mCrmApi.getCustomList(requestBody);
-        } else {
+        if (type == 2) {
             return mCrmApi.getPublicCustomList(requestBody);
+        } else {
+            return mCrmApi.getCustomList(requestBody);
         }
     }
 

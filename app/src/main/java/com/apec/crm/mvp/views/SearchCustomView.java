@@ -11,4 +11,6 @@ import java.util.ArrayList;
 
 public interface SearchCustomView extends View {
     void onSearchSuccess(ArrayList<Custom> customs);
+
+    void onPickSuccess();
 }

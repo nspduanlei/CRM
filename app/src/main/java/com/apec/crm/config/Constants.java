@@ -43,6 +43,7 @@ public class Constants {
     public static final int RESULT_CODE_DELETE_CONTACT = 118; //删除联系人
     public static final int RESULT_CODE_FILTER_VISIT = 119; //筛选拜访记录
     public static final int RESULT_CODE_EDIT_CONTACT = 120; //编辑联系人
+    public static final int RESULT_CODE_PICK_CUSTOM = 121; //拾取客户
 
     /**
      * request
@@ -68,6 +69,7 @@ public class Constants {
     public static final String CUSTOMER_LEVEL = "level"; //客户分类
     public static final String CUSTOMER_STATE = "state"; //客户状态
     public static final String CUSTOMER_SOURCE = "source"; //客户来源
+
 
 
 }

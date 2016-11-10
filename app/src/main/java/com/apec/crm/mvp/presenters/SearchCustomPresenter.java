@@ -5,6 +5,7 @@ import com.apec.crm.domin.entities.FilterCustomBean;
 import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.useCase.custom.GetCustomListUseCase;
+import com.apec.crm.domin.useCase.custom.PickCustomUseCase;
 import com.apec.crm.mvp.presenters.core.Presenter;
 import com.apec.crm.mvp.views.SearchCustomView;
 import com.apec.crm.mvp.views.core.View;
@@ -21,20 +22,23 @@ import rx.Subscription;
 public class SearchCustomPresenter implements Presenter {
 
     GetCustomListUseCase mGetCustomListUseCase;
+    PickCustomUseCase mPickCustomUseCase;
 
     SearchCustomView mSearchCustomView;
 
     FilterCustomBean mFilter;
 
-    Subscription mSubscription;
+    Subscription mSubscription, mPickSubscription;
 
     public void setType(int type) {
         mFilter.setType(type);
     }
 
     @Inject
-    public SearchCustomPresenter(GetCustomListUseCase getCustomListUseCase) {
+    public SearchCustomPresenter(GetCustomListUseCase getCustomListUseCase,
+                                 PickCustomUseCase pickCustomUseCase) {
         mGetCustomListUseCase = getCustomListUseCase;
+        mPickCustomUseCase = pickCustomUseCase;
     }
 
     @Override
@@ -85,6 +89,26 @@ public class SearchCustomPresenter implements Presenter {
 
         if (listPageResult.isSucceed()) {
             mSearchCustomView.onSearchSuccess(listPageResult.getData().getRows());
+        }
+    }
+
+    /**
+     * 拾取客户
+     * @param id
+     */
+    public void pickCustom(String id) {
+        mSearchCustomView.showLoadingView();
+
+        mPickCustomUseCase.setData(id);
+        mPickSubscription = mPickCustomUseCase.execute().
+                subscribe(this::onPickReceived, this::manageError);
+    }
+
+    private void onPickReceived(Result result) {
+        mSearchCustomView.hideLoadingView();
+
+        if (result.isSucceed()) {
+            mSearchCustomView.onPickSuccess();
         }
     }
 }

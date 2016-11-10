@@ -123,7 +123,7 @@ public class CustomFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == Constants.REQUEST_CODE_FILTER_CUSTOM) {
+        if (requestCode == Constants.REQUEST_CODE_FILTER_CUSTOM) {  //选择筛选条件
             if (resultCode == Constants.RESULT_CODE_FILTER_CUSTOM) {
 
                 mFilterCustomBean =
@@ -131,11 +131,15 @@ public class CustomFragment extends BaseFragment {
                 mFilterCustomNameBean =
                         data.getParcelableExtra(FilterCustomActivity.ARG_RESULT_NAME);
 
-                mCustomListFragment.updateForFilter(mFilterCustomBean);
+                updateCustomList();
             }
-        } else if (requestCode == Constants.REQUEST_CODE_ADD_CUSTOM) {
+        } else if (requestCode == Constants.REQUEST_CODE_ADD_CUSTOM) { //添加客户
             if (resultCode == Constants.RESULT_CODE_ADD_CUSTOM) {
-                mCustomListFragment.updateForFilter(null);
+                updateCustomList();
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_SELECT_CUSTOM) { //搜索成功
+            if (resultCode == Constants.RESULT_CODE_PICK_CUSTOM) { //拾取客户成功
+                updateCustomList();
             }
         }
     }

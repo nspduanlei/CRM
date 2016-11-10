@@ -72,7 +72,6 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
                             .setOnClickLister(R.id.tv_pick, v -> {
                                 //拾取客户
                                 mCustomListPresenter.pickCustom(custom.getId());
-                                RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
                             });
                 } else {
                     holder.setVisibility(R.id.tv_time, View.VISIBLE)
@@ -185,6 +184,7 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
     public void onPickSuccess() {
         T.showShort(getContext(), "拾取客户成功");
         initiateRefresh();
+        RxBus.getDefault().post(MainActivity.ACTION_UPDATE_CUSTOMS);
     }
 
     @Override
