@@ -9,6 +9,7 @@ import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
 import com.apec.crm.config.Constants;
 import com.apec.crm.domin.entities.Custom;
+import com.apec.crm.domin.entities.User;
 import com.apec.crm.domin.entities.VisitsFilter;
 import com.apec.crm.views.activities.core.BaseActivity;
 
@@ -28,6 +29,9 @@ public class FilterVisitActivity extends BaseActivity {
 
     @BindView(R.id.tv_custom)
     TextView mTvCustom;
+
+    @BindView(R.id.tv_user)
+    TextView mTvUser;
 
     @Override
     protected void setUpContentView() {
@@ -96,12 +100,19 @@ public class FilterVisitActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST_CODE_SELECT_CUSTOM) {
+        if (requestCode == Constants.REQUEST_CODE_SELECT_CUSTOM) { //选择客户
             if (resultCode == Constants.RESULT_CODE_SELECT_CUSTOM) {
                 Custom custom = data.getParcelableExtra(SearchCustomActivity.ARG_CUSTOM);
                 mTvCustom.setText(custom.getCustomerName());
                 mVisitsFilter.setCustomNo(custom.getId());
                 mVisitsFilter.setCustomName(custom.getCustomerName());
+            }
+        } else if (requestCode == Constants.REQUEST_CODE_SELECT_USER) { //选择用户
+            if (resultCode == Constants.RESULT_CODE_SELECT_USER) {
+                User user = data.getParcelableExtra(SearchUserActivity.ARG_USER);
+                mTvUser.setText(user.getRealName());
+                mVisitsFilter.setUserNo(user.getUserNo());
+                mVisitsFilter.setUserName(user.getUserName());
             }
         }
     }

@@ -9,6 +9,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import static com.apec.crm.R.id.imageView;
+
 /**
  * Created by duanlei on 2016/11/8.
  */
@@ -35,6 +37,15 @@ public class ImageLoad {
                 .load(url)
                 .transform(new CircleTransform())
                 .into(imageView);
+    }
+
+    public static void loadUrl(Context context, ImageView iv, String url) {
+        if (StringUtils.isNullOrEmpty(url)) {
+            return;
+        }
+        Picasso.with(context)
+                .load(url)
+                .into(iv);
     }
 }
 

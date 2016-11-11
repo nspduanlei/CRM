@@ -1,5 +1,7 @@
 package com.apec.crm.domin.useCase.user;
 
+import com.apec.crm.domin.entities.User;
+import com.apec.crm.domin.entities.func.ListPage;
 import com.apec.crm.domin.entities.func.Result;
 import com.apec.crm.domin.repository.GoodsRepository;
 import com.apec.crm.domin.useCase.UseCase;
@@ -21,7 +23,7 @@ import rx.Scheduler;
  * 获取下属用户
  */
 
-public class GetUserListUseCase extends UseCase<Result> {
+public class GetUserListUseCase extends UseCase<Result<ListPage<User>>> {
     private final GoodsRepository mRepository;
     private final Scheduler mUiThread;
     private final Scheduler mExecutorThread;
@@ -48,7 +50,7 @@ public class GetUserListUseCase extends UseCase<Result> {
     }
 
     @Override
-    public Observable<Result> buildObservable() {
+    public Observable<Result<ListPage<User>>> buildObservable() {
         return mRepository.getUserList(mRequestBody)
                 .observeOn(mUiThread)
                 .subscribeOn(mExecutorThread);

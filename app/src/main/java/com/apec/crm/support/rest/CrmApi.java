@@ -40,7 +40,7 @@ public interface CrmApi {
     Observable<Result<MyCount>> getMyCount();
 
     /**
-     * 获取我本月的统计数据
+     * 获取版本信息
      */
     @POST("sysparam-service/getNowVersionInfo.apec")
     Observable<Result<Version>> getVersion();
@@ -61,7 +61,10 @@ public interface CrmApi {
      * 获取用户下属
      */
     @POST("userAppInterface-service/getDepartmentList.apec")
-    Observable<Result> getUserList(@Body RequestBody body);
+    Observable<Result<ListPage<User>>> getUserList(@Body RequestBody body);
+
+    @POST("userAppInterface-service/getDepartmentList.apec")
+    Observable<Result<ListPage<User>>> getUserList();
 
     /**
      * 上传用户头像

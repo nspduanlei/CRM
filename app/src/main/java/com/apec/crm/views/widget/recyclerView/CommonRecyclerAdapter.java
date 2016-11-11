@@ -35,7 +35,6 @@ public abstract class CommonRecyclerAdapter<T> extends
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         if (viewType == VIEW_TYPE_ITEM) {
             View view = mLayoutInflater.inflate(mResId, parent, false);
             return new MyViewHolder(view, mContext);
@@ -48,18 +47,13 @@ public abstract class CommonRecyclerAdapter<T> extends
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
         if (holder instanceof MyViewHolder) {
             MyViewHolder myViewHolder = (MyViewHolder) holder;
             convert(myViewHolder, mData.get(position), position);
-
         } else if (holder instanceof CommonRecyclerAdapter.LoadingViewHolder) {
-
             LoadingViewHolder loadingViewHolder = (LoadingViewHolder) holder;
             loadingViewHolder.progressBar.setIndeterminate(true);
         }
-
-
     }
 
     @Override

@@ -68,7 +68,7 @@ public interface GoodsRepository {
 
     Observable<Result> pickCustom(RequestBody requestBody);
 
-    Observable<Result> getUserList(RequestBody requestBody);
+    Observable<Result<ListPage<User>>> getUserList(RequestBody requestBody);
 
     Observable<Result<String>> uploadHeader(MultipartBody.Part image);
 }

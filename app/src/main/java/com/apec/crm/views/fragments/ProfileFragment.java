@@ -1,5 +1,7 @@
 package com.apec.crm.views.fragments;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -86,8 +88,23 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
      */
     @OnClick(R.id.btn_login_out)
     void onLoginOutClicked(View view) {
-        SPUtils.put(getActivity(), SPUtils.TOKEN, "");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("退出登录");
+        builder.setMessage("确定退出登录？");
+        // 更新
+        builder.setPositiveButton("确定", (dialog, which) -> {
+            dialog.dismiss();
 
+            loginOut();
+        });
+        // 稍后更新
+        builder.setNegativeButton("取消", (dialog, which) -> dialog.dismiss());
+        Dialog noticeDialog = builder.create();
+        noticeDialog.show();
+    }
+
+    private void loginOut() {
+        SPUtils.put(getActivity(), SPUtils.TOKEN, "");
         Intent intent = new Intent(getActivity(), LoginActivity.class);
         startActivity(intent);
         getActivity().finish();

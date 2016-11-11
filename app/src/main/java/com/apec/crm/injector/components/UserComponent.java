@@ -12,6 +12,7 @@ import com.apec.crm.injector.modules.ActivityModule;
 import com.apec.crm.injector.modules.UserModule;
 import com.apec.crm.views.activities.LoginActivity;
 import com.apec.crm.views.activities.ModifyPasswordActivity;
+import com.apec.crm.views.activities.SearchUserActivity;
 import com.apec.crm.views.activities.UserInfoActivity;
 import com.apec.crm.views.fragments.ProfileFragment;
 import com.apec.crm.views.fragments.WorkPlaceFragment;
@@ -30,6 +31,7 @@ public interface UserComponent extends ActivityComponent {
     void inject(UserInfoActivity userInfoActivity);
     void inject(ModifyPasswordActivity modifyPasswordActivity);
     void inject(ProfileFragment profileFragment);
+    void inject(SearchUserActivity searchUserActivity);
 
     //登录
     LoginUseCase loginUseCase();

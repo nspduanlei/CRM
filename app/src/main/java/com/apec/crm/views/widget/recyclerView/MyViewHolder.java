@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.apec.crm.support.picasso.ImageLoad;
 import com.apec.crm.views.widget.RoundTextView;
-import com.squareup.picasso.Picasso;
 
 import butterknife.ButterKnife;
 
@@ -84,7 +84,13 @@ public class MyViewHolder extends RecyclerView.ViewHolder {
 
     public MyViewHolder setImageUrl(int viewId, String url) {
         ImageView iv = getView(viewId);
-        Picasso.with(mContext).load(url).into(iv);
+        ImageLoad.loadUrl(mContext, iv, url);
+        return this;
+    }
+
+    public MyViewHolder setRoundImageUrl(int viewId, String url) {
+        ImageView iv = getView(viewId);
+        ImageLoad.loadUrlRound(mContext, url, iv);
         return this;
     }
 

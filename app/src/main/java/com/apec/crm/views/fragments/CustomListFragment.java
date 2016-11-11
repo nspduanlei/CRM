@@ -80,7 +80,6 @@ public class CustomListFragment extends BaseListFragment implements CustomListVi
                                     getString(R.string.date_format_custom)));
                 }
 
-
                 MyUtils.setHeadText(holder.getView(R.id.tv_head), custom.getCustomerName());
 
                 holder.setOnItemClickListener(v -> {

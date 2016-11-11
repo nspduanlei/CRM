@@ -188,8 +188,12 @@ public class RestDataSource implements GoodsRepository {
     }
 
     @Override
-    public Observable<Result> getUserList(RequestBody requestBody) {
-        return mCrmApi.getUserList(requestBody);
+    public Observable<Result<ListPage<User>>> getUserList(RequestBody requestBody) {
+        if (requestBody != null) {
+            return mCrmApi.getUserList(requestBody);
+        } else {
+            return mCrmApi.getUserList();
+        }
     }
 
     @Override

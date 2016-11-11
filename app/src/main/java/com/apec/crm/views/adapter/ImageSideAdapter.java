@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by duanlei on 2016/10/31.
+ * 图片浏览
  */
 
 public class ImageSideAdapter extends PagerAdapter {

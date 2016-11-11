@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by duanlei on 16/9/27.
  */
-public class User implements Parcelable {
+public class User implements Parcelable, Comparable<User> {
     private String userNo;
     private String userName;
     private String password;
@@ -18,6 +18,8 @@ public class User implements Parcelable {
 
     //部门名称
     private String depName;
+
+    private String depNo;
 
     //职位名称
     private String positionName;
@@ -38,6 +40,13 @@ public class User implements Parcelable {
 
     public User() {}
 
+    public User(String realName, String depName, String depNo, String img) {
+        this.realName = realName;
+        this.depName = depName;
+        this.depNo = depNo;
+        this.img = img;
+    }
+
     protected User(Parcel in) {
         userNo = in.readString();
         userName = in.readString();
@@ -45,6 +54,7 @@ public class User implements Parcelable {
         token = in.readString();
         realName = in.readString();
         depName = in.readString();
+        depNo = in.readString();
         positionName = in.readString();
         positionLevel = in.readString();
         phoneNumber = in.readString();
@@ -64,6 +74,14 @@ public class User implements Parcelable {
             return new User[size];
         }
     };
+
+    public String getDepNo() {
+        return depNo;
+    }
+
+    public void setDepNo(String depNo) {
+        this.depNo = depNo;
+    }
 
     public String getPositionLevel() {
         return positionLevel;
@@ -175,11 +193,17 @@ public class User implements Parcelable {
         dest.writeString(token);
         dest.writeString(realName);
         dest.writeString(depName);
+        dest.writeString(depNo);
         dest.writeString(positionName);
         dest.writeString(positionLevel);
         dest.writeString(phoneNumber);
         dest.writeString(sex);
         dest.writeString(email);
         dest.writeString(img);
+    }
+
+    @Override
+    public int compareTo(User o) {
+        return this.getDepNo().compareTo(o.getDepNo());
     }
 }

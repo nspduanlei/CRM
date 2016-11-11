@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:focusable="true"
-              android:focusableInTouchMode="true">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/colorWhite"
+             android:focusable="true"
+             android:focusableInTouchMode="true">
 
     <include
         layout="@layout/top_bar_search_layout"/>
 
-    <ListView
-        android:id="@+id/lv_user"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_user"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/top_bar_height_e"/>
 
-</LinearLayout>
+    <include
+        layout="@layout/layout_empty"/>
+
+    <include
+        layout="@layout/loading_layout"/>
+
+</FrameLayout>
