@@ -43,7 +43,11 @@ public class FilterVisitActivity extends BaseActivity {
         mVisitsFilter = getIntent().getParcelableExtra(ARG_FILTER);
         if (mVisitsFilter == null) {
             mVisitsFilter = new VisitsFilter();
+        } else {
+            mTvCustom.setText(mVisitsFilter.getCustomName());
+            mTvUser.setText(mVisitsFilter.getUserName());
         }
+
     }
 
     @Override

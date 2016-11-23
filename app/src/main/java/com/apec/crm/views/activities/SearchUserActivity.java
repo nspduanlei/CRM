@@ -37,7 +37,6 @@ import butterknife.OnClick;
 /**
  * Created by duanlei on 2016/10/25.
  */
-
 public class SearchUserActivity extends BaseActivity
         implements SearchUserView {
 

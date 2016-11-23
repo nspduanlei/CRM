@@ -32,6 +32,9 @@ import butterknife.OnClick;
 
 /**
  * Created by duanlei on 16/9/14.
+ *
+ * 选择位置
+ *
  */
 public class MapLocationActivity extends BaseActivity implements AMapLocationListener,
         AMap.OnCameraChangeListener, AMap.OnMapLoadedListener, GeocodeSearch.OnGeocodeSearchListener {
@@ -123,13 +126,6 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
     @Override
     protected void initPresenter() {
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
     }
 
     @Override
@@ -244,6 +240,14 @@ public class MapLocationActivity extends BaseActivity implements AMapLocationLis
         if (mObjectAnimator != null) {
             mObjectAnimator.start();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mLocationTask.unRegisterLocationListener(this);
+        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
+        mMapView.onDestroy();
     }
 
 //    @Override

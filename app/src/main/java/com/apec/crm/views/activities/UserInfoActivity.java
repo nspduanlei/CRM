@@ -16,6 +16,7 @@ import com.apec.crm.mvp.views.UserInfoView;
 import com.apec.crm.support.eventBus.RxBus;
 import com.apec.crm.support.picasso.ImageLoad;
 import com.apec.crm.utils.GalleryFinalUtils;
+import com.apec.crm.utils.L;
 import com.apec.crm.utils.SPUtils;
 import com.apec.crm.views.activities.core.BaseActivity;
 
@@ -34,8 +35,7 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
  * 用户信息
  */
 
-public class UserInfoActivity extends BaseActivity implements UserInfoView,
-        GalleryFinal.OnHanlderResultCallback {
+public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     @BindView(R.id.iv_head)
     ImageView mIvHead;
@@ -134,21 +134,26 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView,
 
     @OnClick(R.id.iv_head)
     void onHeadClicked(View view) {
-        mGalleryFinalUtils.selectUserHead(this);
+        mGalleryFinalUtils.selectUserHead(
+                new GalleryFinal.OnHanlderResultCallback() {
+                    @Override
+                    public void onHanlderSuccess(int request, List<PhotoInfo> resultList) {
+                        if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
+                            File imgFile = new File(resultList.get(0).getPhotoPath());
+
+                            L.e(resultList.get(0).getPhotoPath());
+
+                            mUserInfoPresenter.uploadUserHead(imgFile);
+                        }
+                    }
+
+                    @Override
+                    public void onHanlderFailure(int requestCode, String errorMsg) {
+
+                    }
+                });
     }
 
-    @Override
-    public void onHanlderSuccess(int request, List<PhotoInfo> resultList) {
-        if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
-            File imgFile = new File(resultList.get(0).getPhotoPath());
-            mUserInfoPresenter.uploadUserHead(imgFile);
-        }
-    }
-
-    @Override
-    public void onHanlderFailure(int requestCode, String errorMsg) {
-
-    }
 
     @Override
     protected void onStop() {

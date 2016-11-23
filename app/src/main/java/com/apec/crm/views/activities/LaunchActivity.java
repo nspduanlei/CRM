@@ -41,7 +41,6 @@ public class LaunchActivity extends BaseActivity {
 
             this.finish();
         }, 2000);
-
     }
 
     @Override

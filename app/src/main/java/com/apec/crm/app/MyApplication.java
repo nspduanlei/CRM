@@ -24,13 +24,12 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initializeInjector();
-        initializeDebug();
         sInstance = this;
 
+        initializeInjector();
+        initializeDebug();
         LeakCanary.install(this);
     }
-
 
     private void initializeDebug() {
         Stetho.initializeWithDefaults(this);

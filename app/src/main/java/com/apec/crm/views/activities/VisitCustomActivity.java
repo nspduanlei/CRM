@@ -26,8 +26,10 @@ import butterknife.OnClick;
 
 /**
  * Created by duanlei on 16/9/19.
+ * 拜访记录
  */
-public class VisitCustomActivity extends BaseActivity implements VisitRecordFragment.CountListener {
+public class VisitCustomActivity extends BaseActivity implements
+        VisitRecordFragment.CountListener {
 
     @BindView(R.id.calendarView)
     MaterialCalendarView mCalendarView;

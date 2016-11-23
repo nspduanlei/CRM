@@ -156,7 +156,8 @@ public class GalleryFinal {
      * @param config
      * @param callback
      */
-    public static void openGalleryMuti(int requestCode, FunctionConfig config, OnHanlderResultCallback callback) {
+    public static void openGalleryMuti(int requestCode, FunctionConfig config,
+                                       OnHanlderResultCallback callback) {
         if ( mCoreConfig.getImageLoader() == null ) {
             ILogger.e("Please init GalleryFinal.");
             if(callback != null){

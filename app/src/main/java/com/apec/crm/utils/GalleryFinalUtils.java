@@ -17,6 +17,7 @@ public class GalleryFinalUtils {
     public static final int REQUEST_SELECT_IMAGE = 0x1;
     public static final int REQUEST_EDIT_IMAGE = 0x2;
     private Context mContext;
+    private CoreConfig mCoreConfig;
 
     public GalleryFinalUtils(Context context) {
         mContext = context;
@@ -37,11 +38,12 @@ public class GalleryFinalUtils {
         //配置imageloader
         ImageLoader imageLoader = new PicassoImageLoader();
 
-        CoreConfig coreConfig = new CoreConfig.Builder(context, imageLoader, themeConfig)
+        mCoreConfig = new CoreConfig.Builder(context.getApplicationContext(),
+                imageLoader, themeConfig)
                 .setFunctionConfig(functionConfig)
                 .build();
 
-        GalleryFinal.init(coreConfig);
+        GalleryFinal.init(mCoreConfig);
     }
 
     /**
@@ -68,8 +70,8 @@ public class GalleryFinalUtils {
     /**
      * 选择拜访图片
      */
-    public void selectVisitImage(GalleryFinal.OnHanlderResultCallback onHanlderResultCallback,
-                                 int size) {
+    public void selectVisitImage(int size,
+                                 GalleryFinal.OnHanlderResultCallback onHanlderResultCallback) {
 
         //配置功能
         FunctionConfig functionConfig = new FunctionConfig.Builder()
@@ -81,6 +83,8 @@ public class GalleryFinalUtils {
                 .build();
 
         GalleryFinal.openGalleryMuti(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);
+
+        GalleryFinal.getCallback();
     }
 
     /**
@@ -99,7 +103,6 @@ public class GalleryFinalUtils {
         //带配置
         GalleryFinal.openEdit(REQUEST_EDIT_IMAGE, functionConfig, photoPath,
                 onHanlderResultCallback);
-
     }
 
 

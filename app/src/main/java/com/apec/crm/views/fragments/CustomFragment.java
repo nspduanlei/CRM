@@ -36,6 +36,7 @@ public class CustomFragment extends BaseFragment {
 
     @BindView(R.id.rl_custom_head)
     RelativeLayout mRlCustomHead;
+    
     @BindView(R.id.btn_flash)
     FloatingActionButton mBtnFlash;
 

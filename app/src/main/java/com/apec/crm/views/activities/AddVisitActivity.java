@@ -44,8 +44,7 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
 /**
  * Created by duanlei on 16/9/19.
  */
-public class AddVisitActivity extends BaseActivity implements AMapLocationListener,
-        GalleryFinal.OnHanlderResultCallback, AddVisitView {
+public class AddVisitActivity extends BaseActivity implements AMapLocationListener, AddVisitView {
 
     @BindView(R.id.et_content)
     EditText mEtContent;
@@ -99,7 +98,7 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         } else if (mContactId == null) {
             T.showShort(this, "请选择联系人");
         } else if (mPhotos.size() == 1) {
-                T.showShort(this, "请选择图片");
+            T.showShort(this, "请选择图片");
         } else {
             String mark = mEtContent.getText().toString();
             if (!StringUtils.isNullOrEmpty(mark)) {
@@ -142,7 +141,6 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                 R.layout.item_photo) {
             @Override
             public void convert(MyViewHolder holder, PhotoBean photoBean) {
-
                 if (photoBean.getPhotoPath() != null) {
                     holder.setPhoto(R.id.iv_photo, photoBean.getPhotoPath())
                             .setVisibility(R.id.iv_delete, View.VISIBLE)
@@ -165,15 +163,33 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
                     T.showShort(AddVisitActivity.this, "最多只能上传3张图片");
                     return;
                 }
-                mGalleryFinalUtils.selectVisitImage(this, PHOTO_COUNT + 1 - mPhotos.size());
+                mGalleryFinalUtils.selectVisitImage(PHOTO_COUNT + 1 - mPhotos.size(),
+                        new GalleryFinal.OnHanlderResultCallback() {
+                            @Override
+                            public void onHanlderSuccess(int request, List<PhotoInfo> resultList) {
+                                if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
+                                    for (int i = 0; i < resultList.size(); i++) {
+                                        mPhotos.add(0,
+                                                new PhotoBean(resultList.get(i).getPhotoPath()));
+                                    }
+                                    mCommonAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onHanlderFailure(int requestCode, String errorMsg) {
+
+                            }
+                        });
             }
         });
     }
 
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mGalleryFinalUtils = null;
+        mLocationTask.unRegisterLocationListener(this);
     }
 
     @Override
@@ -282,22 +298,6 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
 
     private void setLocationString(String locationString) {
         mTvLocation.setText(locationString);
-    }
-
-    @Override
-    public void onHanlderSuccess(int request, List<PhotoInfo> resultList) {
-        if (request == GalleryFinalUtils.REQUEST_SELECT_IMAGE) {
-            for (int i = 0; i < resultList.size(); i++) {
-                mPhotos.add(0,
-                        new PhotoBean(resultList.get(i).getPhotoPath()));
-            }
-            mCommonAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onHanlderFailure(int requestCode, String errorMsg) {
-
     }
 
     @Override

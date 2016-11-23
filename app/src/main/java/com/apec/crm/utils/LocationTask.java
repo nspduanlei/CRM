@@ -27,6 +27,11 @@ public class LocationTask  {
         mLocationClient.setLocationListener(aMapLocationListener);
     }
 
+    public void unRegisterLocationListener(AMapLocationListener aMapLocationListener) {
+        mLocationClient.unRegisterLocationListener(aMapLocationListener);
+        mLocationClient = null;
+    }
+
     /**
      * 开启单次定位
      */
