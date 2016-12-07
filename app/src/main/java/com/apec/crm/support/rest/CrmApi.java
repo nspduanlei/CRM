@@ -85,8 +85,6 @@ public interface CrmApi {
     @POST("CUSTOMER-SERVICE/searchOpenSea.apec")
     Observable<Result<ListPage<Custom>>> getPublicCustomList(@Body RequestBody body);
 
-
-
     /**
      * 选择行政区域
      */

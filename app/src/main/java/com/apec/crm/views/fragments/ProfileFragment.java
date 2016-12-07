@@ -49,7 +49,7 @@ public class ProfileFragment extends BaseFragment implements ProfileView {
     @BindView(R.id.tv_find_version)
     TextView mTvFindVersion;
 
-    private boolean mHasNewVersion;
+    private boolean mHasNewVersion = false;
     private Version mVersion;
 
     @Inject

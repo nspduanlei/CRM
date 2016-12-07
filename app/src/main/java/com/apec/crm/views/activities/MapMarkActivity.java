@@ -161,14 +161,14 @@ public class MapMarkActivity extends BaseActivity implements LocationSource, AMa
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mMapView.onResume();
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         mMapView.onPause();

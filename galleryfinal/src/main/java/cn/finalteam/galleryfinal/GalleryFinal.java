@@ -46,7 +46,8 @@ public class GalleryFinal {
     private static ThemeConfig mThemeConfig;
     private static CoreConfig mCoreConfig;
 
-    private static OnHanlderResultCallback mCallback;
+    public static OnHanlderResultCallback mCallback;
+
     private static int mRequestCode;
 
     public static void init(CoreConfig coreConfig) {

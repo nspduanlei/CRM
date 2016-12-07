@@ -15,9 +15,7 @@ import com.apec.crm.views.fragments.ProfileFragment;
 import com.apec.crm.views.fragments.WorkPlaceFragment;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
-
 import java.util.ArrayList;
-
 import butterknife.BindView;
 import rx.Subscription;
 
@@ -54,6 +52,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initUi(Bundle savedInstanceState) {
+        //int test = 1/0;
+
         initTabBar();
         initSubscription();
     }

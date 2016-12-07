@@ -34,7 +34,6 @@ import cn.finalteam.galleryfinal.model.PhotoInfo;
  * Created by duanlei on 2016/10/13.
  * 用户信息
  */
-
 public class UserInfoActivity extends BaseActivity implements UserInfoView {
 
     @BindView(R.id.iv_head)
@@ -159,5 +158,11 @@ public class UserInfoActivity extends BaseActivity implements UserInfoView {
     protected void onStop() {
         super.onStop();
         mUserInfoPresenter.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mGalleryFinalUtils.unRegisterCallBack();
     }
 }

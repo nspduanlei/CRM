@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.apec.crm.R;
 import com.apec.crm.app.MyApplication;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.ButterKnife;
 
@@ -145,5 +146,14 @@ public abstract class BaseActivity extends AppCompatActivity implements Toolbar.
         mMenuText.setVisibility(View.VISIBLE);
         mMenuText.setText(title);
         mMenuText.setOnClickListener(onClickListener);
+    }
+
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 }

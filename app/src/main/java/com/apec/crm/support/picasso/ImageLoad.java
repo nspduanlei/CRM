@@ -9,8 +9,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
-import static com.apec.crm.R.id.imageView;
-
 /**
  * Created by duanlei on 2016/11/8.
  */

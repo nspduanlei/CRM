@@ -185,11 +185,11 @@ public class AddVisitActivity extends BaseActivity implements AMapLocationListen
         });
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mLocationTask.unRegisterLocationListener(this);
+        mGalleryFinalUtils.unRegisterCallBack();
     }
 
     @Override

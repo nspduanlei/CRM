@@ -13,7 +13,6 @@
     <string name="today" translatable="false">今天</string>
     <string name="date_format" translatable="false">M月d日 HH:mm</string>
     <string name="year_format" translatable="false">yyyy年 M月d日 HH:mm</string>
-
     <string name="date_format_custom" translatable="false">yyyy.M.d</string>
     <string name="date_format_work_place" translatable="false">yyyy年 M月</string>
 

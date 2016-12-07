@@ -83,8 +83,10 @@ public class GalleryFinalUtils {
                 .build();
 
         GalleryFinal.openGalleryMuti(REQUEST_SELECT_IMAGE, functionConfig, onHanlderResultCallback);
+    }
 
-        GalleryFinal.getCallback();
+    public void unRegisterCallBack() {
+        GalleryFinal.mCallback = null;
     }
 
     /**

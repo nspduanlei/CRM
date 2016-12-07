@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 import rx.Subscription;
 
+
 /**
  * Created by duanlei on 2016/10/13.
  */
@@ -32,8 +33,8 @@ public class MyUtils {
     /**
      * 客户头像生成随机颜色
      */
-    private static String[] mRandomColor = {"#D32F2F", "#C2185B", "#7B1FA2", "#FF1744", "#F50057",
-            "#D500F9", "#D32F2F", "#C2185B", "#7B1FA2", "#FF1744"};
+    private static String[] mRandomColor = {"#30c6fe", "#2ee0da", "#c3ae81", "#caa6ff", "#ff80cb",
+            "#ffbd49", "#ff6d8c", "#30c6fe", "#2ee0da", "#c3ae81"};
 
     public static int getRandomColor() {
         return Color.parseColor(mRandomColor[(int) (Math.random() * 10) % mRandomColor.length]);
